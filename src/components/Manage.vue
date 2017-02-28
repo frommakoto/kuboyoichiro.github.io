@@ -145,8 +145,6 @@
         height: 100%;
         font-size: 12px;
         font-family:"Helvetica","ヒラギノ角ゴ ProN W3",HiraKakuProN-W3;
-        overflow-x: hidden;
-        overflow-y: hidden;
     }
 
     header {
@@ -222,7 +220,7 @@
         background-color: #f9f9f9;
         height: 100%;
         position: relative;
-        top: 5%;
+        top: 70px;
         left: 280px;
         // column-count: 4;
         column-count: 1;
@@ -301,15 +299,15 @@
         }
 
         .single {
-            width: 400px;
+            width: 30%;
         }
 
         .double {
-            width: 800px;
+            width: 60%;
         }
 
         .triple {
-            width: 1245px;
+            width: 93%;
         }
     }
 
