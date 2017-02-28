@@ -1,5 +1,5 @@
 <template>
-    <div class="dokaben">
+    <div class="dokaben loop komaochi">
         <!-- <router-link to="/question">
         <img class="logo" src="../assets/logo_kemono.png" />
     </router-link> -->

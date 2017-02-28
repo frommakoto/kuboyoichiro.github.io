@@ -9,9 +9,9 @@
         </header>
         <nav>
             <ul>
-                <li class="active" v-on:click="changeClass"><router-link to="#">ページ1</router-link></li>
-                <li v-on:click="changeClass"><router-link to="#">ページ2</router-link></li>
-                <li v-on:click="changeClass"><router-link to="#">ページ3</router-link></li>
+                <li class="active" v-on:click="changeClass"><router-link to="#">トップページ</router-link></li>
+                <li v-on:click="changeClass"><router-link to="#">問題・解答編集</router-link></li>
+                <li v-on:click="changeClass"><router-link to="#">問題・解答新規作成</router-link></li>
                 <li v-on:click="changeClass"><router-link to="#">{{ msg }}</router-link></li>
             </ul>
         </nav>
@@ -39,30 +39,67 @@
                 </div>
             </div>
 
-            <div class="card double">
-                <div class="cardTitle">
-                    <span>問題一覧</span>
-                </div>
-                <div class="cardContent">
-                    <span>fugaaaaaaaaaaaaa</span>
-                </div>
-            </div>
-
-            <div class="card single">
-                <div class="cardTitle">
-                    <span>なんか</span>
-                </div>
-                <div class="cardContent">
-                    <span>fugaaaaaaaaaaaaa</span>
-                </div>
-            </div>
-
             <div class="card triple">
                 <div class="cardTitle">
-                    <span>問題入力フォーム</span>
+                    <span>問題・解答選択肢一覧</span>
                 </div>
-                <div class="cardContent">
-                    <span>fugaaaaaaaaaaaaa</span>
+                <div class="cardContent" style="padding: 0;">
+                    <div class="tableWrapper">
+                        <ul class="cell label">
+                            <li class="item label"><span>出題順</span></li>
+                            <li class="item label"><span>問題文</span></li>
+                            <li class="item label"><span>選択肢1</span></li>
+                            <li class="item label"><span>選択肢2</span></li>
+                            <li class="item label"><span>選択肢3</span></li>
+                            <li class="item label"><span>選択肢4</span></li>
+                            <li class="item label"><span>正解</span></li>
+                        </ul>
+                        <ul class="cell cell-data">
+                            <li class="item"><span>1</span></li>
+                            <li class="item"><span>次のうち金を１つしかとっていないのは誰でしょう</span></li>
+                            <li class="item"><span>谷亮子</span></li>
+                            <li class="item"><span>北島康介</span></li>
+                            <li class="item"><span>吉田沙保里</span></li>
+                            <li class="item"><span>田中裕二</span></li>
+                            <li class="item"><span>田中裕二</span></li>
+                        </ul>
+                        <ul class="cell cell-data even">
+                            <li class="item"><span>2</span></li>
+                            <li class="item"><span>次のうち金を１つしかとっていないのは誰でしょう</span></li>
+                            <li class="item"><span>谷亮子</span></li>
+                            <li class="item"><span>北島康介</span></li>
+                            <li class="item"><span>吉田沙保里</span></li>
+                            <li class="item"><span>田中裕二</span></li>
+                            <li class="item"><span>田中裕二</span></li>
+                        </ul>
+                        <ul class="cell cell-data">
+                            <li class="item"><span>3</span></li>
+                            <li class="item"><span>次のうち金を１つしかとっていないのは誰でしょう</span></li>
+                            <li class="item"><span>谷亮子</span></li>
+                            <li class="item"><span>北島康介</span></li>
+                            <li class="item"><span>吉田沙保里</span></li>
+                            <li class="item"><span>田中裕二</span></li>
+                            <li class="item"><span>田中裕二</span></li>
+                        </ul>
+                        <ul class="cell cell-data even">
+                            <li class="item"><span>4</span></li>
+                            <li class="item"><span>次のうち金を１つしかとっていないのは誰でしょう</span></li>
+                            <li class="item"><span>谷亮子</span></li>
+                            <li class="item"><span>北島康介</span></li>
+                            <li class="item"><span>吉田沙保里</span></li>
+                            <li class="item"><span>田中裕二</span></li>
+                            <li class="item"><span>田中裕二</span></li>
+                        </ul>
+                        <ul class="cell cell-data">
+                            <li class="item"><span>5</span></li>
+                            <li class="item"><span>次のうち金を１つしかとっていないのは誰でしょう</span></li>
+                            <li class="item"><span>谷亮子</span></li>
+                            <li class="item"><span>北島康介</span></li>
+                            <li class="item"><span>吉田沙保里</span></li>
+                            <li class="item"><span>田中裕二</span></li>
+                            <li class="item"><span>田中裕二</span></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
@@ -118,7 +155,7 @@
         background-color: #ffffff;
         width: 100%;
         z-index: 3;
-        height: 5%;
+        height: 70px;
 
         box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.6);
         -moz-box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.6);
@@ -155,7 +192,7 @@
         width: 280px;
         height: 100%;
         position: fixed;
-        top: 5%;
+        top: 70px;
         overflow: auto;
         z-index: 2;
 
@@ -222,7 +259,44 @@
             }
 
             .cardContent {
-                padding: 10px;
+                padding: 20px;
+
+                .tableWrapper {
+                    display: table;
+                    position: relative;
+                    width: 100%;
+                    margin-top: 20px;
+
+                    ul {
+                        display: table-row;
+                        text-align: center;
+                        li {
+                            display: table-cell;
+                            padding: 10px;
+                        }
+
+                        .item.label {
+                            font-size: 18px;
+                        }
+
+                        .item {
+                            font-size: 14px;
+                            word-wrap: break-word;
+                        }
+                        .item:hover{
+                            color: #dddddd;
+                        }
+
+                    }
+                    ul.cell.label {
+                        background-color: #333333;
+                        color: #fff;
+                    }
+
+                    ul.cell.cell-data.even {
+                        background-color: #cccccc;
+                    }
+                }
             }
         }
 
