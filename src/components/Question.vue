@@ -29,20 +29,23 @@
 </template>
 
 <script>
-export default {
-  name: 'question',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+    export default {
+      name: 'question',
+      data () {
+        return {
+          msg: 'Welcome to Your Vue.js App'
+        }
+      },
+      methods: {
+        greet: function(e){
+          console.log(e);
+          var element = document.getElementsByClassName('question');
+          console.log(element);
+          element[0].classList.add('done');
+          return false;
+        }
+      }
     }
-  },
-  methods: {
-    greet: function(e){
-      console.log(e);
-      return false;
-    }
-  }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -57,6 +60,11 @@ export default {
         padding-top: 30px;
         padding-bottom: 4%;
         overflow: hidden;
+    }
+
+    .done {
+        background-color: #333333;
+        opacity: 0.4;
     }
 
     #questionWrapper {
