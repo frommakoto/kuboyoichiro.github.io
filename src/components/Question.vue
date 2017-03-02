@@ -29,8 +29,12 @@
 </template>
 
 <script>
+    import * as $ from 'jquery';
+
     export default {
       name: 'question',
+      self: this,
+
       data () {
         return {
           msg: 'Welcome to Your Vue.js App'
@@ -39,11 +43,14 @@
       methods: {
         greet: function(e){
           console.log(e);
-          var element = document.getElementsByClassName('question');
-          console.log(element);
-          element[0].classList.add('done');
+          $('.question').addClass('done');
           return false;
         }
+      },
+      mounted () {
+        console.log('mount');
+        console.log($('.question'));
+        console.log(self);
       }
     }
 </script>
