@@ -35,6 +35,12 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  methods: {
+    greet: function(e){
+      console.log(e);
+      return false;
+    }
   }
 }
 </script>
@@ -47,8 +53,10 @@ export default {
         -moz-osx-font-smoothing: grayscale;
         font-size: 100px;
         background: linear-gradient(#03bffe, #090f94) fixed;
-        height: 100%;
+        min-height: 100vh;
         padding-top: 30px;
+        padding-bottom: 4%;
+        overflow: hidden;
     }
 
     #questionWrapper {
