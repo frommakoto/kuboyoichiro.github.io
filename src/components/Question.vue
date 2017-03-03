@@ -37,12 +37,16 @@
 
       data () {
         return {
+          questionState: 0,
           msg: 'Welcome to Your Vue.js App'
         }
       },
       methods: {
         greet: function(e){
-          console.log(e);
+          // console.log(e);
+          console.log(this.questionState);
+          this.questionState = 1;
+          console.log(this.questionState);
           $('.question').addClass('done');
           return false;
         }
@@ -51,6 +55,7 @@
         console.log('mount');
         console.log($('.question'));
         console.log(self);
+        console.log(this);
       }
     }
 </script>
