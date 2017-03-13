@@ -5,6 +5,7 @@ import Question from 'components/Question'
 import Dokaben from 'components/Dokaben'
 import Manage from 'components/Manage'
 import Login from 'components/Login'
+import Screen from 'components/Screen'
 
 
 Vue.use(Router)
@@ -35,6 +36,11 @@ export default new Router({
           path: '/login',
           name: 'Login',
           component: Login
+      },
+      {
+          path: '/screen',
+          name: 'Screen',
+          component: Screen
       }
   ]
 })
