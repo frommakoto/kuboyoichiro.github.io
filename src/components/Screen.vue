@@ -26,7 +26,7 @@
         data () {
             return {
                 count: 4,
-                state: 0,
+                state: 1,
                 text: '選択肢'
             }
         },
@@ -37,6 +37,14 @@
                 $('.count:eq(2)').css('background-color', '#00ff00');
                 $('.count:eq(3)').css('background-color', '#f19149');
             }
+
+            $(document).on('keydown', function(e){
+                console.log(e.keyCode);
+                var key = e.keyCode;
+                if(key === 65){
+                    location.href="#question";
+                }
+            });
         }
 
     }
