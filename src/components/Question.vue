@@ -56,6 +56,15 @@
         console.log($('.question'));
         console.log(self);
         console.log(this);
+        $(document).on('keydown', function(e){
+            console.log(e.keyCode);
+            var key = e.keyCode;
+
+            // if(key === 65){
+            //     location.href="#screen";
+            // }
+            return false;
+        });
       }
     }
 </script>

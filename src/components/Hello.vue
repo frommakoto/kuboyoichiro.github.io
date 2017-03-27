@@ -13,40 +13,44 @@
 </template>
 
 <script>
-export default {
-  name: 'hello',
-  data () {
-    return {
-      msg: 'ようこそジャパリパークへ！'
+    import * as $ from 'jquery';
+    export default {
+      name: 'hello',
+      data () {
+        return {
+          msg: 'ようこそジャパリパークへ！'
+        }
+      },
+      mounted () {
+          $(document).on('keydown', function(e){
+              var key = e.keyCode;
+              // Sキー
+              // 問題一覧ページ（スクリーン）
+              if(key === 83){
+                  location.href="#screen";
+              }
+              return false;
+          });
+      }
     }
-  }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 
     .hello {
-        position: relative;
-        top: 40%;
-        left: 25%;
+        // position: relative;
+        // top: 40%;
+        // left: 25%;
+        height: 100%;
+        background: url('../assets/screen_bg.png') no-repeat;
+        background-size: cover;
+        overflow: hidden;
     }
 
-
-    @media(max-width: 1000px){
-        .hello {
-            top: 0;
-            left: 0;
-            background: linear-gradient(#9ab9ef, #c8a27d) fixed;
-            height: 100%;
-        }
-
-        img {
-            width: 100%;
-        }
-
-        .logo {
-            margin-top: 500px;
-        }
+    .logo {
+      display: block;
+      margin: auto;
+      margin-top: 200px;
     }
 </style>
