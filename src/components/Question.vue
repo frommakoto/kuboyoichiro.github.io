@@ -43,28 +43,12 @@
       },
       methods: {
         greet: function(e){
-          // console.log(e);
-          console.log(this.questionState);
-          this.questionState = 1;
-          console.log(this.questionState);
-          $('.question').addClass('done');
-          return false;
-        }
-      },
-      mounted () {
-        console.log('mount');
-        console.log($('.question'));
-        console.log(self);
-        console.log(this);
-        $(document).on('keydown', function(e){
-            console.log(e.keyCode);
-            var key = e.keyCode;
-
-            // if(key === 65){
-            //     location.href="#screen";
-            // }
+            if(this.questionState === 0){
+                this.questionState = 1;
+                $('.question').addClass('done');
+            }
             return false;
-        });
+        }
       }
     }
 </script>

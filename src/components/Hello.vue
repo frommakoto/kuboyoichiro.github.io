@@ -39,9 +39,6 @@
 <style scoped lang="scss">
 
     .hello {
-        // position: relative;
-        // top: 40%;
-        // left: 25%;
         height: 100%;
         background: url('../assets/screen_bg.png') no-repeat;
         background-size: cover;
@@ -51,6 +48,6 @@
     .logo {
       display: block;
       margin: auto;
-      margin-top: 200px;
+      margin-top: 500px;
     }
 </style>

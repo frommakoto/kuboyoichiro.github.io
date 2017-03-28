@@ -312,4 +312,15 @@
             top: 12%;
         }
     }
+
+    @media(min-height: 800px){
+        .imageWrapper {
+            .questionText {
+                height: 600px;
+                .questionInnerText {
+                    font-size: 1.5rem;
+                }
+            }
+        }
+    }
 </style>
