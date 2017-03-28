@@ -1,17 +1,33 @@
 <template>
   <div class="screen">
-      <ul class="imageWrapper" v-if="state==1">
-          <li class="questionImage" v-for="n in 4">
+      <ul class="imageWrapper">
+          <li class="questionImage question1">
               <div class="questionImageText">
-                  <span class="index">{{ n }}</span>
+                  <span class="index one">1</span>
                   <span class="choice">東京夜景</span>
                   <span class="selected">18</span>
               </div>
           </li>
-      </ul>
-      <ul class="textWrapper" v-for="n in 4" v-if="state==0">
-          <li class="questionProblem">
-              <span class="count">{{n}}</span> {{text}}{{n}}
+          <li class="questionImage question2">
+              <div class="questionImageText">
+                  <span class="index two">2</span>
+                  <span class="choice">東京夜景</span>
+                  <span class="selected">18</span>
+              </div>
+          </li>
+          <li class="questionImage question3">
+              <div class="questionImageText">
+                  <span class="index three">3</span>
+                  <span class="choice">東京夜景</span>
+                  <span class="selected">18</span>
+              </div>
+          </li>
+          <li class="questionImage question4">
+              <div class="questionImageText">
+                  <span class="index four">4</span>
+                  <span class="choice">東京夜景</span>
+                  <span class="selected">18</span>
+              </div>
           </li>
       </ul>
       <div class="questionText">
@@ -20,7 +36,7 @@
               <span>問題文問題文問題文問題文</span>
           </div>
           <div class="time">
-              <span>10</span>
+              <span>{{timer}}</span>
           </div>
       </div>
   </div>
@@ -31,14 +47,26 @@
     export default {
         data () {
             return {
-                count: 4,
-                state: 1,
-                text: '選択肢'
+                timer: 10,
+                text: '選択肢',
+                startCountDown: '',
+                answer: 1
+            }
+        },
+        methods: {
+            countDown: function(){
+                this.timer -= 1;
+                if(this.timer === 0){
+                    // alert('over');
+                    $('.screen').addClass('done');
+                    clearInterval(this.startCountDown);
+                }
+                return false;
             }
         },
         mounted () {
-            console.log($(window).height());
-
+            // console.log($(window).height());
+            var self = this;
             if(this.state === 0){
                 $('.count:eq(0)').css('background-color', '#8540bf');
                 $('.count:eq(1)').css('background-color', '#fd0000');
@@ -64,6 +92,33 @@
                     location.href="/";
                     return false;
                 }
+                // Tキー
+                // カウントダウンスタート
+                else if(key === 84){
+                    self.startCountDown = setInterval(self.countDown, 1000);
+                }
+                // Yキー
+                // DONEクラスremove
+                else if(key === 89){
+                    $('.screen').removeClass('done');
+                }
+
+                // Aキー
+                // 答えオープン
+                else if(key === 65){
+                    if(self.answer === 1){
+                        $('.question2').addClass('done');
+                        $('.question3').addClass('done');
+                        $('.question4').addClass('done');
+                    }
+                }
+
+                // Oキー
+                // 問題表示
+                else if(key === 79){
+                    $('.imageWrapper').css('display', 'block');
+                }
+
                 else {
                     return false;
                 }
@@ -86,7 +141,13 @@
         overflow: hidden;
     }
 
+    .done {
+        background-color: #333333;
+        opacity: 0.4;
+    }
+
     .imageWrapper {
+        display: none;
         position: relative;
         top: 15%;
         left: 10%;
@@ -115,7 +176,7 @@
                 position: absolute;
                 bottom: 0;
                 z-index: 3;
-                height: 15%;
+                height: 20%;
                 width: 100%;
                 text-align: center;
                 background: #000;
@@ -154,6 +215,22 @@
                     height: 90%;
                     font-weight: bold;
                     color: #090a41;
+                }
+
+                .one {
+                    background-color: #8540bf;
+                }
+
+                .two {
+                    background-color: #fd0000;
+                }
+
+                .three {
+                    background-color: #00ff00;
+                }
+
+                .four {
+                    background-color: #f19149;
                 }
             }
         }
@@ -200,7 +277,9 @@
         top: 15%;
         left: 85%;
         width: 150px;
-        height: 700px;
+        // height: 700px;
+        min-height: 500px;
+        height: 70%;
         background: -webkit-linear-gradient(top, #1e5799 0%,#302689 1%,#302689 50%,#2989d8 80%,#2353e6 100%);
         opacity: 0.9;
         font-family: "ヒラギノ丸ゴ Pro W4","Hiragino Maru Gothic Pro", 'Avenir', Helvetica, Arial, sans-serif;
@@ -209,8 +288,6 @@
 
 
         .questionLogo {
-            // position: relative;
-            // top: 3%;
             font-size: 6.0rem;
             text-align: center;
             color: #39fed5;
@@ -227,7 +304,10 @@
             margin: 5%;
             margin-left: auto;
             margin-right: auto;
-            // margin-top: 20px;
+            min-width: 90px;
+            width: 40%;
+            min-height: 100px;
+            height: 65%;
             padding: 5% 20%;
             border-radius: 0.8em;
             -webkit-writing-mode: vertical-rl;
@@ -236,13 +316,15 @@
             font-size: 2.5rem;
             text-align: center;
             opacity: 1.0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .time {
-            position: relative;
-            // top: 10%;
-            top: 0;
-            left: 0;
+            position: absolute;
+            top: 90%;
+            left: -10%;
             text-align: center;
             z-index: 2;
             font-size: 3.0rem;
@@ -250,9 +332,11 @@
             font-weight: bold;
             border: 10px solid #cdd2de;
             background-color: #940100;
+            // max-width: 150px;
+            // max-height: 150px;
             width: 150px;
             height: 150px;
-            -webkit-border-radius: 50%;/* 50%でもOK */
+            -webkit-border-radius: 50%;
             -moz-border-radius: 50%;
             border-radius: 50%;
             margin-left: auto;
@@ -260,67 +344,16 @@
             opacity: 1.0;
 
             span {
-                font-size: 5.0rem;
-                position: relative;
-                top: 10%;
+                // font-size: 5.0rem;
+                font-size: 60px;
+                position: absolute;;
+                top: 20%;
+                left: 25%;
             }
         }
     }
 
-    @media(min-height: 1200px){
-        .questionText{
-            height: 900px;
-            width: 180px;
-            .time {
-                width: 200px;
-                height: 200px;
-                left: -20px;
-
-                span {
-                    top: 20%;
-                }
-            }
-        }
-        .questionInnerText{
-            height: 550px;
-        }
-    }
-
-    @media(max-height: 1000px) {
-        .imageWrapper {
-            .questionImage {
-                .questionImageText {
-                    .index {
-                        height: 25px;
-                        padding: 10px 10px 5px 10px;
-                        line-height: 20px;
-                    }
-
-                    .choice {
-                        font-size: 2.0rem;
-                        line-height: 50px;
-                    }
-
-                    .selected {
-                        line-height: 40px;
-                    }
-                }
-            }
-        }
-
-        .questionText {
-            top: 12%;
-        }
-    }
-
-    @media(min-height: 800px){
-        .imageWrapper {
-            .questionText {
-                height: 600px;
-                .questionInnerText {
-                    font-size: 1.5rem;
-                }
-            }
-        }
-    }
+    // @media(max-height: 960px){
+    //
+    // }
 </style>

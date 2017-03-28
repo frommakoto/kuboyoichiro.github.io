@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-      <router-link to="/dokaben">
+      <router-link to="/question">
           <img class="logo" src="../assets/logo_kemono.png" />
       </router-link>
     <!-- <router-link to="/question">
@@ -43,11 +43,14 @@
         background: url('../assets/screen_bg.png') no-repeat;
         background-size: cover;
         overflow: hidden;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .logo {
-      display: block;
-      margin: auto;
-      margin-top: 500px;
+        display: block;
+        margin: auto;
     }
 </style>
