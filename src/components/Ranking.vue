@@ -1,5 +1,12 @@
 <template>
   <div class="ranking">
+      <ul class="rankingWrapper">
+          <li v-for="r in rankings" class="ranking">
+              <span class="number">{{r.ranking}}</span>
+              <span class="name">{{r.name}}</span>
+              <span class="gain">{{r.gain}}</span>
+          </li>
+      </ul>
   </div>
 </template>
 
@@ -8,9 +15,58 @@
     export default {
         data () {
             return {
-                count: 4,
-                state: 1,
-                text: '選択肢'
+                rankings : [
+                    {
+                        ranking: 1,
+                        name: "name",
+                        gain: 100
+                    },
+                    {
+                        ranking: 2,
+                        name: "name",
+                        gain: 100
+                    },
+                    {
+                        ranking: 3,
+                        name: "name",
+                        gain: 100
+                    },
+                    {
+                        ranking: 4,
+                        name: "name",
+                        gain: 100
+                    },
+                    {
+                        ranking: 5,
+                        name: "name",
+                        gain: 100
+                    },
+                    {
+                        ranking: 6,
+                        name: "name",
+                        gain: 100
+                    },
+                    {
+                        ranking: 7,
+                        name: "name",
+                        gain: 100
+                    },
+                    {
+                        ranking: 8,
+                        name: "name",
+                        gain: 100
+                    },
+                    {
+                        ranking: 9,
+                        name: "name",
+                        gain: 100
+                    },
+                    {
+                        ranking: 10,
+                        name: "name",
+                        gain: 100
+                    }
+                ]
             }
         },
         mounted () {
@@ -49,5 +105,39 @@
         background: url('../assets/screen_bg.png') no-repeat;
         background-size: cover;
         overflow: hidden;
+    }
+
+    .rankingWrapper {
+        position: relative;
+        text-align: center;
+        margin-top: 20px;
+        margin-left: 50px;
+        margin-right: 50px;
+        margin-bottom: 20px;
+        // padding-bottom: 20px;
+
+        .ranking {
+            font-size: 2.0rem;
+            background: #fff;
+            color: #000;
+            border: solid 1px #000000;
+            border-radius: 0.5rem;
+            margin-bottom: 15px;
+            height: 75px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+
+            .number {
+                position: absolute;
+                left: 30px;
+            }
+
+            .gain {
+                position: absolute;
+                right: 30px;
+            }
+        }
     }
 </style>
