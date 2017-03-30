@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-      <router-link to="/question">
+      <router-link to="/login">
           <img class="logo" src="../assets/logo_kemono.png" />
       </router-link>
     <!-- <router-link to="/question">
