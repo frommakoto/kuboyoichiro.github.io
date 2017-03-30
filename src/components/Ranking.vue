@@ -2,9 +2,14 @@
   <div class="ranking">
       <ul class="rankingWrapper">
           <li v-for="r in rankings" class="ranking">
-              <span class="number">{{r.ranking}}</span>
-              <span class="name">{{r.name}}</span>
-              <span class="gain">{{r.gain}}</span>
+              <span class="nameRank">
+                  <span class="number">{{r.ranking}}</span>
+                  <span class="name">{{r.name}}</span>
+              </span>
+              <span class="count">
+                  <span class="gain">獲得額：{{r.gain}}円</span>
+                  <span class="time">1:55:55</span>
+              </span>
           </li>
       </ul>
   </div>
@@ -115,28 +120,72 @@
         margin-right: 50px;
         margin-bottom: 20px;
         // padding-bottom: 20px;
+        height: 100%;
 
         .ranking {
             font-size: 2.0rem;
-            background: #fff;
+            // background: #fff;
             color: #000;
-            border: solid 1px #000000;
-            border-radius: 0.5rem;
+            // border: solid 1px #000000;
+            // border-radius: 0.5rem;
             margin-bottom: 15px;
-            height: 75px;
+            // height: 75px;
+            height: 8%;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
 
-            .number {
+            .nameRank {
+                background: #0100fc;
+                border: 1px solid #0100fc;
+                border-radius: 0.5rem;
+                height: 100%;
+                width: 50%;
                 position: absolute;
-                left: 30px;
+                left: 0;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .number {
+                    position: absolute;
+                    left: 30px;
+                    background: #00a3e8;
+                    border: 1px solid #00a3e8;
+                    color: #fff;
+                    width: 100px;
+                    border-radius: 0.5rem;
+                    text-align: center;
+                }
+
+                .name {
+                    position: absolute;
+                    left: 400px;
+                    color: #fff20c;
+                }
             }
 
-            .gain {
+            .count {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: #0100fc;
+                border: 1px solid #0100fc;
+                border-radius: 0.5rem;
+                height: 100%;
+                width: 30%;
                 position: absolute;
-                right: 30px;
+                right: 0;
+                color: #fff20c;
+                .gain {
+                    position: absolute;
+                    left: 30px;
+                }
+                .time {
+                    position: absolute;
+                    right: 30px;
+                }
             }
         }
     }
