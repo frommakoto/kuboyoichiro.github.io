@@ -160,7 +160,8 @@
         column-gap: 1em;
 
         .questionImage {
-            height: 40%;
+            // height: 40%;
+            height: 43%;
             background-size: cover;
             background-image: url('../assets/question_sample.jpg');
             margin-right: 5%;
@@ -207,9 +208,9 @@
                     font-size: 2.0rem;
                     line-height: 60px;
                     background-color: #77c2ca;
-                    margin-top: 5px;
                     margin-right: 5px;
-                    padding-left: 50px;
+                    // padding-left: 50px;
+                    padding-left: 5%;
                     padding-right: 10px;
                     border-radius: 0.5em;
                     font-weight: bold;
@@ -259,7 +260,8 @@
                 // position: relative;
                 // // top: 10%;
                 position: absolute;
-                top: 15%;
+                // top: 15%;
+                top: 20%;
                 left: -33%;
                 background-color: #b6c5e0;
                 color: #160087;
