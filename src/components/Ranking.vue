@@ -75,6 +75,16 @@
             }
         },
         mounted () {
+            $.ajax('http://35.187.217.35:3000/users/ranking',{
+                method:'POST',
+                type:'POST',
+                cache:false
+            })
+            .done(function(json){
+                console.log(json);
+            })
+            .fail(function(err){});
+
 
             $(document).on('keydown', function(e){
                 console.log(e.keyCode);

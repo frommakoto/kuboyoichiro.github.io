@@ -238,7 +238,7 @@
 
     .questionText {
             position: absolute;
-            top: 15%;
+            top: 13%;
             left: 83%;
             width: 200px;
             min-height: 500px;
