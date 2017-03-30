@@ -1,8 +1,9 @@
 <template>
   <div class="hello">
-      <router-link to="/login">
+      <!-- <router-link to="/login">
           <img class="logo" src="../assets/logo_kemono.png" />
-      </router-link>
+      </router-link> -->
+      <img class="logo" src="../assets/logo_kemono.png" />
     <!-- <router-link to="/question">
         <img class="logo" src="../assets/logo_kemono.png" />
     </router-link> -->
@@ -22,12 +23,36 @@
         }
       },
       mounted () {
-          $(document).on('keydown', function(e){
+          var userId = window.localStorage.getItem('userId');
+          console.log(userId);
+
+          //   ログイン済であればログインページへは飛ばさない
+          //   余力があればv-ifでアレしたい
+          $('.logo').on('click', function(){
+              if(!userId) {
+                  location.href="#login";
+                  return false;
+              }
+              else {
+                  location.href="#question"
+                  return false;
+              }
+          });
+
+          $(document).on('keyup', function(e){
               var key = e.keyCode;
+              console.log(key);
               // Sキー
               // 問題一覧ページ（スクリーン）
               if(key === 83){
                   location.href="#screen";
+                  return false;
+              }
+              //   Dキー
+              // ローカルストレージ削除
+              else if(key == 68){
+                 window.localStorage.removeItem('userId');
+                 return false;
               }
               return false;
           });

@@ -86,7 +86,7 @@
             .fail(function(err){});
 
 
-            $(document).on('keydown', function(e){
+            $(document).on('keyup', function(e){
                 console.log(e.keyCode);
                 var key = e.keyCode;
 

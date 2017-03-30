@@ -1,12 +1,6 @@
 <template>
   <div class="login">
       <img class="logo" src="../assets/logo_kemono.png" />
-      <!-- <form>
-          <div class="login-wrapper">
-              <input type="text" id="userid" name="userid" placeholder="ユーザーIDを入力" value="">
-              <button class="login">はじめる！</button>
-          </div>
-      </form> -->
       <div class="login-wrapper">
           <input type="text" id="userid" name="userid" placeholder="ユーザーIDを入力" value="">
           <button class="loginButton">はじめる！</button>
@@ -27,15 +21,16 @@
             login: function(e){
                 // console.log(e);
                 var userId = $('#userid').val();
-                alert('あなたのユーザーIDは' + userId);
+                alert('あなたのユーザーIDは' + userId + 'です．楽しいゲームを！');
+                window.localStorage.setItem('userId', userId);
                 location.href="#question"
             }
         },
         mounted(){
             var self = this;
+            $('#userid').focus();
             $('.loginButton').on('click', function(e){
                 self.login(e);
-                // console.log(this);
             });
         }
     }

@@ -76,7 +76,7 @@
                 $('.count:eq(3)').css('background-color', '#f19149');
             }
 
-            $(document).on('keydown', function(e){
+            $(document).on('keyup', function(e){
                 console.log(e.keyCode);
                 var key = e.keyCode;
 

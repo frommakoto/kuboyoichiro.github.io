@@ -49,6 +49,13 @@
             }
             return false;
         }
+      },
+      mounted(){
+          var userId = window.localStorage.getItem('userId');
+          console.log(userId);
+          if(userId == null){
+              location.href="/";
+          }
       }
     }
 </script>
