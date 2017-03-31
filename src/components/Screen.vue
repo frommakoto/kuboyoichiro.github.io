@@ -83,7 +83,9 @@
                 // Sキー
                 // 問題一覧ページ（スクリーン）
                 if(key === 83){
-                    location.href="#screen";
+                    // location.href="#screen";
+                    // 回答状況を取得するAPIを叩く…？
+                    $('.selected').css('display', 'block');
                 }
                 // Rキー
                 else if(key === 82){
@@ -124,6 +126,8 @@
                 else {
                     return false;
                 }
+
+                // 答えた人数公開ボタンが必要！
 
                 return false;
             });
@@ -217,6 +221,7 @@
                     border-radius: 0.5em;
                     font-weight: bold;
                     color: #090a41;
+                    display: none;
                 }
 
                 .one {
