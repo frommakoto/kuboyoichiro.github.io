@@ -65,11 +65,6 @@
                         ranking: 9,
                         name: "name",
                         gain: 100
-                    },
-                    {
-                        ranking: 10,
-                        name: "name",
-                        gain: 100
                     }
                 ]
             }
@@ -171,7 +166,7 @@
 
                 .name {
                     position: absolute;
-                    left: 400px;
+                    left: 200px;
                     color: #fff20c;
                 }
             }
@@ -184,10 +179,11 @@
                 border: 1px solid #0100fc;
                 border-radius: 0.5rem;
                 height: 100%;
-                width: 30%;
+                width: 40%;
                 position: absolute;
                 right: 0;
                 color: #fff20c;
+                font-size: 1.5rem;
                 .gain {
                     position: absolute;
                     left: 30px;

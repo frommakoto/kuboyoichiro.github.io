@@ -39,6 +39,9 @@
               <span>{{timer}}</span>
           </div>
       </div>
+      <div class="timeupText">
+          TIME UP
+      </div>
   </div>
 </template>
 
@@ -47,7 +50,7 @@
     export default {
         data () {
             return {
-                timer: 10,
+                timer: 3,
                 text: '選択肢',
                 startCountDown: '',
                 answer: 1
@@ -59,6 +62,7 @@
                 if(this.timer === 0){
                     // alert('over');
                     $('.screen').addClass('done');
+                    $('.timeupText').css('display', 'block');
                     clearInterval(this.startCountDown);
                 }
                 return false;
@@ -105,6 +109,7 @@
                 // DONEクラスremove
                 else if(key === 89){
                     $('.screen').removeClass('done');
+                    $('.timeupText').css('display', 'none');
                 }
 
                 // Aキー
@@ -139,6 +144,8 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
     .screen{
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
         font-size: 100%;
         width: 100%;
         height: 100%;
@@ -148,8 +155,9 @@
     }
 
     .done {
-        background-color: #333333;
-        opacity: 0.4;
+        background-color: #eeeeee;
+        opacity: 0.6;
+        z-index: -3;
     }
 
     .imageWrapper {
@@ -248,7 +256,7 @@
         top: 13%;
         left: 83%;
         width: 200px;
-        min-height: 500px;
+        // min-height: 500px;
         height: 70%;
         background: -webkit-linear-gradient(top, #1e5799 0%,#302689 1%,#302689 50%,#2989d8 80%,#2353e6 100%);
         opacity: 0.9;
@@ -325,6 +333,40 @@
                 // position: absolute;
                 // top: 20%;
                 // left: 25%;
+            }
+        }
+    }
+
+    .timeupText {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 30%;
+        font-size: 5.0rem;
+        color: red;
+        text-shadow:4px 2px 5px #000000;
+        opacity: 1.0;
+        z-index: 4;
+    }
+
+    @media(max-height: 800px) {
+        .imageWrapper {
+            left: 5%;
+
+            .questionImageText {
+                .choice {
+                    font-size: 1.0rem;
+                }
+            }
+        }
+        .questionText {
+            top: 4%;
+            left: 77%;
+
+            .questionInnerText {
+                font-size: 1.0rem;
+                height: 55%;
+                top: 25%;
             }
         }
     }
