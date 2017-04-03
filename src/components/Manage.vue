@@ -54,6 +54,28 @@
                             <li class="item label"><span>選択肢4</span></li>
                             <li class="item label"><span>正解</span></li>
                         </ul>
+                        <ul class="cell cell-data"  v-for="(q, index) in questions">
+                            <li class="item">
+                                <span>{{index}}</span>
+                            </li>
+                            <li class="item">
+                                <span>{{q.problemText}}</span>
+                            </li>
+                            <li class="item"><span>選択肢1</span></li>
+                            <li class="item"><span>選択肢2</span></li>
+                            <li class="item"><span>選択肢3</span></li>
+                            <li class="item"><span>選択肢4</span></li>
+                            <li class="item"><span>正解</span></li>
+                        </ul>
+                        <!-- <ul class="cell label">
+                            <li class="item label"><span>出題順</span></li>
+                            <li class="item label"><span>問題文</span></li>
+                            <li class="item label"><span>選択肢1</span></li>
+                            <li class="item label"><span>選択肢2</span></li>
+                            <li class="item label"><span>選択肢3</span></li>
+                            <li class="item label"><span>選択肢4</span></li>
+                            <li class="item label"><span>正解</span></li>
+                        </ul>
                         <ul class="cell cell-data">
                             <li class="item"><span>1</span></li>
                             <li class="item"><span>次のうち金を１つしかとっていないのは誰でしょう</span></li>
@@ -98,7 +120,7 @@
                             <li class="item"><span>吉田沙保里</span></li>
                             <li class="item"><span>田中裕二</span></li>
                             <li class="item"><span>田中裕二</span></li>
-                        </ul>
+                        </ul> -->
                     </div>
                 </div>
             </div>
@@ -111,6 +133,7 @@
 
 
 <script>
+    import * as $ from 'jquery';
     export default {
         name: 'Manage',
         data() {
@@ -127,7 +150,8 @@
                 day: day,
                 daysLeft: daysLeft,
                 deadLineLeft: deadLineLeft,
-                msg: 'メッセージバインディング'
+                msg: 'メッセージバインディング',
+                questions: []
             }
         },
         methods: {
@@ -135,6 +159,21 @@
                 console.log(event);
                 return false;
             }
+        },
+        mounted (){
+            var self = this;
+            self.questions = [];
+            $.get('http://35.187.220.214:3000/problems')
+            .done(function(json){
+                console.log(json);
+                console.log(self.questions);
+                var data = json;
+                $.each(data, function(i){
+                    self.questions[i] = {};
+                    self.questions[i].problemText = data[i].problem_text;
+                    console.log(self.questions);
+                });
+            });
         }
     }
 </script>
