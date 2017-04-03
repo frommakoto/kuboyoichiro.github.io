@@ -7,6 +7,7 @@ import Manage from 'components/Manage'
 import Login from 'components/Login'
 import Screen from 'components/Screen'
 import Ranking from 'components/Ranking'
+import Ready from 'components/Ready'
 
 
 Vue.use(Router)
@@ -47,6 +48,11 @@ export default new Router({
           path: '/ranking',
           name: 'Ranking',
           component: Ranking
+      },
+      {
+          path: '/ready',
+          name: 'Ready',
+          component: Ready
       }
   ]
 })

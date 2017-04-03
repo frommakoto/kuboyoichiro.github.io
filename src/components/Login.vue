@@ -23,7 +23,7 @@
                 var userId = $('#userid').val();
                 alert('あなたのユーザーIDは' + userId + 'です．楽しいゲームを！');
                 window.localStorage.setItem('userId', userId);
-                location.href="#question"
+                location.href="#ready"
             }
         },
         mounted(){

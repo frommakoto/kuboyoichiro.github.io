@@ -25,6 +25,12 @@
               <span class="answerDescription">選択肢4</span>
           </li>
       </ul>
+
+      <div class="button">
+          <router-link to="/ready">
+              正解発表後に<br />押してください！
+          </router-link>
+      </div>
   </div>
 </template>
 
@@ -37,6 +43,8 @@
 
       data () {
         return {
+          timer: 3,
+          startCountDown: '',
           questionState: 0,
           msg: 'Welcome to Your Vue.js App',
           userId: ''
@@ -87,15 +95,30 @@
             for (var i = 0; i < length; i++) format = format.replace(/S/, milliSeconds.substring(i, i + 1));
           }
           return format;
-        }
+      },
+      countDown: function(){
+          this.timer -= 1;
+          console.log(this.timer);
+          if(this.timer === 0){
+              // alert('over');
+              $('.question').addClass('done');
+              $('#questionWrapper').css('display', 'none');
+              $('#answerWrapper').css('display', 'none');
+
+              clearInterval(this.startCountDown);
+          }
+          return false;
+      }
       },
       mounted(){
+          var self = this;
           var userId = window.localStorage.getItem('userId');
           this.userId = userId;
           console.log(userId);
           if(userId == null){
               location.href="/";
           }
+          self.startCountDown = setInterval(self.countDown, 1000);
       }
     }
 </script>
@@ -115,8 +138,12 @@
     }
 
     .done {
-        background-color: #333333;
-        opacity: 0.4;
+        // background-color: #333333;
+        // opacity: 0.4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
     }
 
     #questionWrapper {
@@ -213,5 +240,14 @@
         .answer:active {
             color: #cccccc;
         }
+    }
+
+    .button {
+        width: 80%;
+        border: solid 1px #fff;
+        border-radius: 0.5em;
+        background-color: yellow;
+        color: #333333;
+        font-size: 90px;
     }
 </style>
