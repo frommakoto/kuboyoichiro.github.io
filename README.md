@@ -20,6 +20,10 @@ npm run build --report
 # deploy for heroku
 npm run deploy
 
+# instance of ec2
+52.192.55.36:5000
+
 ```
+
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

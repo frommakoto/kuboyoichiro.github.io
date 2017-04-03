@@ -134,6 +134,7 @@
 
 <script>
     import * as $ from 'jquery';
+    import url from '../assets/url.js';
     export default {
         name: 'Manage',
         data() {
@@ -151,7 +152,8 @@
                 daysLeft: daysLeft,
                 deadLineLeft: deadLineLeft,
                 msg: 'メッセージバインディング',
-                questions: []
+                questions: [],
+                url: 'http://' + window.url
             }
         },
         methods: {
@@ -160,19 +162,12 @@
                 return false;
             },
             publishQuestion: function(event){
-                console.log(event);
-                console.log(event.target.innerText);
                 var questionId = event.target.innerText;
                 var self = this;
-                var postData = {
-                    "id": questionId
-                }
-                postData = JSON.stringify(postData);
-                $.ajax('http://35.187.220.214:3000/problems/doQuestions',{
+                $.ajax(self.url + '/problems/doQuestions?id=' + questionId,{
                     method:'POST',
                     type:'POST',
-                    cache:false,
-                    data: postData
+                    cache:false
                 })
                 .done(function(json){
                     console.log(json);
@@ -184,24 +179,13 @@
         mounted (){
             var self = this;
             self.questions = [];
-            $.get('http://35.187.220.214:3000/problems')
+            $.get(self.url + '/problems')
             .done(function(json){
-                console.log(json);
-                // console.log(self.questions);
                 var data = json;
                 $.each(data, function(i){
-                    // self.questions[i] = {};
-                    // self.questions[i].problemText = data[i].problem_text;
                     var questionData = {};
                     questionData.problemText = data[i].problem_text;
                     self.questions.push(questionData);
-                    // console.log(self.questions);
-                    // $('.cell-data').on('click', function(){
-                    //     console.log('hoge');
-                    // });
-                });
-                self.$nextTick(function(){
-                    console.log('hoge');
                 });
             });
         }

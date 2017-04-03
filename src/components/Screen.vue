@@ -47,13 +47,15 @@
 
 <script>
     import * as $ from 'jquery';
+    import url from '../assets/url.js';
     export default {
         data () {
             return {
                 timer: 3,
                 text: '選択肢',
                 startCountDown: '',
-                answer: 1
+                answer: 1,
+                url: 'http://' + window.url
             }
         },
         methods: {
@@ -89,7 +91,7 @@
                 if(key === 83){
                     // location.href="#screen";
                     // 回答状況を取得するAPIを叩く…？
-                    $.ajax('http://35.187.220.214:3000/steps/ranking',{
+                    $.ajax(self.url + '/steps/ranking',{
                         method:'POST',
                         type:'POST',
                         cache:false

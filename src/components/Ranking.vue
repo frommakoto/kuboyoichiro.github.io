@@ -17,6 +17,7 @@
 
 <script>
     import * as $ from 'jquery';
+    import url from '../assets/url.js';
     export default {
         data () {
             return {
@@ -66,23 +67,20 @@
                         name: "name",
                         gain: 100
                     }
-                ]
+                ],
+                url: 'http://' + window.url
             }
         },
         mounted () {
             var self = this;
-            $.ajax('http://35.187.220.214:3000/users/ranking',{
+            $.ajax(self.url + '/users/ranking',{
                 method:'POST',
                 type:'POST',
                 cache:false
             })
             .done(function(json){
-                console.log(json);
-                console.log(self.rankings);
                 var data = json;
                 $.each(data, function(i){
-                    console.log(data[i]);
-                    console.log(self.rankings[i]);
                     self.rankings[i].name = data[i].name;
                     self.rankings[i].gain = data[i].user_point;
                 });
