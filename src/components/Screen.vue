@@ -89,7 +89,16 @@
                 if(key === 83){
                     // location.href="#screen";
                     // 回答状況を取得するAPIを叩く…？
-                    $('.selected').css('display', 'block');
+                    $.ajax('http://25.187.220.214:3000/steps/ranking',{
+                        method:'POST',
+                        type:'POST',
+                        cache:false
+                    })
+                    .done(function(json){
+                        console.log(json);
+                        $('.selected').css('display', 'block');
+                    })
+                    .fail(function(err){});
                 }
                 // Rキー
                 else if(key === 82){

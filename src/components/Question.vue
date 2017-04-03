@@ -8,19 +8,19 @@
       </div>
 
       <ul id="answerWrapper">
-          <li class="answer" v-on:click="greet">
+          <li class="answer" v-on:click="greet" value="1">
               <span class="number one">1</span>
               <span class="answerDescription">選択肢1</span>
           </li>
-          <li class="answer" v-on:click="greet">
+          <li class="answer" v-on:click="greet" value="2">
               <span class="number two">2</span>
               <span class="answerDescription">選択肢2</span>
           </li>
-          <li class="answer" v-on:click="greet">
+          <li class="answer" v-on:click="greet" value="3">
               <span class="number three">3</span>
               <span class="answerDescription">選択肢3</span>
           </li>
-          <li class="answer" v-on:click="greet">
+          <li class="answer" v-on:click="greet" value="4">
               <span class="number four">4</span>
               <span class="answerDescription">選択肢4</span>
           </li>
@@ -43,11 +43,41 @@
       },
       methods: {
         greet: function(e){
+            console.log(e);
             if(this.questionState === 0){
                 this.questionState = 1;
+                let value = e.target.value;
+                let date = new Date();
+                date = this.formatTime(date);
+                //  時間をアレする
+                console.log(date);
+                $.ajax('http://25.187.220.214:3000/steps/answer',{
+                    method:'POST',
+                    type:'POST',
+                    cache:false
+                })
+                .done(function(json){
+                    console.log(json);
+                })
+                .fail(function(err){});
                 $('.question').addClass('done');
             }
             return false;
+        },
+        formatTime: function(date, format){
+          if (!format) format = 'YYYY-MM-DD hh:mm:ss.SSS';
+          format = format.replace(/YYYY/g, date.getFullYear());
+          format = format.replace(/MM/g, ('0' + (date.getMonth() + 1)).slice(-2));
+          format = format.replace(/DD/g, ('0' + date.getDate()).slice(-2));
+          format = format.replace(/hh/g, ('0' + date.getHours()).slice(-2));
+          format = format.replace(/mm/g, ('0' + date.getMinutes()).slice(-2));
+          format = format.replace(/ss/g, ('0' + date.getSeconds()).slice(-2));
+          if (format.match(/S/g)) {
+            var milliSeconds = ('00' + date.getMilliseconds()).slice(-3);
+            var length = format.match(/S/g).length;
+            for (var i = 0; i < length; i++) format = format.replace(/S/, milliSeconds.substring(i, i + 1));
+          }
+          return format;
         }
       },
       mounted(){

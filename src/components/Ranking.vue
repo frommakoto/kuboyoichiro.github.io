@@ -70,13 +70,22 @@
             }
         },
         mounted () {
-            $.ajax('http://35.187.217.35:3000/users/ranking',{
+            var self = this;
+            $.ajax('http://35.187.220.214:3000/users/ranking',{
                 method:'POST',
                 type:'POST',
                 cache:false
             })
             .done(function(json){
                 console.log(json);
+                console.log(self.rankings);
+                var data = json;
+                $.each(data, function(i){
+                    console.log(data[i]);
+                    console.log(self.rankings[i]);
+                    self.rankings[i].name = data[i].name;
+                    self.rankings[i].gain = data[i].user_point;
+                });
             })
             .fail(function(err){});
 
@@ -189,6 +198,7 @@
                     left: 30px;
                 }
                 .time {
+                    display: none;
                     position: absolute;
                     right: 30px;
                 }
