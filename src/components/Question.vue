@@ -38,11 +38,13 @@
       data () {
         return {
           questionState: 0,
-          msg: 'Welcome to Your Vue.js App'
+          msg: 'Welcome to Your Vue.js App',
+          userId: ''
         }
       },
       methods: {
         greet: function(e){
+            var self = this;
             console.log(e);
             if(this.questionState === 0){
                 this.questionState = 1;
@@ -51,10 +53,17 @@
                 date = this.formatTime(date);
                 //  時間をアレする
                 console.log(date);
-                $.ajax('http://25.187.220.214:3000/steps/answer',{
+                var postData = {
+                    "pust_time": date,
+                    "select_answer_id": value,
+                    "user_id": self.userId
+                }
+                postData = JSON.stringify(postData);
+                $.ajax('http://35.187.220.214:3000/steps/answer',{
                     method:'POST',
                     type:'POST',
-                    cache:false
+                    cache:false,
+                    data: postData
                 })
                 .done(function(json){
                     console.log(json);
@@ -82,6 +91,7 @@
       },
       mounted(){
           var userId = window.localStorage.getItem('userId');
+          this.userId = userId;
           console.log(userId);
           if(userId == null){
               location.href="/";
