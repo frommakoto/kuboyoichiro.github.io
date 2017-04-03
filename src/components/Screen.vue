@@ -89,7 +89,7 @@
                 if(key === 83){
                     // location.href="#screen";
                     // 回答状況を取得するAPIを叩く…？
-                    $.ajax('http://25.187.220.214:3000/steps/ranking',{
+                    $.ajax('http://35.187.220.214:3000/steps/ranking',{
                         method:'POST',
                         type:'POST',
                         cache:false
