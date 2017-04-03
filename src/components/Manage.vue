@@ -54,9 +54,9 @@
                             <li class="item label"><span>選択肢4</span></li>
                             <li class="item label"><span>正解</span></li>
                         </ul>
-                        <ul class="cell cell-data"  v-for="(q, index) in questions">
+                        <ul class="cell cell-data"  v-for="(q,index) in questions" v-on:click="publishQuestion">
                             <li class="item">
-                                <span>{{index}}</span>
+                                {{index}}
                             </li>
                             <li class="item">
                                 <span>{{q.problemText}}</span>
@@ -158,6 +158,27 @@
             changeClass: function(event){
                 console.log(event);
                 return false;
+            },
+            publishQuestion: function(event){
+                console.log(event);
+                console.log(event.target.innerText);
+                var questionId = event.target.innerText;
+                var self = this;
+                var postData = {
+                    "id": questionId
+                }
+                postData = JSON.stringify(postData);
+                $.ajax('http://35.187.220.214:3000/problems/doQuestions',{
+                    method:'POST',
+                    type:'POST',
+                    cache:false,
+                    data: postData
+                })
+                .done(function(json){
+                    console.log(json);
+                })
+                .fail(function(err){});
+                return false;
             }
         },
         mounted (){
@@ -166,12 +187,21 @@
             $.get('http://35.187.220.214:3000/problems')
             .done(function(json){
                 console.log(json);
-                console.log(self.questions);
+                // console.log(self.questions);
                 var data = json;
                 $.each(data, function(i){
-                    self.questions[i] = {};
-                    self.questions[i].problemText = data[i].problem_text;
-                    console.log(self.questions);
+                    // self.questions[i] = {};
+                    // self.questions[i].problemText = data[i].problem_text;
+                    var questionData = {};
+                    questionData.problemText = data[i].problem_text;
+                    self.questions.push(questionData);
+                    // console.log(self.questions);
+                    // $('.cell-data').on('click', function(){
+                    //     console.log('hoge');
+                    // });
+                });
+                self.$nextTick(function(){
+                    console.log('hoge');
                 });
             });
         }
