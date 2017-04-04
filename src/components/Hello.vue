@@ -34,7 +34,7 @@
                   return false;
               }
               else {
-                  location.href="#question"
+                  location.href="#ready"
                   return false;
               }
           });

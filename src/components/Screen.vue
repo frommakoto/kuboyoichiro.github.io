@@ -4,28 +4,28 @@
           <li class="questionImage question1">
               <div class="questionImageText">
                   <span class="index one">1</span>
-                  <span class="choice">東京夜景</span>
+                  <span class="choice">{{answer1}}</span>
                   <span class="selected">18</span>
               </div>
           </li>
           <li class="questionImage question2">
               <div class="questionImageText">
                   <span class="index two">2</span>
-                  <span class="choice">東京夜景</span>
+                  <span class="choice">{{answer2}}</span>
                   <span class="selected">18</span>
               </div>
           </li>
           <li class="questionImage question3">
               <div class="questionImageText">
                   <span class="index three">3</span>
-                  <span class="choice">東京夜景</span>
+                  <span class="choice">{{answer3}}</span>
                   <span class="selected">18</span>
               </div>
           </li>
           <li class="questionImage question4">
               <div class="questionImageText">
                   <span class="index four">4</span>
-                  <span class="choice">東京夜景</span>
+                  <span class="choice">{{answer4}}</span>
                   <span class="selected">18</span>
               </div>
           </li>
@@ -33,7 +33,7 @@
       <div class="questionText">
           <div class="questionLogo">Q</div>
           <div class="questionInnerText">
-              <span>問題文問題文問題文問題文</span>
+              <span>{{problemText}}</span>
           </div>
           <div class="time">
               <span>{{timer}}</span>
@@ -51,11 +51,16 @@
     export default {
         data () {
             return {
-                timer: 3,
+                timer: 10,
                 text: '選択肢',
                 startCountDown: '',
                 answer: 1,
-                url: 'http://' + window.url
+                url: 'http://' + window.url,
+                problemText: '',
+                answer1: '',
+                answer2: '',
+                answer3: '',
+                answer4: ''
             }
         },
         methods: {
@@ -73,6 +78,42 @@
         mounted () {
             // console.log($(window).height());
             $('.imageWrapper').css('display', 'none');
+            var self = this;
+
+            // $.ajax(self.url + '/steps/getProblem?user_id=' + 3, {
+            $.ajax(self.url + '/rounds/getRoundProblem', {
+                method: 'POST',
+                type: 'POST',
+                cache: false
+            })
+            .done(function(json){
+                console.log(json);
+                var data = json;
+                self.problemText = data.problem.problem_text;
+                $.each(data.answers, function(i){
+                  // 選択肢のパッケージング
+                  var answer = data.answers[i].answer_text
+                  if(i === 0){
+                    self.answer1 = answer;
+                  }
+                  else if(i === 1){
+                    self.answer2 = answer;
+                  }
+                  else if(i === 2){
+                    self.answer3 = answer;
+                  }
+                  else if(i === 4){
+                    self.answer4 = answer;
+                  }
+
+                  if(data.answers[i].answer_flg === true){
+                    self.answer = i + 1;
+                    console.log('答えは ' + self.answer + 'です');
+                  }
+
+                })
+
+            });
 
             var self = this;
             if(this.state === 0){
@@ -126,10 +167,26 @@
                 // Aキー
                 // 答えオープン
                 else if(key === 65){
+                  console.log(self.answer);
                     if(self.answer === 1){
                         $('.question2').addClass('done');
                         $('.question3').addClass('done');
                         $('.question4').addClass('done');
+                    }
+                    else if(self.answer === 2){
+                        $('.question1').addClass('done');
+                        $('.question3').addClass('done');
+                        $('.question4').addClass('done');
+                    }
+                    else if(self.answer === 3){
+                        $('.question1').addClass('done');
+                        $('.question2').addClass('done');
+                        $('.question4').addClass('done');
+                    }
+                    else if(self.answer === 4){
+                        $('.question2').addClass('done');
+                        $('.question3').addClass('done');
+                        $('.question1').addClass('done');
                     }
                 }
 

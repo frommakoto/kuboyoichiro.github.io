@@ -3,26 +3,26 @@
       <div id="questionWrapper">
           <span class="questionLabel">Q</span>
           <div class="questionDescription">
-              問題文問題文問題文問題文問題文問題文問題文問題文問題文
+              {{question}}
           </div>
       </div>
 
       <ul id="answerWrapper">
           <li class="answer" v-on:click="greet" value="1">
               <span class="number one">1</span>
-              <span class="answerDescription">選択肢1</span>
+              <span class="answerDescription">{{answer1}}</span>
           </li>
           <li class="answer" v-on:click="greet" value="2">
               <span class="number two">2</span>
-              <span class="answerDescription">選択肢2</span>
+              <span class="answerDescription">{{answer2}}</span>
           </li>
           <li class="answer" v-on:click="greet" value="3">
               <span class="number three">3</span>
-              <span class="answerDescription">選択肢3</span>
+              <span class="answerDescription">{{answer3}}</span>
           </li>
           <li class="answer" v-on:click="greet" value="4">
               <span class="number four">4</span>
-              <span class="answerDescription">選択肢4</span>
+              <span class="answerDescription">{{answer4}}</span>
           </li>
       </ul>
 
@@ -36,6 +36,7 @@
 
 <script>
     import * as $ from 'jquery';
+    import url from '../assets/url.js';
 
     export default {
       name: 'question',
@@ -43,11 +44,17 @@
 
       data () {
         return {
-          timer: 3,
+          timer: 10,
           startCountDown: '',
           questionState: 0,
           msg: 'Welcome to Your Vue.js App',
-          userId: ''
+          userId: '',
+          url: 'http://' + window.url,
+          question: '',
+          answer1: '',
+          answer2: '',
+          answer3: '',
+          answer4: ''
         }
       },
       methods: {
@@ -60,7 +67,7 @@
                 let date = new Date();
                 date = this.formatTime(date);
                 //  時間をアレする
-                console.log(date);
+                // console.log(date);
                 var postData = {
                     "pust_time": date,
                     "select_answer_id": value,
@@ -74,10 +81,12 @@
                     data: postData
                 })
                 .done(function(json){
-                    console.log(json);
+                    // console.log(json);
+                    $('#questionWrapper').css('display', 'none');
+                    $('#answerWrapper').css('display', 'none');
+                    $('.question').addClass('done');
                 })
                 .fail(function(err){});
-                $('.question').addClass('done');
             }
             return false;
         },
@@ -98,7 +107,6 @@
       },
       countDown: function(){
           this.timer -= 1;
-          console.log(this.timer);
           if(this.timer === 0){
               // alert('over');
               $('.question').addClass('done');
@@ -106,6 +114,8 @@
               $('#answerWrapper').css('display', 'none');
 
               clearInterval(this.startCountDown);
+              alert('時間切れです！');
+              location.href="#ready";
           }
           return false;
       }
@@ -118,7 +128,32 @@
           if(userId == null){
               location.href="/";
           }
-          self.startCountDown = setInterval(self.countDown, 1000);
+          $.ajax(self.url + '/steps/getProblem?user_id=' + 3, {
+              method: 'POST',
+              type: 'POST',
+              cache: false
+          })
+          .done(function(json){
+              console.log(json);
+              var data = json;
+              self.question = data.problem.problem_text;
+              $.each(data.answers, function(i){
+                var answer = data.answers[i].answer_text
+                if(i === 0){
+                  self.answer1 = answer;
+                }
+                else if(i === 1){
+                  self.answer2 = answer;
+                }
+                else if(i === 2){
+                  self.answer3 = answer;
+                }
+                else if(i === 4){
+                  self.answer4 = answer;
+                }
+              })
+              self.startCountDown = setInterval(self.countDown, 1000);
+          });
       }
     }
 </script>
@@ -249,5 +284,6 @@
         background-color: yellow;
         color: #333333;
         font-size: 90px;
+        display: none;
     }
 </style>
