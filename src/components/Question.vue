@@ -114,7 +114,7 @@
               $('#answerWrapper').css('display', 'none');
 
               clearInterval(this.startCountDown);
-              alert('時間切れです！');
+              alert('回答時間終了です！');
               location.href="#ready";
           }
           return false;
@@ -128,7 +128,7 @@
           if(userId == null){
               location.href="/";
           }
-          $.ajax(self.url + '/steps/getProblem?user_id=' + 3, {
+          $.ajax(self.url + '/steps/getProblem?user_id=' + self.userId, {
               method: 'POST',
               type: 'POST',
               cache: false

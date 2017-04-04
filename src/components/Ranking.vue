@@ -73,19 +73,22 @@
         },
         mounted () {
             var self = this;
-            $.ajax(self.url + '/users/ranking',{
-                method:'POST',
-                type:'POST',
-                cache:false
-            })
-            .done(function(json){
-                var data = json;
-                $.each(data, function(i){
-                    self.rankings[i].name = data[i].name;
-                    self.rankings[i].gain = data[i].user_point;
-                });
-            })
-            .fail(function(err){});
+            // $.ajax(self.url + '/users/ranking',{
+            //     method:'POST',
+            //     type:'POST',
+            //     cache:false
+            // })
+            // .done(function(json){
+            //     var data = json;
+            //     $.each(data, function(i){
+            //         self.rankings[i].name = data[i].name;
+            //         self.rankings[i].gain = data[i].user_point;
+            //         if(i === 8){
+            //           return false;
+            //         }
+            //     });
+            // })
+            // .fail(function(err){});
 
 
             $(document).on('keyup', function(e){
@@ -101,6 +104,76 @@
                 else if(key === 76){
                     location.href="/";
                     return false;
+                }
+                // Zキー
+                // 90
+                // 金額ランキング
+                else if(key === 90){
+                  $('.rankingWrapper').show();
+                  $.ajax(self.url + '/users/ranking',{
+                      method:'POST',
+                      type:'POST',
+                      cache:false
+                  })
+                  .done(function(json){
+                      var data = json;
+                      $.each(data, function(i){
+                          self.rankings[i].name = data[i].name;
+                          self.rankings[i].gain = data[i].user_point;
+                          if(i === 8){
+                            return false;
+                          }
+                      });
+                  })
+                  .fail(function(err){});
+                }
+
+                // Xキー
+                // 88
+                // 速さ早い順
+                else if(key === 88){
+                  $('.rankingWrapper').show();
+                  $.ajax(self.url + '/steps/ranking',{
+                      method:'POST',
+                      type:'POST',
+                      cache:false
+                  })
+                  .done(function(json){
+                      var data = json;
+                      // var length = data.length;
+                      $.each(data, function(i){
+                          self.rankings[i].name = data[i].name;
+                          self.rankings[i].gain = data[i].user_point;
+                          if(i === 8){
+                            return false;
+                          }
+                      });
+                  })
+                  .fail(function(err){});
+                }
+
+                // Cキー
+                // 67
+                // 速さ遅い順
+                else if(key === 67){
+                  $('.rankingWrapper').show();
+                  $.ajax(self.url + '/steps/ranking',{
+                      method:'POST',
+                      type:'POST',
+                      cache:false
+                  })
+                  .done(function(json){
+                      var data = json;
+                      // var length = data.length;
+                      $.each(data, function(i){
+                          self.rankings[i].name = data[i].name;
+                          self.rankings[i].gain = data[i].user_point;
+                          if(i === 8){
+                            return false;
+                          }
+                      });
+                  })
+                  .fail(function(err){});
                 }
                 else {
                     return false;
@@ -133,6 +206,7 @@
         margin-bottom: 20px;
         // padding-bottom: 20px;
         height: 100%;
+        display: none;
 
         .ranking {
             font-size: 2.0rem;

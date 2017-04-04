@@ -2,7 +2,7 @@
   <div class="login">
       <img class="logo" src="../assets/logo_kemono.png" />
       <div class="login-wrapper">
-          <input type="text" id="userid" name="userid" placeholder="ユーザーIDを入力" value="">
+          <input type="text" id="userid" name="userid" placeholder="名前（フルネーム）を入力" value="">
           <button class="loginButton">はじめる！</button>
       </div>
   </div>
@@ -10,20 +10,37 @@
 
 <script>
     import * as $ from 'jquery';
+    import url from '../assets/url.js';
+
     export default {
         name: 'login',
         data () {
             return {
-                msg: 'ようこそジャパリパークへ！'
+                msg: 'ようこそジャパリパークへ！',
+                url: 'http://' + window.url
             }
         },
         methods: {
             login: function(e){
-                // console.log(e);
-                var userId = $('#userid').val();
-                alert('あなたのユーザーIDは' + userId + 'です．楽しいゲームを！');
+              var self = this;
+              // console.log(e);
+              // var userName = encodeURIComponent($('#userid').val());
+              // var userName = String(userName);
+              var userName = $('#userid').val();
+              console.log(userName);
+              $.ajax(self.url + '/users?name=' + userName + '&user_point=0', {
+                  method: 'POST',
+                  type: 'POST',
+                  cache: false
+              })
+              .done(function(json){
+                console.log(json);
+                var userId = json.id;
+                alert('あなたの名前は' + userName + 'です．楽しいゲームを！');
+                window.localStorage.setItem('userName', userName);
                 window.localStorage.setItem('userId', userId);
                 location.href="#ready"
+              });
             }
         },
         mounted(){
