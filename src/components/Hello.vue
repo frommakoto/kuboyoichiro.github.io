@@ -52,6 +52,7 @@
               // ローカルストレージ削除
               else if(key == 68){
                  window.localStorage.removeItem('userId');
+                 window.localStorage.removeItem('userName');
                  return false;
               }
               return false;

@@ -8,21 +8,21 @@
       </div>
 
       <ul id="answerWrapper">
-          <li class="answer" v-on:click="greet" value="1">
-              <span class="number one">1</span>
-              <span class="answerDescription">{{answer1}}</span>
+          <li class="answer" v-on:click="greet('1')" value="1">
+              <span class="number one" value="1">1</span>
+              <span class="answerDescription" value="1">{{answer1}}</span>
           </li>
-          <li class="answer" v-on:click="greet" value="2">
-              <span class="number two">2</span>
-              <span class="answerDescription">{{answer2}}</span>
+          <li class="answer" v-on:click="greet('2')" value="2">
+              <span class="number two"  value="2">2</span>
+              <span class="answerDescription"  value="2">{{answer2}}</span>
           </li>
-          <li class="answer" v-on:click="greet" value="3">
-              <span class="number three">3</span>
-              <span class="answerDescription">{{answer3}}</span>
+          <li class="answer" v-on:click="greet('3')" value="3">
+              <span class="number three" value="3">3</span>
+              <span class="answerDescription" value="3">{{answer3}}</span>
           </li>
-          <li class="answer" v-on:click="greet" value="4">
-              <span class="number four">4</span>
-              <span class="answerDescription">{{answer4}}</span>
+          <li class="answer" v-on:click="greet('4')" value="4">
+              <span class="number four" value="4">4</span>
+              <span class="answerDescription" value="4">{{answer4}}</span>
           </li>
       </ul>
 
@@ -58,27 +58,18 @@
         }
       },
       methods: {
-        greet: function(e){
+        greet: function(value){
             var self = this;
-            console.log(e);
             if(this.questionState === 0){
                 this.questionState = 1;
-                let value = e.target.value;
-                let date = new Date();
+                console.log(value)
+                var date = new Date();
                 date = this.formatTime(date);
-                //  時間をアレする
-                // console.log(date);
-                var postData = {
-                    "pust_time": date,
-                    "select_answer_id": value,
-                    "user_id": self.userId
-                }
-                postData = JSON.stringify(postData);
-                $.ajax('http://35.187.220.214:3000/steps/answer',{
-                    method:'POST',
-                    type:'POST',
-                    cache:false,
-                    data: postData
+                console.log(date);
+                $.ajax(self.url + '/steps/answer?user_id=' + self.userId + '&selected_answer_id=' + value + '&push_time=' + date, {
+                    method: 'POST',
+                    type: 'POST',
+                    cache: false
                 })
                 .done(function(json){
                     // console.log(json);

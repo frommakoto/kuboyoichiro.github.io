@@ -23,21 +23,21 @@
 
             <div class="card single">
                 <div class="cardTitle">
-                    <span>残り日数（本番）</span>
+                    <span>セッション切り替え</span>
                 </div>
-                <div class="cardContent">
-                    <span style="font-size: 36px;"><span style="font-size: 16px; margin-right: 40px;">総会まであと</span>{{ daysLeft }}日</span>
+                <div class="cardContent" id="changeSessionButton" v-on:click="changeSession">
+                    <span>セッションを切り替える</span>
                 </div>
             </div>
 
-            <div class="card double">
+            <!-- <div class="card double">
                 <div class="cardTitle">
                     <span>残り日数（事前準備）</span>
                 </div>
                 <div class="cardContent">
                     <span style="font-size: 36px;"><span style="font-size: 16px; margin-right: 40px;">事前準備締め切りまであと</span>{{ deadLineLeft }}日</span>
                 </div>
-            </div>
+            </div> -->
 
             <div class="card triple">
                 <div class="cardTitle">
@@ -153,7 +153,8 @@
                 deadLineLeft: deadLineLeft,
                 msg: 'メッセージバインディング',
                 questions: [],
-                url: 'http://' + window.url
+                url: 'http://' + window.url,
+                sessionId: 1
             }
         },
         methods: {
@@ -174,6 +175,18 @@
                 })
                 .fail(function(err){});
                 return false;
+            },
+            changeSession: function(){
+              var self = this;
+              $.ajax(self.url + '/rounds/changeSession?id=' + self.sessionId, {
+                method:'POST',
+                type:'POST',
+                cache:false
+              })
+              .done(function(json){
+                console.log(json);
+                self.sessionId += 1;
+              });
             }
         },
         mounted (){

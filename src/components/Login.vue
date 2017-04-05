@@ -36,10 +36,17 @@
               .done(function(json){
                 console.log(json);
                 var userId = json.id;
-                alert('あなたの名前は' + userName + 'です．楽しいゲームを！');
-                window.localStorage.setItem('userName', userName);
-                window.localStorage.setItem('userId', userId);
-                location.href="#ready"
+                $.ajax(self.url + '/steps?user_id=' + userId + '&round_id=1&response_time=0&mistake_flg=false', {
+                    method: 'POST',
+                    type: 'POST',
+                    cache: false
+                })
+                .done(function(json){
+                  alert('あなたの名前は' + userName + 'です．楽しいゲームを！');
+                  window.localStorage.setItem('userName', userName);
+                  window.localStorage.setItem('userId', userId);
+                  location.href="#ready"
+                });
               });
             }
         },

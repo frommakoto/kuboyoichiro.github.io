@@ -6,9 +6,12 @@
                   <span class="number">{{r.ranking}}</span>
                   <span class="name">{{r.name}}</span>
               </span>
-              <span class="count">
+              <span class="count" v-if="gainFlg===true">
                   <span class="gain">獲得額：{{r.gain}}円</span>
                   <span class="time">1:55:55</span>
+              </span>
+              <span class="count" v-if="gainFlg===false">
+                  <span class="time">回答時間：{{r.time}}秒</span>
               </span>
           </li>
       </ul>
@@ -21,51 +24,61 @@
     export default {
         data () {
             return {
+                gainFlg: false,
                 rankings : [
                     {
                         ranking: 1,
                         name: "name",
-                        gain: 100
+                        gain: 100,
+                        time: '1:55:55'
                     },
                     {
                         ranking: 2,
                         name: "name",
-                        gain: 100
+                        gain: 100,
+                        time: '1:55:55'
                     },
                     {
                         ranking: 3,
                         name: "name",
-                        gain: 100
+                        gain: 100,
+                        time: '1:55:55'
                     },
                     {
                         ranking: 4,
                         name: "name",
-                        gain: 100
+                        gain: 100,
+                        time: '1:55:55'
                     },
                     {
                         ranking: 5,
                         name: "name",
-                        gain: 100
+                        gain: 100,
+                        time: '1:55:55'
                     },
                     {
                         ranking: 6,
                         name: "name",
-                        gain: 100
+                        gain: 100,
+                        time: '1:55:55'
                     },
                     {
                         ranking: 7,
                         name: "name",
-                        gain: 100
+                        gain: 100,
+                        time: '1:55:55'
                     },
                     {
                         ranking: 8,
                         name: "name",
-                        gain: 100
+                        gain: 100,
+                        time: '1:55:55'
                     },
                     {
                         ranking: 9,
                         name: "name",
-                        gain: 100
+                        gain: 100,
+                        time: '1:55:55'
                     }
                 ],
                 url: 'http://' + window.url
@@ -109,6 +122,7 @@
                 // 90
                 // 金額ランキング
                 else if(key === 90){
+                  self.gainFlg = true;
                   $('.rankingWrapper').show();
                   $.ajax(self.url + '/users/ranking',{
                       method:'POST',
@@ -141,9 +155,11 @@
                   .done(function(json){
                       var data = json;
                       // var length = data.length;
+                      $('.time').show();
                       $.each(data, function(i){
-                          self.rankings[i].name = data[i].name;
-                          self.rankings[i].gain = data[i].user_point;
+                          // self.rankings[i].name = data[i].name;
+                          self.rankings[i].name = data[i].user_id;
+                          self.rankings[i].time = data[i].response_time;
                           if(i === 8){
                             return false;
                           }
@@ -164,14 +180,18 @@
                   })
                   .done(function(json){
                       var data = json;
-                      // var length = data.length;
+                      var length = data.length;
                       $.each(data, function(i){
                           self.rankings[i].name = data[i].name;
-                          self.rankings[i].gain = data[i].user_point;
+                          // self.rankings[i].gain = data[i].user_point;
+                          self.rankings[i].time = data[i].response_time;
                           if(i === 8){
                             return false;
                           }
                       });
+                      // for(var l = data.length - 1, j = 0; l > j, l--;){
+                      //   self.rankings[l]
+                      // }
                   })
                   .fail(function(err){});
                 }
