@@ -25,85 +25,12 @@
         data () {
             return {
                 gainFlg: false,
-                rankings : [
-                    {
-                        ranking: 1,
-                        name: "name",
-                        gain: 100,
-                        time: '1:55:55'
-                    },
-                    {
-                        ranking: 2,
-                        name: "name",
-                        gain: 100,
-                        time: '1:55:55'
-                    },
-                    {
-                        ranking: 3,
-                        name: "name",
-                        gain: 100,
-                        time: '1:55:55'
-                    },
-                    {
-                        ranking: 4,
-                        name: "name",
-                        gain: 100,
-                        time: '1:55:55'
-                    },
-                    {
-                        ranking: 5,
-                        name: "name",
-                        gain: 100,
-                        time: '1:55:55'
-                    },
-                    {
-                        ranking: 6,
-                        name: "name",
-                        gain: 100,
-                        time: '1:55:55'
-                    },
-                    {
-                        ranking: 7,
-                        name: "name",
-                        gain: 100,
-                        time: '1:55:55'
-                    },
-                    {
-                        ranking: 8,
-                        name: "name",
-                        gain: 100,
-                        time: '1:55:55'
-                    },
-                    {
-                        ranking: 9,
-                        name: "name",
-                        gain: 100,
-                        time: '1:55:55'
-                    }
-                ],
+                rankings: [],
                 url: 'http://' + window.url
             }
         },
         mounted () {
             var self = this;
-            // $.ajax(self.url + '/users/ranking',{
-            //     method:'POST',
-            //     type:'POST',
-            //     cache:false
-            // })
-            // .done(function(json){
-            //     var data = json;
-            //     $.each(data, function(i){
-            //         self.rankings[i].name = data[i].name;
-            //         self.rankings[i].gain = data[i].user_point;
-            //         if(i === 8){
-            //           return false;
-            //         }
-            //     });
-            // })
-            // .fail(function(err){});
-
-
             $(document).on('keyup', function(e){
                 console.log(e.keyCode);
                 var key = e.keyCode;
@@ -131,10 +58,16 @@
                   })
                   .done(function(json){
                       var data = json;
+                      console.log(data);
                       $.each(data, function(i){
-                          self.rankings[i].name = data[i].name;
-                          self.rankings[i].gain = data[i].user_point;
-                          if(i === 8){
+                          var pushData = {
+                            ranking: i + 1,
+                            name: data[i].name,
+                            gain: data[i].user_point
+                          };
+                          self.rankings.push(pushData);
+                          console.log(self.rankings);
+                          if(i === 9){
                             return false;
                           }
                       });
@@ -154,13 +87,16 @@
                   })
                   .done(function(json){
                       var data = json;
-                      // var length = data.length;
+                      console.log(data);
                       $('.time').show();
                       $.each(data, function(i){
-                          // self.rankings[i].name = data[i].name;
-                          self.rankings[i].name = data[i].user_id;
-                          self.rankings[i].time = data[i].response_time;
-                          if(i === 8){
+                          var pushData = {
+                            ranking: i + 1,
+                            name: data[i].user_id,
+                            time: data[i].response_time
+                          };
+                          self.rankings.push(pushData);
+                          if(i === 9){
                             return false;
                           }
                       });
@@ -181,17 +117,19 @@
                   .done(function(json){
                       var data = json;
                       var length = data.length;
+                      $('.time').show();
+                      data = data.reverse();
                       $.each(data, function(i){
-                          self.rankings[i].name = data[i].name;
-                          // self.rankings[i].gain = data[i].user_point;
-                          self.rankings[i].time = data[i].response_time;
+                          var pushData = {
+                            ranking: length - i,
+                            name: data[i].user_id,
+                            time: data[i].response_time
+                          };
+                          self.rankings.push(pushData);
                           if(i === 8){
                             return false;
                           }
                       });
-                      // for(var l = data.length - 1, j = 0; l > j, l--;){
-                      //   self.rankings[l]
-                      // }
                   })
                   .fail(function(err){});
                 }
@@ -224,18 +162,13 @@
         margin-left: 50px;
         margin-right: 50px;
         margin-bottom: 20px;
-        // padding-bottom: 20px;
         height: 100%;
         display: none;
 
         .ranking {
             font-size: 2.0rem;
-            // background: #fff;
             color: #000;
-            // border: solid 1px #000000;
-            // border-radius: 0.5rem;
             margin-bottom: 15px;
-            // height: 75px;
             height: 8%;
             display: flex;
             justify-content: center;
@@ -290,9 +223,8 @@
                     left: 30px;
                 }
                 .time {
-                    display: none;
                     position: absolute;
-                    right: 30px;
+                    left: 30px;
                 }
             }
         }

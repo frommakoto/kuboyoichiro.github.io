@@ -62,7 +62,7 @@
             var self = this;
             if(this.questionState === 0){
                 this.questionState = 1;
-                console.log(value)
+                //  dateまわりの処理があやしい？
                 var date = new Date();
                 date = this.formatTime(date);
                 console.log(date);

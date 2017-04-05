@@ -23,18 +23,15 @@
         methods: {
             login: function(e){
               var self = this;
-              // console.log(e);
-              // var userName = encodeURIComponent($('#userid').val());
-              // var userName = String(userName);
               var userName = $('#userid').val();
-              console.log(userName);
+              // console.log(userName);
               $.ajax(self.url + '/users?name=' + userName + '&user_point=0', {
                   method: 'POST',
                   type: 'POST',
                   cache: false
               })
               .done(function(json){
-                console.log(json);
+                // console.log(json);
                 var userId = json.id;
                 $.ajax(self.url + '/steps?user_id=' + userId + '&round_id=1&response_time=0&mistake_flg=false', {
                     method: 'POST',

@@ -67,60 +67,6 @@
                             <li class="item"><span>選択肢4</span></li>
                             <li class="item"><span>正解</span></li>
                         </ul>
-                        <!-- <ul class="cell label">
-                            <li class="item label"><span>出題順</span></li>
-                            <li class="item label"><span>問題文</span></li>
-                            <li class="item label"><span>選択肢1</span></li>
-                            <li class="item label"><span>選択肢2</span></li>
-                            <li class="item label"><span>選択肢3</span></li>
-                            <li class="item label"><span>選択肢4</span></li>
-                            <li class="item label"><span>正解</span></li>
-                        </ul>
-                        <ul class="cell cell-data">
-                            <li class="item"><span>1</span></li>
-                            <li class="item"><span>次のうち金を１つしかとっていないのは誰でしょう</span></li>
-                            <li class="item"><span>谷亮子</span></li>
-                            <li class="item"><span>北島康介</span></li>
-                            <li class="item"><span>吉田沙保里</span></li>
-                            <li class="item"><span>田中裕二</span></li>
-                            <li class="item"><span>田中裕二</span></li>
-                        </ul>
-                        <ul class="cell cell-data even">
-                            <li class="item"><span>2</span></li>
-                            <li class="item"><span>次のうち金を１つしかとっていないのは誰でしょう</span></li>
-                            <li class="item"><span>谷亮子</span></li>
-                            <li class="item"><span>北島康介</span></li>
-                            <li class="item"><span>吉田沙保里</span></li>
-                            <li class="item"><span>田中裕二</span></li>
-                            <li class="item"><span>田中裕二</span></li>
-                        </ul>
-                        <ul class="cell cell-data">
-                            <li class="item"><span>3</span></li>
-                            <li class="item"><span>次のうち金を１つしかとっていないのは誰でしょう</span></li>
-                            <li class="item"><span>谷亮子</span></li>
-                            <li class="item"><span>北島康介</span></li>
-                            <li class="item"><span>吉田沙保里</span></li>
-                            <li class="item"><span>田中裕二</span></li>
-                            <li class="item"><span>田中裕二</span></li>
-                        </ul>
-                        <ul class="cell cell-data even">
-                            <li class="item"><span>4</span></li>
-                            <li class="item"><span>次のうち金を１つしかとっていないのは誰でしょう</span></li>
-                            <li class="item"><span>谷亮子</span></li>
-                            <li class="item"><span>北島康介</span></li>
-                            <li class="item"><span>吉田沙保里</span></li>
-                            <li class="item"><span>田中裕二</span></li>
-                            <li class="item"><span>田中裕二</span></li>
-                        </ul>
-                        <ul class="cell cell-data">
-                            <li class="item"><span>5</span></li>
-                            <li class="item"><span>次のうち金を１つしかとっていないのは誰でしょう</span></li>
-                            <li class="item"><span>谷亮子</span></li>
-                            <li class="item"><span>北島康介</span></li>
-                            <li class="item"><span>吉田沙保里</span></li>
-                            <li class="item"><span>田中裕二</span></li>
-                            <li class="item"><span>田中裕二</span></li>
-                        </ul> -->
                     </div>
                 </div>
             </div>
