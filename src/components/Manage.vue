@@ -109,29 +109,33 @@
             publishQuestion: function(event){
                 var questionId = event.target.innerText;
                 var self = this;
-                $.ajax(self.url + '/problems/doQuestions?id=' + questionId,{
-                    method:'POST',
-                    type:'POST',
-                    cache:false
-                })
-                .done(function(json){
-                    console.log(json);
-                })
-                .fail(function(err){});
+                if(window.confirm('この問題を出題しますか？')){
+                  $.ajax(self.url + '/problems/doQuestions?id=' + questionId,{
+                      method:'POST',
+                      type:'POST',
+                      cache:false
+                  })
+                  .done(function(json){
+                      console.log(json);
+                  })
+                  .fail(function(err){});
+                }
                 return false;
             },
             // セッション変更ボタン
             changeSession: function(){
-              var self = this;
-              $.ajax(self.url + '/rounds/changeSession?id=' + self.roundId, {
-                method:'POST',
-                type:'POST',
-                cache:false
-              })
-              .done(function(json){
-                console.log(json);
-                self.roundId += 1;
-              });
+                var self = this;
+                if(window.confirm('セッションを変更しますか？')){
+                  $.ajax(self.url + '/rounds/changeSession?id=' + self.roundId, {
+                    method:'POST',
+                    type:'POST',
+                    cache:false
+                  })
+                  .done(function(json){
+                    console.log(json);
+                    self.roundId += 1;
+                  });
+                }
             }
         },
         mounted (){
