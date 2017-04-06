@@ -48,6 +48,7 @@
 <script>
     import * as $ from 'jquery';
     import url from '../assets/url.js';
+    import statusUrl from '../assets/url.js';
     export default {
         data () {
             return {
@@ -56,6 +57,7 @@
                 startCountDown: '',
                 answer: 1,
                 url: 'http://' + window.url,
+                statusUrl: window.statusUrl,
                 problemText: '',
                 answer1: '',
                 answer2: '',
@@ -72,9 +74,17 @@
             countDown: function(){
                 this.timer -= 1;
                 if(this.timer === 0){
-                    $('.screen').addClass('done');
-                    $('.timeupText').css('display', 'block');
                     clearInterval(this.startCountDown);
+                    $.ajax('http://' + self.statusUrl + '/isAnswerChange',{
+                        method:'POST',
+                        type:'POST',
+                        cache:false
+                    })
+                    .done(function(json){
+                        console.log(json);
+                        $('.screen').addClass('done');
+                        $('.timeupText').css('display', 'block');
+                    });
                 }
                 return false;
             }
@@ -162,7 +172,15 @@
                 // Tキー
                 // カウントダウンスタート
                 else if(key === 84){
-                    self.startCountDown = setInterval(self.countDown, 1000);
+                    $.ajax('http://' + self.statusUrl + '/isAnswerChange',{
+                        method:'POST',
+                        type:'POST',
+                        cache:false
+                    })
+                    .done(function(json){
+                        console.log(json);
+                        self.startCountDown = setInterval(self.countDown, 1000);
+                    });
                 }
                 // Yキー
                 // DONEクラスremove

@@ -50,7 +50,8 @@
           answer1: '',
           answer2: '',
           answer3: '',
-          answer4: ''
+          answer4: '',
+          questionAnswer: 0
         }
       },
       methods: {
@@ -58,6 +59,11 @@
             var self = this;
             if(this.questionState === 0){
                 this.questionState = 1;
+                // 成否内部判定
+                if(value != self.questionAnswer){
+                    window.localStorage.setItem('answerFlg', true);
+                }
+
                 $.ajax(self.url + '/steps/answer?user_id=' + self.userId + '&select_answer_id=' + value + '&push_time=' + self.responseTime, {
                     method: 'POST',
                     type: 'POST',
@@ -112,6 +118,10 @@
               var data = json;
               self.question = data.problem.problem_text;
               $.each(data.answers, function(i){
+                  if(data.answers[i].answer_flg == true){
+                      self.questionAnswer = i + 1;
+                  }
+
                 var answer = data.answers[i].answer_text
                 if(i === 0){
                   self.answer1 = answer;
@@ -125,7 +135,7 @@
                 else if(i === 4){
                   self.answer4 = answer;
                 }
-              })
+            });
               self.startCountDown = setInterval(self.countDown, 1000);
               self.startCountUp = setInterval(self.countUp, 0.1);
           });

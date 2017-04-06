@@ -36,34 +36,86 @@
           var self = this;
           var answerFlg = window.localStorage.getItem('answerFlg');
           var userId = window.localStorage.getItem('userId');
-          console.log(userId);
-          console.log(answerFlg);
+        //   console.log(userId);
+        //   console.log(answerFlg);
+        //   console.log(self.statusUrl);
+
 
         $.get('http://' + self.url + '/users/' + userId)
         .done(function(json){
             var data = json;
             self.userPoint = data.user_point;
+            return false;
         });
 
-          if(answerFlg === false){
-            //   $.get('http://' + statusUrl + '/isAnswer')
-            //   .done(function(json){
-            //       if(json === true)
-            //   })
-              self.message = "回答開始！"
-          }
-          else {
-              self.message = "回答できるまでお待ち下さい";
-          }
+          $.get('http://' + self.statusUrl + '/isCheck')
+          .done(function(json){
+            //   console.log(json);
+              var isAnswer = json.isAnswer;
+              var isSpecial = json.isSpecial;
+              if(answerFlg == 'false'){
+                  //   特例問題か？
+                    if(isSpecial == true && isAnswer == true){
+                        window.localStorage.setItem('answerFlg', false);
+                        answerFlg = 'false';
+                        self.message = "回答開始！"
+                    }
+                    else if(isAnswer == true){
+                        self.message = "回答開始！"
+                    }
+                    else {
+                        self.message = "回答開始！"
+                    }
+              }
+              else {
+                  if(isSpecial == true && isAnswer == true){
+                      window.localStorage.setItem('answerFlg', false);
+                      answerFlg = 'false';
+                      self.message = "回答開始！"
+                  }
+                  else {
+                    self.message = "回答できるまでお待ち下さい";
+                  }
+                //   alert('回答できるまでしばらくお待ち下さい');
+              }
+          });
 
         //   ボタンクリックイベント
           $('.goAnswerButton').on('click', function(){
-              if(answerFlg === false){
-                  location.href="#question";
-              }
-              else {
-                 alert('回答可能になるまでお待ち下さい！');
-              }
+              $.get('http://' + self.statusUrl + '/isCheck')
+              .done(function(json){
+                //   console.log(json);
+                  var isAnswer = json.isAnswer;
+                  var isSpecial = json.isSpecial;
+                  if(answerFlg == 'false'){
+                      //   特例問題か？
+                        if(isSpecial == true && isAnswer == true){
+                            window.localStorage.setItem('answerFlg', false);
+                            answerFlg = 'false';
+                            // self.message = "回答開始！"
+                            location.href="#question";
+                        }
+                        else if(isAnswer == true){
+                            // self.message = "回答開始！"
+                            location.href="#question";
+                        }
+                        else {
+                            self.message = "回答開始！"
+                            alert('回答できるまでしばらくお待ち下さい');
+                        }
+                  }
+                  else {
+                      if(isSpecial == true && isAnswer == true){
+                          window.localStorage.setItem('answerFlg', false);
+                          answerFlg = 'false';
+                          self.message = "回答開始！"
+                      }
+                      else {
+                          self.message = "回答できるまでお待ち下さい";
+                          alert('回答できるまでしばらくお待ち下さい');
+                      }
+                  }
+              });
           });
       }
     }
