@@ -89,11 +89,11 @@
                       var data = json;
                       console.log(data);
                       $('.time').show();
-                      $.each(data, function(i){
+                      $.each(data.steps, function(i){
                           var pushData = {
                             ranking: i + 1,
-                            name: data[i].user_id,
-                            time: data[i].response_time
+                            name: data.users[i].name,
+                            time: data.steps[i].response_time
                           };
                           self.rankings.push(pushData);
                           if(i === 9){
@@ -122,8 +122,8 @@
                       $.each(data, function(i){
                           var pushData = {
                             ranking: length - i,
-                            name: data[i].user_id,
-                            time: data[i].response_time
+                            name: data.users[i].name,
+                            time: data.steps[i].response_time
                           };
                           self.rankings.push(pushData);
                           if(i === 8){

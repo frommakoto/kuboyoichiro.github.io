@@ -47,6 +47,11 @@
         },
         mounted(){
             var self = this;
+            // ユーザーIDが既に発行されている場合はreadyページに飛ばす
+            var userId = window.localStorage.getItem('userId');
+            if (userId){
+                location.href="#ready"
+            }
             $('#userid').focus();
             $('.loginButton').on('click', function(e){
                 self.login(e);

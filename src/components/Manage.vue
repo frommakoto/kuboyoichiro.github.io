@@ -45,7 +45,17 @@
               </div>
               <div class="cardContent">
                 <input type="text" id="roundid" name="roundid" placeholder="変更したいラウンドIDを入力" value="">
-                <button class="changeRoundButton">変更する</button>
+                <button class="changeRoundButton" id="changeRound">変更する</button>
+              </div>
+            </div>
+
+            <div class="card single">
+              <div class="cardTitle">
+                 <span>制限時間フラグ</span>
+              </div>
+              <div class="cardContent">
+                <span style="font-size: 24px;">{{isAnswerMessage}}</span>
+                <button class="changeRoundButton" id="isAnswer">変更する</button>
               </div>
             </div>
 
@@ -101,7 +111,11 @@
                 msg: 'メッセージバインディング',
                 questions: [],
                 url: 'http://' + window.url,
-                roundId: 1
+                roundId: 1,
+                statusUrl: 'http://' + window.statusUrl,
+                isAnswerFlg: '',
+                isSpecialFlg: '',
+                isAnswerMessage: ''
             }
         },
         methods: {
@@ -117,6 +131,7 @@
                   })
                   .done(function(json){
                       console.log(json);
+                      alert('出題準備成功！');
                   })
                   .fail(function(err){});
                 }
@@ -134,13 +149,35 @@
                   .done(function(json){
                     console.log(json);
                     self.roundId += 1;
+                    alert('セッション変更成功！');
                   });
                 }
+            },
+            getIsAnswer: function(){
+                $.get(self.statusUrl + '/isAnswer')
+                .done(function(json){
+                    self.answerFlg = json;
+                });
             }
         },
         mounted (){
             var self = this;
             self.questions = [];
+
+            $.get(self.statusUrl + '/isAnswer')
+            .done(function(json){
+                if(json === true){
+                    self.answerFlg = true;
+                    self.isAnswerMessage = '時間内';
+                }
+                else {
+                    self.answerFlg = false;
+                    self.isAnswerMessage = '時間外';
+                }
+                return false;
+            });
+
+            // $.get
 
             // 問題一覧取得
             $.get(self.url + '/problems')
@@ -154,7 +191,7 @@
             });
 
             // ラウンド変更ボタン
-            $('.changeRoundButton').on('click', function(){
+            $('#changeRound').on('click', function(){
                 var number = $('#roundid').val();
                 if(window.confirm('ラウンドを変更しますか？')){
                   if(!isNaN(number)){
@@ -165,7 +202,27 @@
                   }
                 }
                 return false;
-            })
+            });
+
+            // 制限時間フラグ更新ボタン
+            $('#isAnswer').on('click', function(){
+                 $.ajax(self.statusUrl + '/isAnswerChange', {
+                     method:'POST',
+                     type:'POST',
+                     cache:false
+                 })
+                 .done(function(json){
+                     if(json === true){
+                         self.answerFlg = true;
+                         self.isAnswerMessage = '時間内';
+                     }
+                     else {
+                         self.answerFlg = false;
+                         self.isAnswerMessage = '時間外';
+                     }
+                     return false;
+                 });
+            });
         }
     }
 </script>

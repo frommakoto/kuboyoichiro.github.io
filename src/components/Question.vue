@@ -46,6 +46,8 @@
         return {
           timer: 10,
           startCountDown: '',
+          startCountUp: '',
+          responseTime: 0,
           questionState: 0,
           msg: 'Welcome to Your Vue.js App',
           userId: '',
@@ -66,7 +68,8 @@
                 var date = new Date();
                 date = this.formatTime(date);
                 console.log(date);
-                $.ajax(self.url + '/steps/answer?user_id=' + self.userId + '&selected_answer_id=' + value + '&push_time=' + date, {
+                // $.ajax(self.url + '/steps/answer?user_id=' + self.userId + '&select_answer_id=' + value + '&push_time=' + date, {
+                $.ajax(self.url + '/steps/answer?user_id=' + self.userId + '&select_answer_id=' + value + '&push_time=' + self.responseTime, {
                     method: 'POST',
                     type: 'POST',
                     cache: false
@@ -76,6 +79,7 @@
                     $('#questionWrapper').css('display', 'none');
                     $('#answerWrapper').css('display', 'none');
                     $('.question').addClass('done');
+                    clearInterval(this.startCountUp);
                 })
                 .fail(function(err){});
             }
@@ -96,22 +100,31 @@
           }
           return format;
       },
-      countDown: function(){
-          this.timer -= 1;
-          if(this.timer === 0){
-              $('.question').addClass('done');
-              $('#questionWrapper').css('display', 'none');
-              $('#answerWrapper').css('display', 'none');
-              clearInterval(this.startCountDown);
-              alert('回答時間終了です！');
-              location.href="#ready";
+          countDown: function(){
+              this.timer -= 1;
+              if(this.timer === 0){
+                  $('.question').addClass('done');
+                  $('#questionWrapper').css('display', 'none');
+                  $('#answerWrapper').css('display', 'none');
+                  clearInterval(this.startCountDown);
+                  alert('回答時間終了です！');
+                  location.href="#ready";
+              }
+              return false;
+          },
+          countUp: function(){
+            var self = this;
+            self.responseTime += 0.0001;
+            console.log(self.responseTime);
+            if(self.responseTime >= 0.25){
+                clearInterval(this.startCountUp);
+            }
           }
-          return false;
-      }
       },
       mounted(){
           var self = this;
           var userId = window.localStorage.getItem('userId');
+          self.responseTime = 0;
           this.userId = userId;
           if(userId == null){
               location.href="/";
@@ -140,6 +153,11 @@
                 }
               })
               self.startCountDown = setInterval(self.countDown, 1000);
+              self.startCountUp = setInterval(self.countUp, 0.1);
+            //   var countUp = setInterval(function(){
+            //       responseTime += 0.1;
+            //       console.log(responseTime);
+            //   },100);
           });
       }
     }

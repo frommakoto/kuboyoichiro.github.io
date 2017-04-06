@@ -10,6 +10,13 @@ var port = process.env.PORT || 3000;
 var isAnswerTimeFlg = false; // 回答開始フラグ
 var isSpecialFlg = false; // 特別問題フラグ
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+
 // 回答開始かどうかフラグを返す
 app.get('/isAnswer', function(req, res){
     res.json(isAnswerTimeFlg);
@@ -17,7 +24,12 @@ app.get('/isAnswer', function(req, res){
 
 // 回答開始フラグを変える
 app.post('/isAnswerChange', function(req, res){
-    isAnswerTimeFlg = true;
+    if(isAnswerTimeFlg === false){
+        isAnswerTimeFlg = true;
+    }
+    else {
+        isAnswerTimeFlg = false;
+    }
     res.json(isAnswerTimeFlg);
 });
 
@@ -30,7 +42,13 @@ app.get('/isSpecial', function(req, res){
 
 // 特別問題フラグを変える
 app.post('/isSpecialChange', function(req, res){
-    isSpecialFlg = true;
+    if(isSpecialFlg === false){
+        isSpecialFlg = true;
+    }
+    else{
+        isSpecialFlg = false;
+    }
+
     res.json(isSpecialFlg);
 });
 
