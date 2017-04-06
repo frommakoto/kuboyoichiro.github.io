@@ -24,14 +24,12 @@
             login: function(e){
               var self = this;
               var userName = $('#userid').val();
-              // console.log(userName);
               $.ajax(self.url + '/users?name=' + userName + '&user_point=0', {
                   method: 'POST',
                   type: 'POST',
                   cache: false
               })
               .done(function(json){
-                // console.log(json);
                 var userId = json.id;
                 $.ajax(self.url + '/steps?user_id=' + userId + '&round_id=1&response_time=0&mistake_flg=false', {
                     method: 'POST',
@@ -60,7 +58,6 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
     .login {
-        // background: linear-gradient(#03bffe, #090f94) fixed;
         background: url('../assets/screen_bg.png') no-repeat;
         background-size: cover;
         overflow: hidden;
@@ -75,36 +72,34 @@
         margin-top: 200px;
     }
 
-    // form{
-        .login-wrapper {
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
+    .login-wrapper {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
 
-            input {
-                width: 60%;
-                height: 100px;
-                font-size: 40px;
-            }
-
-            input::-webkit-input-placeholder {
-             color: #000;
-             font-size: 40px;
-            }
-            input:-moz-placeholder {
-             color: #000;
-             font-size: 40px;
-            }
-
-            .loginButton {
-                background: #fff;
-                font-size: 40px;
-                padding: 20px;
-                margin-left: 40px;
-            }
-
+        input {
+            width: 60%;
+            height: 100px;
+            font-size: 40px;
         }
-    // }
+
+        input::-webkit-input-placeholder {
+         color: #000;
+         font-size: 40px;
+        }
+        input:-moz-placeholder {
+         color: #000;
+         font-size: 40px;
+        }
+
+        .loginButton {
+            background: #fff;
+            font-size: 40px;
+            padding: 20px;
+            margin-left: 40px;
+        }
+
+    }
 </style>

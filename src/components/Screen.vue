@@ -1,28 +1,28 @@
 <template>
   <div class="screen">
       <ul class="imageWrapper">
-          <li class="questionImage question1">
+          <li class="questionImage question1" style="background-image:url({image1}.length > 0 ? {image1} : {imageDefault})">
               <div class="questionImageText">
                   <span class="index one">1</span>
                   <span class="choice">{{answer1}}</span>
                   <span class="selected">18</span>
               </div>
           </li>
-          <li class="questionImage question2">
+          <li class="questionImage question2" style="background-image:url({image2}.length > 0 ? {image2} : {imageDefault})">
               <div class="questionImageText">
                   <span class="index two">2</span>
                   <span class="choice">{{answer2}}</span>
                   <span class="selected">18</span>
               </div>
           </li>
-          <li class="questionImage question3">
+          <li class="questionImage question3" style="background-image:url({image3}.length > 0 ? {image3} : {imageDefault})">
               <div class="questionImageText">
                   <span class="index three">3</span>
                   <span class="choice">{{answer3}}</span>
                   <span class="selected">18</span>
               </div>
           </li>
-          <li class="questionImage question4">
+          <li class="questionImage question4" style="background-image:url({image4}.length > 0 ? {image4} : {imageDefault})">
               <div class="questionImageText">
                   <span class="index four">4</span>
                   <span class="choice">{{answer4}}</span>
@@ -60,14 +60,18 @@
                 answer1: '',
                 answer2: '',
                 answer3: '',
-                answer4: ''
+                answer4: '',
+                image1: '',
+                image2: '',
+                image3: '',
+                image4: '',
+                imageDefault: '../assets/question_sample.jpg'
             }
         },
         methods: {
             countDown: function(){
                 this.timer -= 1;
                 if(this.timer === 0){
-                    // alert('over');
                     $('.screen').addClass('done');
                     $('.timeupText').css('display', 'block');
                     clearInterval(this.startCountDown);
@@ -76,11 +80,9 @@
             }
         },
         mounted () {
-            // console.log($(window).height());
             $('.imageWrapper').css('display', 'none');
             var self = this;
 
-            // $.ajax(self.url + '/steps/getProblem?user_id=' + 3, {
             $.ajax(self.url + '/rounds/getRoundProblem', {
                 method: 'POST',
                 type: 'POST',
@@ -92,18 +94,23 @@
                 self.problemText = data.problem.problem_text;
                 $.each(data.answers, function(i){
                   // 選択肢のパッケージング
-                  var answer = data.answers[i].answer_text
+                  var answer = data.answers[i].answer_text;
+                  var image = data.answers[i].imgpath;
                   if(i === 0){
                     self.answer1 = answer;
+                    self.image1 = image;
                   }
                   else if(i === 1){
                     self.answer2 = answer;
+                    self.image2 = image;
                   }
                   else if(i === 2){
                     self.answer3 = answer;
+                    self.image3 = image;
                   }
                   else if(i === 4){
                     self.answer4 = answer;
+                    self.image4 = image;
                   }
 
                   if(data.answers[i].answer_flg === true){

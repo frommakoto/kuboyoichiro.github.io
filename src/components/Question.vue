@@ -99,11 +99,9 @@
       countDown: function(){
           this.timer -= 1;
           if(this.timer === 0){
-              // alert('over');
               $('.question').addClass('done');
               $('#questionWrapper').css('display', 'none');
               $('#answerWrapper').css('display', 'none');
-
               clearInterval(this.startCountDown);
               alert('回答時間終了です！');
               location.href="#ready";
@@ -115,7 +113,6 @@
           var self = this;
           var userId = window.localStorage.getItem('userId');
           this.userId = userId;
-          console.log(userId);
           if(userId == null){
               location.href="/";
           }
@@ -125,7 +122,6 @@
               cache: false
           })
           .done(function(json){
-              console.log(json);
               var data = json;
               self.question = data.problem.problem_text;
               $.each(data.answers, function(i){
@@ -164,8 +160,6 @@
     }
 
     .done {
-        // background-color: #333333;
-        // opacity: 0.4;
         display: flex;
         justify-content: center;
         align-items: center;

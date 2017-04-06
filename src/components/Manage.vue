@@ -7,14 +7,14 @@
                 <span class="date">{{ month }}/{{ day }}</span>
             </div>
         </header>
-        <nav>
+        <!-- <nav>
             <ul>
                 <li class="active" v-on:click="changeClass"><router-link to="#">トップページ</router-link></li>
                 <li v-on:click="changeClass"><router-link to="#">問題・解答編集</router-link></li>
                 <li v-on:click="changeClass"><router-link to="#">問題・解答新規作成</router-link></li>
                 <li v-on:click="changeClass"><router-link to="#">{{ msg }}</router-link></li>
             </ul>
-        </nav>
+        </nav> -->
         <section>
             <div class="titleWrapper">
                 <p class="title">Dashboard</p>
@@ -26,18 +26,28 @@
                     <span>セッション切り替え</span>
                 </div>
                 <div class="cardContent" id="changeSessionButton" v-on:click="changeSession">
-                    <span>セッションを切り替える</span>
+                    <span class="cardButton">セッションを切り替える</span>
                 </div>
             </div>
 
-            <!-- <div class="card double">
-                <div class="cardTitle">
-                    <span>残り日数（事前準備）</span>
-                </div>
-                <div class="cardContent">
-                    <span style="font-size: 36px;"><span style="font-size: 16px; margin-right: 40px;">事前準備締め切りまであと</span>{{ deadLineLeft }}日</span>
-                </div>
-            </div> -->
+            <div class="card single">
+              <div class="cardTitle">
+                <span>現在のラウンド</span>
+              </div>
+              <div class="cardContent">
+                <span style="font-size: 24px;">{{roundId}}</span>
+              </div>
+            </div>
+
+            <div class="card single">
+              <div class="cardTitle">
+                 <span>ラウンド切り替え</span>
+              </div>
+              <div class="cardContent">
+                <input type="text" id="roundid" name="roundid" placeholder="変更したいラウンドIDを入力" value="">
+                <button class="changeRoundButton">変更する</button>
+              </div>
+            </div>
 
             <div class="card triple">
                 <div class="cardTitle">
@@ -46,13 +56,8 @@
                 <div class="cardContent" style="padding: 0;">
                     <div class="tableWrapper">
                         <ul class="cell label">
-                            <li class="item label"><span>出題順</span></li>
+                            <li class="item label"><span>インデックス</span></li>
                             <li class="item label"><span>問題文</span></li>
-                            <li class="item label"><span>選択肢1</span></li>
-                            <li class="item label"><span>選択肢2</span></li>
-                            <li class="item label"><span>選択肢3</span></li>
-                            <li class="item label"><span>選択肢4</span></li>
-                            <li class="item label"><span>正解</span></li>
                         </ul>
                         <ul class="cell cell-data"  v-for="(q,index) in questions" v-on:click="publishQuestion">
                             <li class="item">
@@ -61,11 +66,6 @@
                             <li class="item">
                                 <span>{{q.problemText}}</span>
                             </li>
-                            <li class="item"><span>選択肢1</span></li>
-                            <li class="item"><span>選択肢2</span></li>
-                            <li class="item"><span>選択肢3</span></li>
-                            <li class="item"><span>選択肢4</span></li>
-                            <li class="item"><span>正解</span></li>
                         </ul>
                     </div>
                 </div>
@@ -81,6 +81,7 @@
 <script>
     import * as $ from 'jquery';
     import url from '../assets/url.js';
+
     export default {
         name: 'Manage',
         data() {
@@ -100,14 +101,11 @@
                 msg: 'メッセージバインディング',
                 questions: [],
                 url: 'http://' + window.url,
-                sessionId: 1
+                roundId: 1
             }
         },
         methods: {
-            changeClass: function(event){
-                console.log(event);
-                return false;
-            },
+            // 次に出題する問題を決定するボタン
             publishQuestion: function(event){
                 var questionId = event.target.innerText;
                 var self = this;
@@ -122,22 +120,25 @@
                 .fail(function(err){});
                 return false;
             },
+            // セッション変更ボタン
             changeSession: function(){
               var self = this;
-              $.ajax(self.url + '/rounds/changeSession?id=' + self.sessionId, {
+              $.ajax(self.url + '/rounds/changeSession?id=' + self.roundId, {
                 method:'POST',
                 type:'POST',
                 cache:false
               })
               .done(function(json){
                 console.log(json);
-                self.sessionId += 1;
+                self.roundId += 1;
               });
             }
         },
         mounted (){
             var self = this;
             self.questions = [];
+
+            // 問題一覧取得
             $.get(self.url + '/problems')
             .done(function(json){
                 var data = json;
@@ -147,6 +148,20 @@
                     self.questions.push(questionData);
                 });
             });
+
+            // ラウンド変更ボタン
+            $('.changeRoundButton').on('click', function(){
+                var number = $('#roundid').val();
+                if(window.confirm('ラウンドを変更しますか？')){
+                  if(!isNaN(number)){
+                    self.roundId = number;
+                  }
+                  else {
+                    alert('数値を入力してください');
+                  }
+                }
+                return false;
+            })
         }
     }
 </script>
@@ -229,11 +244,12 @@
 
     section {
         // clear: both;
-        background-color: #f9f9f9;
+        // background-color: #f9f9f9;
+        background-color: #dddddd;
         height: 100%;
         position: relative;
         top: 70px;
-        left: 280px;
+        // left: 280px;
         // column-count: 4;
         column-count: 1;
         column-gap: 1em;
@@ -271,6 +287,10 @@
             .cardContent {
                 padding: 20px;
 
+                display: flex;
+                // justify-content: center;
+                align-items: center;
+
                 .tableWrapper {
                     display: table;
                     position: relative;
@@ -307,6 +327,27 @@
                         background-color: #cccccc;
                     }
                 }
+
+                .cardButton {
+                  font-size: 18px;
+                }
+                .cardButton:hover {
+                  color: #cccccc;
+                }
+                #roundid {
+                  width: 60%;
+                  height: 30px;
+                  font-size: 18px;
+                  padding-left: 12px;
+                }
+
+                .changeRoundButton {
+                  background: #fff;
+                  font-size: 14px;
+                  padding: 10px;
+                  margin-left: 40px;
+                  float: right;
+                }
             }
         }
 
@@ -330,12 +371,15 @@
         color: #aaaaaa;
         width: 100%;
         height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-        span {
-            position: relative;
-            top: 15px;
-            left: 55%;
-        }
+        // span {
+        //     position: relative;
+        //     top: 15px;
+        //     left: 55%;
+        // }
     }
 
 </style>

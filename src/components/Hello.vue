@@ -1,15 +1,6 @@
 <template>
   <div class="hello">
-      <!-- <router-link to="/login">
-          <img class="logo" src="../assets/logo_kemono.png" />
-      </router-link> -->
       <img class="logo" src="../assets/logo_kemono.png" />
-    <!-- <router-link to="/question">
-        <img class="logo" src="../assets/logo_kemono.png" />
-    </router-link> -->
-    <!-- <a href="http://kemono-friends.jp/">
-        <img src="../assets/serval.jpg" />
-    </a> -->
   </div>
 </template>
 
@@ -53,6 +44,7 @@
               else if(key == 68){
                  window.localStorage.removeItem('userId');
                  window.localStorage.removeItem('userName');
+                 location.reload();
                  return false;
               }
               return false;
