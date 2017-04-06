@@ -35,13 +35,13 @@
               console.log(key);
               // Sキー
               // 問題一覧ページ（スクリーン）
-            //   if(key === 83){
-            //       location.href="#screen";
-            //       return false;
-            //   }
+              if(key === 83){
+                  location.href="#screen";
+                  return false;
+              }
               //   Dキー
               // ローカルストレージ削除
-              if(key == 68){
+              else if(key == 68){
                  window.localStorage.removeItem('userId');
                  window.localStorage.removeItem('userName');
                  location.reload();

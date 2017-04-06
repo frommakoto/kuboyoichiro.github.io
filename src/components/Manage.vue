@@ -59,6 +59,25 @@
               </div>
             </div>
 
+            <div class="card single">
+              <div class="cardTitle">
+                 <span>特例フラグ</span>
+              </div>
+              <div class="cardContent">
+                <span style="font-size: 24px;">{{isSpecialMessage}}</span>
+                <button class="changeRoundButton" id="isSpecial">変更する</button>
+              </div>
+            </div>
+
+            <div class="card single">
+              <div class="cardTitle">
+                 <span>全ユーザー回答権リセットボタン</span>
+              </div>
+              <div class="cardContent">
+                <button class="changeRoundButton" id="userReset">リセットする</button>
+              </div>
+            </div>
+
             <div class="card triple">
                 <div class="cardTitle">
                     <span>問題・解答選択肢一覧</span>
@@ -115,7 +134,8 @@
                 statusUrl: 'http://' + window.statusUrl,
                 isAnswerFlg: '',
                 isSpecialFlg: '',
-                isAnswerMessage: ''
+                isAnswerMessage: '',
+                isSpecialMessage: ''
             }
         },
         methods: {
@@ -152,12 +172,6 @@
                     alert('セッション変更成功！');
                   });
                 }
-            },
-            getIsAnswer: function(){
-                $.get(self.statusUrl + '/isAnswer')
-                .done(function(json){
-                    self.answerFlg = json;
-                });
             }
         },
         mounted (){
@@ -167,17 +181,28 @@
             $.get(self.statusUrl + '/isAnswer')
             .done(function(json){
                 if(json === true){
-                    self.answerFlg = true;
+                    self.isAnswerFlg = true;
                     self.isAnswerMessage = '時間内';
                 }
                 else {
-                    self.answerFlg = false;
+                    self.isAnswerFlg = false;
                     self.isAnswerMessage = '時間外';
                 }
                 return false;
             });
 
-            // $.get
+            $.get(self.statusUrl + '/isSpecial')
+            .done(function(json){
+                if(json === true){
+                    self.isSpecialFlg = true;
+                    self.isSpecialMessage = '回答可能';
+                }
+                else {
+                    self.isSpecialFlg = false;
+                    self.isSpecialMessage = '回答不可';
+                }
+                return false;
+            });
 
             // 問題一覧取得
             $.get(self.url + '/problems')
@@ -195,7 +220,16 @@
                 var number = $('#roundid').val();
                 if(window.confirm('ラウンドを変更しますか？')){
                   if(!isNaN(number)){
-                    self.roundId = number;
+                      $.ajax(self.url + '/steps/refleshRound?round_id=' + number,{
+                          method:'POST',
+                          type:'POST',
+                          cache:false
+                      })
+                      .done(function(json){
+                          console.log(json);
+                          self.roundId = number;
+                          alert('変更しました');
+                      });
                   }
                   else {
                     alert('数値を入力してください');
@@ -223,6 +257,60 @@
                      return false;
                  });
             });
+
+            // 特例フラグ更新ボタン
+            // 制限時間フラグ更新ボタン
+            $('#isSpecial').on('click', function(){
+                 $.ajax(self.statusUrl + '/isSpecialChange', {
+                     method:'POST',
+                     type:'POST',
+                     cache:false
+                 })
+                 .done(function(json){
+                     if(json === true){
+                         self.isSpecialFlg = true;
+                         self.isSpecialMessage = '回答可能';
+                     }
+                     else {
+                         self.isSpecialFlg = false;
+                         self.isSpecialMessage = '回答不可';
+                     }
+                     return false;
+                 });
+            });
+
+            // 全ユーザー復活ボタン
+            $('#userReset').on('click', function(){
+                if(window.confirm('全ユーザーの回答権をリセットしますか？')){
+                    $.ajax(self.url + '/steps/revivalUser',{
+                        method:'POST',
+                        type:'POST',
+                        cache:false
+                    })
+                    .done(function(){
+                        alert('全員復活です！');
+
+                        // ローカルストレージのフラグもクリアしてやる
+                        $.ajax(self.statusUrl + '/isSpecialChange', {
+                            method:'POST',
+                            type:'POST',
+                            cache:false
+                        })
+                        .done(function(json){
+                            alert('ローカルのフラグも併せてリセットします');
+                            if(json === true){
+                                self.isSpecialFlg = true;
+                                self.isSpecialMessage = '回答可能';
+                            }
+                            else {
+                                self.isSpecialFlg = false;
+                                self.isSpecialMessage = '回答不可';
+                            }
+                            return false;
+                        });
+                    });
+                }
+            })
         }
     }
 </script>

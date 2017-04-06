@@ -154,10 +154,6 @@
               })
               self.startCountDown = setInterval(self.countDown, 1000);
               self.startCountUp = setInterval(self.countUp, 0.1);
-            //   var countUp = setInterval(function(){
-            //       responseTime += 0.1;
-            //       console.log(responseTime);
-            //   },100);
           });
       }
     }
@@ -170,7 +166,9 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         font-size: 100px;
-        background: linear-gradient(#03bffe, #090f94) fixed;
+        // background: linear-gradient(#03bffe, #090f94) fixed;
+        background: url('../assets/screen_bg.png') no-repeat;
+        background-size: cover;
         min-height: 100vh;
         padding-top: 30px;
         padding-bottom: 4%;
