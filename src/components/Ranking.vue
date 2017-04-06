@@ -8,10 +8,9 @@
               </span>
               <span class="count" v-if="gainFlg===true">
                   <span class="gain">獲得額：{{r.gain}}円</span>
-                  <span class="time">1:55:55</span>
               </span>
               <span class="count" v-if="gainFlg===false">
-                  <span class="time">回答時間：{{r.time}}秒</span>
+                  <span class="time" id="time">回答時間：{{r.time}}秒</span>
               </span>
           </li>
       </ul>
@@ -61,7 +60,7 @@
                       console.log(data);
                       $.each(data, function(i){
                           var pushData = {
-                            ranking: i + 1,
+                            ranking: i,
                             name: data[i].name,
                             gain: data[i].user_point
                           };

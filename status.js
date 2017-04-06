@@ -52,6 +52,13 @@ app.post('/isSpecialChange', function(req, res){
     res.json(isSpecialFlg);
 });
 
+app.get('/isCheck', function(req, res){
+    var result = {
+        'isAnswer': isAnswerTimeFlg,
+        'isSpecial': isSpecialFlg
+    }
+    res.json(result);
+});
 
 //standing
 // app.listen(3000, function(){

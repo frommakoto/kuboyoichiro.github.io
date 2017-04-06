@@ -40,6 +40,7 @@
                   alert('あなたの名前は' + userName + 'です．楽しいゲームを！');
                   window.localStorage.setItem('userName', userName);
                   window.localStorage.setItem('userId', userId);
+                  window.localStorage.setItem('answerFlg', false);
                   location.href="#ready"
                 });
               });
@@ -68,16 +69,18 @@
         overflow: hidden;
         overflow: hidden;
         height: 100%;
+        position: relative;
+        text-align: center;
     }
 
     .logo {
-        width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 200px;
+        width: 90%;
+        margin-top: 35%;
     }
 
     .login-wrapper {
+        // position: absolute;
+        // top: 40%;
         text-align: center;
         display: flex;
         justify-content: center;
@@ -86,24 +89,24 @@
 
         input {
             width: 60%;
-            height: 100px;
-            font-size: 40px;
+            height: 40px;
+            font-size: 14px;
         }
 
         input::-webkit-input-placeholder {
          color: #000;
-         font-size: 40px;
+         font-size: 14px;
         }
         input:-moz-placeholder {
          color: #000;
-         font-size: 40px;
+         font-size: 14px;
         }
 
         .loginButton {
             background: #fff;
-            font-size: 40px;
-            padding: 20px;
-            margin-left: 40px;
+            font-size: 14px;
+            padding: 10px;
+            margin-left: 10px;
         }
 
     }

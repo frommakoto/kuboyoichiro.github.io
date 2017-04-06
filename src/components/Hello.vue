@@ -39,11 +39,16 @@
                   location.href="#screen";
                   return false;
               }
+              // Rキー
+              else if(key === 82){
+                location.href="#ranking";
+              }
               //   Dキー
               // ローカルストレージ削除
               else if(key == 68){
                  window.localStorage.removeItem('userId');
                  window.localStorage.removeItem('userName');
+                 window.localStorage.removeItem('answerFlg');
                  location.reload();
                  return false;
               }
@@ -70,5 +75,6 @@
     .logo {
         display: block;
         margin: auto;
+        width: 90%;
     }
 </style>

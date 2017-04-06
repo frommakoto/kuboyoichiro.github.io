@@ -25,12 +25,6 @@
               <span class="answerDescription" value="4">{{answer4}}</span>
           </li>
       </ul>
-
-      <div class="button">
-          <router-link to="/ready">
-              正解発表後に<br />押してください！
-          </router-link>
-      </div>
   </div>
 </template>
 
@@ -64,11 +58,6 @@
             var self = this;
             if(this.questionState === 0){
                 this.questionState = 1;
-                //  dateまわりの処理があやしい？
-                var date = new Date();
-                date = this.formatTime(date);
-                console.log(date);
-                // $.ajax(self.url + '/steps/answer?user_id=' + self.userId + '&select_answer_id=' + value + '&push_time=' + date, {
                 $.ajax(self.url + '/steps/answer?user_id=' + self.userId + '&select_answer_id=' + value + '&push_time=' + self.responseTime, {
                     method: 'POST',
                     type: 'POST',
@@ -85,22 +74,7 @@
             }
             return false;
         },
-        formatTime: function(date, format){
-          if (!format) format = 'YYYY-MM-DD hh:mm:ss.SSS';
-          format = format.replace(/YYYY/g, date.getFullYear());
-          format = format.replace(/MM/g, ('0' + (date.getMonth() + 1)).slice(-2));
-          format = format.replace(/DD/g, ('0' + date.getDate()).slice(-2));
-          format = format.replace(/hh/g, ('0' + date.getHours()).slice(-2));
-          format = format.replace(/mm/g, ('0' + date.getMinutes()).slice(-2));
-          format = format.replace(/ss/g, ('0' + date.getSeconds()).slice(-2));
-          if (format.match(/S/g)) {
-            var milliSeconds = ('00' + date.getMilliseconds()).slice(-3);
-            var length = format.match(/S/g).length;
-            for (var i = 0; i < length; i++) format = format.replace(/S/, milliSeconds.substring(i, i + 1));
-          }
-          return format;
-      },
-          countDown: function(){
+        countDown: function(){
               this.timer -= 1;
               if(this.timer === 0){
                   $('.question').addClass('done');
@@ -111,15 +85,15 @@
                   location.href="#ready";
               }
               return false;
-          },
-          countUp: function(){
+        },
+        countUp: function(){
             var self = this;
             self.responseTime += 0.0001;
-            console.log(self.responseTime);
+            // console.log(self.responseTime);
             if(self.responseTime >= 0.25){
                 clearInterval(this.startCountUp);
             }
-          }
+        }
       },
       mounted(){
           var self = this;
@@ -165,13 +139,11 @@
         font-family: "ヒラギノ丸ゴ Pro W4","Hiragino Maru Gothic Pro", 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        font-size: 100px;
-        // background: linear-gradient(#03bffe, #090f94) fixed;
+        font-size: 18px;
         background: url('../assets/screen_bg.png') no-repeat;
         background-size: cover;
         min-height: 100vh;
         padding-top: 30px;
-        padding-bottom: 4%;
         overflow: hidden;
     }
 
@@ -183,8 +155,6 @@
     }
 
     #questionWrapper {
-        // margin: 30px;
-        // margin-top: 40px;
         margin-left: 30px;
         margin-right: 30px;
         margin-bottom: 30px;
@@ -207,21 +177,16 @@
 
         color: #1aa1ee;
 
-        .questionLabel {
-            // float: left;
-        }
 
         .questionDescription {
             display: block;
             position: relative;
-            top: -130px;
-            right: -130px;
             width: 80%;
             background-color: #87bcfc;
             color: #000;
             padding: 20px;
             padding-bottom: 100px;
-            font-size: 80px;
+            font-size: 18px;
 
             /* border-radius */
             border-radius:33px;
@@ -231,16 +196,18 @@
     }
 
     #answerWrapper {
-        margin-top: 100px;
-        margin-left: 20px;
-        margin-right: 20px;
+        margin-top: 20px;
+        margin-left: 30px;
+        margin-right: 30px;
+
 
         .number {
-            padding: 10px 20px 10px 20px;
-            margin-left: 20px;
+            padding: 10px;
             border-radius: 50px;
             background-color: #000;
             color: #fff;
+            position: absolute;
+            height: 50%;
         }
         .one {
             background-color: #8540bf;
@@ -260,17 +227,21 @@
 
         .answer {
             background-color: #fbf8d0;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
+            height: 40px;
 
             /* border-radius */
             border-radius:33px;
             -moz-border-radius:33px;
             -webkit-border-radius:33px;
+            position: relative;
+
 
             .answerDescription {
                 display: inline-block;
-                position: relative;
-                left: 170px;
+                position: absolute;
+                top: 10%;
+                left: 20%;
             }
         }
         .answer:active {
