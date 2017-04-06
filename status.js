@@ -6,8 +6,7 @@ var bodyParser = require('body-parser');
 var app = express();
 app.use(express.static(__dirname + '/src'));
 app.use(bodyParser.urlencoded({extended: true}));
-
-
+var port = process.env.PORT || 3000;
 var isAnswerTimeFlg = false; // 回答開始フラグ
 var isSpecialFlg = false; // 特別問題フラグ
 
@@ -37,6 +36,7 @@ app.post('/isSpecialChange', function(req, res){
 
 
 //standing
-app.listen(3000, function(){
-	console.log('working!');
-});
+// app.listen(3000, function(){
+// 	console.log('working!');
+// });
+app.listen(port);
