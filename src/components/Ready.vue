@@ -121,8 +121,10 @@
               });
           });
           $('.reset').on('click', function(){
+            window.localStorage.removeItem('userId');
+            window.localStorage.removeItem('userName');
+            window.localStorage.removeItem('answerFlg');
             alert('ローカルの成否フラグをリセットしました');
-            window.localStorage.setItem('answerFlg', false);
           })
       }
     }
