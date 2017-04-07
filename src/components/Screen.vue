@@ -1,28 +1,28 @@
 <template>
   <div class="screen">
       <ul class="imageWrapper">
-          <li class="questionImage question1" style="background-image:url({image1}.length > 0 ? {image1} : {imageDefault})">
+          <li class="questionImage question1">
               <div class="questionImageText">
                   <span class="index one">1</span>
                   <span class="choice">{{answer1}}</span>
                   <span class="selected">18</span>
               </div>
           </li>
-          <li class="questionImage question2" style="background-image:url({image2}.length > 0 ? {image2} : {imageDefault})">
+          <li class="questionImage question2">
               <div class="questionImageText">
                   <span class="index two">2</span>
                   <span class="choice">{{answer2}}</span>
                   <span class="selected">18</span>
               </div>
           </li>
-          <li class="questionImage question3" style="background-image:url({image3}.length > 0 ? {image3} : {imageDefault})">
+          <li class="questionImage question3">
               <div class="questionImageText">
                   <span class="index three">3</span>
                   <span class="choice">{{answer3}}</span>
                   <span class="selected">18</span>
               </div>
           </li>
-          <li class="questionImage question4" style="background-image:url({image4}.length > 0 ? {image4} : {imageDefault})">
+          <li class="questionImage question4">
               <div class="questionImageText">
                   <span class="index four">4</span>
                   <span class="choice">{{answer4}}</span>
@@ -109,6 +109,8 @@
                   if(i === 0){
                     self.answer1 = answer;
                     self.image1 = image;
+                    self.image1 = 'http://www.heimusu.com/img/img1.jpg';
+                    $('.question1').css('background-image', 'url('+ self.image1 +  ')')
                   }
                   else if(i === 1){
                     self.answer2 = answer;
@@ -149,16 +151,16 @@
                 if(key === 83){
                     // location.href="#screen";
                     // 回答状況を取得するAPIを叩く…？
-                    $.ajax(self.url + '/steps/ranking',{
-                        method:'POST',
-                        type:'POST',
-                        cache:false
-                    })
-                    .done(function(json){
-                        console.log(json);
-                        $('.selected').css('display', 'block');
-                    })
-                    .fail(function(err){});
+                    // $.ajax(self.url + '/steps/ranking',{
+                    //     method:'POST',
+                    //     type:'POST',
+                    //     cache:false
+                    // })
+                    // .done(function(json){
+                    //     console.log(json);
+                    //     $('.selected').css('display', 'block');
+                    // })
+                    // .fail(function(err){});
                 }
                 // Rキー
                 else if(key === 82){
@@ -284,11 +286,13 @@
                 height: 20%;
                 width: 100%;
                 text-align: center;
-                background: #000;
+                // background: #062456;
+                background: linear-gradient(to bottom, #081e29 0%, #062456 100%);
                 color: #fff;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                border-radius: 0.5em;
 
                 .index {
                     font-size: 2.0rem;
@@ -300,12 +304,20 @@
                     border-radius: 50%;
                     background-color: red;
                     height: 40px;
+                    font-weight: bold;
+                    box-shadow:4px 0px 6px 1px #000000;
+                    -moz-box-shadow:4px 0px 6px 1px #000000;
+                    -webkit-box-shadow:4px 0px 6px 1px #000000;
 
                 }
                 .choice {
                     font-size: 3.0rem;
                     font-weight: bold;
                     line-height: 60px;
+                    text-shadow: 2px 2px 1px #00f,
+                    -2px 2px 1px #00f,
+                    2px -2px 1px #00f,
+                    -2px -2px 1px #00f;
 
                 }
 
@@ -334,7 +346,7 @@
                 }
 
                 .three {
-                    background-color: #00ff00;
+                    background-color: #07c003;
                 }
 
                 .four {
@@ -362,6 +374,7 @@
             color: #39fed5;
             font-weight: bold;
             opacity: 1.0;
+            text-shadow:6px 2px 3px #000000;
         }
 
         .questionInnerText{
@@ -386,12 +399,17 @@
             -webkit-writing-mode: vertical-rl;
             -ms-writing-mode: tb-rl;
             writing-mode: vertical-rl;
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             text-align: center;
             opacity: 1.0;
             display: flex;
             justify-content: center;
             align-items: center;
+            font-weight: bold;
+            text-shadow: 2px 2px 1px #fff,
+            -2px 2px 1px #fff,
+            2px -2px 1px #fff,
+            -2px -2px 1px #fff;
         }
 
         .time {
@@ -405,7 +423,8 @@
             color: #f0f0f0;
             font-weight: bold;
             border: 10px solid #cdd2de;
-            background-color: #940100;
+            // background-color: #940100;
+            background: linear-gradient(to left, #610101 0%, #940100 50%, #610101 100%);
             // max-width: 150px;
             // max-height: 150px;
             width: 200px;

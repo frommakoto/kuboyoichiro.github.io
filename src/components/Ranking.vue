@@ -1,7 +1,15 @@
 <template>
   <div class="ranking">
+    <div id="card">
+  <div class="front">
+    Front content
+  </div>
+  <div class="back">
+    Back content
+  </div>
+</div>
       <ul class="rankingWrapper">
-          <li v-for="r in rankings" class="ranking">
+          <li v-for="r in rankings" class="ranking-list">
               <span class="nameRank">
                   <span class="number">{{r.ranking}}</span>
                   <span class="name">{{r.name}}</span>
@@ -20,6 +28,8 @@
 <script>
     import * as $ from 'jquery';
     import url from '../assets/url.js';
+    global.jQuery = require('jquery');
+
     export default {
         data () {
             return {
@@ -30,6 +40,7 @@
         },
         mounted () {
             var self = this;
+            var flip = $('#card').flip({'axis': 'x', 'trigger': 'manual'});
             $(document).on('keyup', function(e){
                 console.log(e.keyCode);
                 var key = e.keyCode;
@@ -51,8 +62,8 @@
                   if(self.rankings.length > 0){
                     self.rankings.length = 0;
                   }
+                  // $('.rankingWrapper').show();
                   self.gainFlg = true;
-                  $('.rankingWrapper').show();
                   $.ajax(self.url + '/users/ranking',{
                       method:'POST',
                       type:'POST',
@@ -60,16 +71,26 @@
                   })
                   .done(function(json){
                       var data = json;
-                      console.log(data);
+                      var length = data.length;
+                      // console.log(length);
+                      // console.log(data);
                       $.each(data, function(i){
                           var pushData = {
-                            ranking: i,
+                            ranking: i + 1,
                             name: data[i].name,
                             gain: data[i].user_point
                           };
                           self.rankings.push(pushData);
-                          console.log(self.rankings);
-                          if(i === 9){
+                          // console.log(self.rankings);
+                          if(i === 9 || i === length - 1){
+                            console.log('done');
+                            setTimeout(function(){
+                              console.log($('.ranking-list'));
+                              for(var j = 0; j < i; j++) {
+                                console.log($('.ranking-list')[j]);
+                                $('.ranking-list').eq(j).show();
+                              }
+                            },1000);
                             return false;
                           }
                       });
@@ -144,6 +165,21 @@
                   })
                   .fail(function(err){});
                 }
+
+                // Dキー
+                // 最後のlist要素
+                else if(key === 68){
+                  console.log($('.ranking-list:last'));
+                  $('.ranking-list:last').addClass('animation');
+                }
+
+                // Tキー
+                // 最初のlist要素
+                else if(key === 84){
+                  console.log($('.ranking-list:first'));
+                  $('.ranking-list:first').addClass('animation');
+                }
+
                 else {
                     return false;
                 }
@@ -158,12 +194,16 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
     .ranking{
-        font-size: 100%;
+        // font-size: 100%;
         width: 100%;
         height: 100%;
         background: url('../assets/screen_bg.png') no-repeat;
         background-size: cover;
         overflow: hidden;
+        font-family: "ヒラギノ丸ゴ Pro W4","Hiragino Maru Gothic Pro", 'Avenir', Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-size: 18px;
     }
 
     .rankingWrapper {
@@ -174,14 +214,15 @@
         margin-right: 50px;
         margin-bottom: 20px;
         height: 100%;
-        display: none;
+        // display: none;
 
-        .ranking {
-            font-size: 2.0rem;
+        .ranking-list {
+            font-size: 3.0rem;
             color: #000;
             margin-bottom: 15px;
             height: 8%;
-            display: flex;
+            display: none;
+            // display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
@@ -228,7 +269,7 @@
                 position: absolute;
                 right: 0;
                 color: #fff20c;
-                font-size: 1.5rem;
+                font-size: 3.0rem;
                 .gain {
                     position: absolute;
                     left: 30px;
@@ -239,5 +280,24 @@
                 }
             }
         }
+    }
+
+    .animation {
+      background: #fff20c;
+      color: #000;
+      border: 1px solid #fff20c !important;
+      span {
+        background: #fff20c !important;
+        color: #000 !important;
+        border: 1px solid #fff20c !important;
+      }
+      animation: Flash1 1s infinite;
+    }
+
+    /* アニメーション */
+    @keyframes Flash1{
+      50%{
+        opacity: 0;
+      }
     }
 </style>

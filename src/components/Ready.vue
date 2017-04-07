@@ -19,6 +19,7 @@
     import * as $ from 'jquery';
     import url from '../assets/url.js';
     import statusUrl from '../assets/url.js';
+    import * as flip from '../assets/jquery.flip.min.js';
 
     export default {
       name: 'hello',
@@ -124,7 +125,8 @@
             window.localStorage.removeItem('userId');
             window.localStorage.removeItem('userName');
             window.localStorage.removeItem('answerFlg');
-            alert('ローカルの成否フラグをリセットしました');
+            alert('ローカルの情報をリセットしました.移動後リロードしてください．');
+            location.href = '#';
           })
       }
     }
@@ -167,5 +169,8 @@
     .reset {
       position: absolute;
       bottom: 100px;
+      width: 80%;
+      background: #dddddd;
+      color: #333333;
     }
 </style>

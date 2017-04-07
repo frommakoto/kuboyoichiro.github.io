@@ -47,7 +47,7 @@
               // Sキー
               // 問題一覧ページ（スクリーン）
               if(key === 83){
-                  if(isiphone || isiPad || isAndroid || isAndroidTablet){
+                  if(isiPhone || isiPad || isAndroid || isAndroidTablet){
                     return false;
                   }
                   location.href="#screen";
@@ -55,7 +55,7 @@
               }
               // Rキー
               else if(key === 82){
-                  if(isiphone || isiPad || isAndroid || isAndroidTablet){
+                  if(isiPhone || isiPad || isAndroid || isAndroidTablet){
                     return false;
                   }
                   location.href="#ranking";
@@ -63,7 +63,7 @@
               //   Dキー
               // ローカルストレージ削除
               else if(key == 68){
-                if(isiphone || isiPad || isAndroid || isAndroidTablet){
+                if(isiPhone || isiPad || isAndroid || isAndroidTablet){
                   return false;
                 }
                  window.localStorage.removeItem('userId');
