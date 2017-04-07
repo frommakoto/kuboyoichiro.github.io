@@ -17,6 +17,17 @@
           var userId = window.localStorage.getItem('userId');
           console.log(userId);
 
+          var ua = navigator.userAgent.toLowerCase();
+
+          // iPhone
+          var isiPhone = (ua.indexOf('iphone') > -1);
+          // iPad
+          var isiPad = (ua.indexOf('ipad') > -1);
+          // Android
+          var isAndroid = (ua.indexOf('android') > -1) && (ua.indexOf('mobile') > -1);
+          // Android Tablet
+          var isAndroidTablet = (ua.indexOf('android') > -1) && (ua.indexOf('mobile') == -1);
+
           //   ログイン済であればログインページへは飛ばさない
           //   余力があればv-ifでアレしたい
           $('.logo').on('click', function(){
@@ -36,16 +47,25 @@
               // Sキー
               // 問題一覧ページ（スクリーン）
               if(key === 83){
+                  if(isiphone || isiPad || isAndroid || isAndroidTablet){
+                    return false;
+                  }
                   location.href="#screen";
                   return false;
               }
               // Rキー
               else if(key === 82){
-                location.href="#ranking";
+                  if(isiphone || isiPad || isAndroid || isAndroidTablet){
+                    return false;
+                  }
+                  location.href="#ranking";
               }
               //   Dキー
               // ローカルストレージ削除
               else if(key == 68){
+                if(isiphone || isiPad || isAndroid || isAndroidTablet){
+                  return false;
+                }
                  window.localStorage.removeItem('userId');
                  window.localStorage.removeItem('userName');
                  window.localStorage.removeItem('answerFlg');
@@ -75,6 +95,6 @@
     .logo {
         display: block;
         margin: auto;
-        width: 90%;
+        width: 60%;
     }
 </style>
