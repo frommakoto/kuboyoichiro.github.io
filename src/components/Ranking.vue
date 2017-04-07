@@ -1,25 +1,29 @@
 <template>
   <div class="ranking">
-    <div id="card">
+    <!-- <div id="card">
   <div class="front">
     Front content
   </div>
   <div class="back">
     Back content
   </div>
-</div>
+</div> -->
       <ul class="rankingWrapper">
           <li v-for="r in rankings" class="ranking-list">
-              <span class="nameRank">
-                  <span class="number">{{r.ranking}}</span>
-                  <span class="name">{{r.name}}</span>
-              </span>
-              <span class="count" v-if="gainFlg===true">
-                  <span class="gain">獲得額：{{r.gain}}円</span>
-              </span>
-              <span class="count" v-if="gainFlg===false">
-                  <span class="time" id="time">回答時間：{{r.time}}秒</span>
-              </span>
+            <!-- <div class="front">
+            </div>
+            <div class="back">
+            </div> -->
+            <span class="nameRank">
+                <span class="number">{{r.ranking}}</span>
+                <span class="name">{{r.name}}</span>
+            </span>
+            <span class="count" v-if="gainFlg===true">
+                <span class="gain">獲得額：{{r.gain}}円</span>
+            </span>
+            <span class="count" v-if="gainFlg===false">
+                <span class="time" id="time">回答時間：{{r.time}}秒</span>
+            </span>
           </li>
       </ul>
   </div>
@@ -35,6 +39,7 @@
             return {
                 gainFlg: false,
                 rankings: [],
+                lastElement: 0,
                 url: 'http://' + window.url
             }
         },
@@ -81,16 +86,15 @@
                             gain: data[i].user_point
                           };
                           self.rankings.push(pushData);
-                          // console.log(self.rankings);
                           if(i === 9 || i === length - 1){
-                            console.log('done');
                             setTimeout(function(){
-                              console.log($('.ranking-list'));
-                              for(var j = 0; j < i; j++) {
-                                console.log($('.ranking-list')[j]);
+                              for(var j = 0; j <= i; j++) {
+                                $('.ranking-list').eq(j).css('display', 'flex');
                                 $('.ranking-list').eq(j).show();
+                                $('.ranking-list').eq(j).addClass('anim-rev' + (j + 1));
+                                self.lastElement = j;
                               }
-                            },1000);
+                            },500);
                             return false;
                           }
                       });
@@ -105,7 +109,7 @@
                   if(self.rankings.length > 0){
                     self.rankings.length = 0;
                   }
-                  $('.rankingWrapper').show();
+                  // $('.rankingWrapper').show();
                   $.ajax(self.url + '/steps/ranking',{
                       method:'POST',
                       type:'POST',
@@ -113,6 +117,7 @@
                   })
                   .done(function(json){
                       var data = json;
+                      var length = data.steps.length;
                       console.log(data);
                       $('.time').show();
                       $.each(data.steps, function(i){
@@ -122,7 +127,15 @@
                             time: data.steps[i].response_time
                           };
                           self.rankings.push(pushData);
-                          if(i === 9){
+                          if(i === 9 || i === length - 1){
+                            setTimeout(function(){
+                              for(var j = 0; j <= i; j++) {
+                                $('.ranking-list').eq(j).css('display', 'flex');
+                                $('.ranking-list').eq(j).show();
+                                $('.ranking-list').eq(j).addClass('anim-rev' + (j + 1));
+                                self.lastElement = j;
+                              }
+                            },500);
                             return false;
                           }
                       });
@@ -147,8 +160,6 @@
                       var data = json;
                       var length = data.steps.length;
                       $('.time').show();
-                      // data.steps = data.steps.reverse();
-                      // data.users = data.users.reverse();
                       console.log(data);
                       $.each(data.steps, function(i){
                           var pushData = {
@@ -157,7 +168,16 @@
                             time: data.steps[length - i - 1].response_time
                           };
                           self.rankings.push(pushData);
-                          if(i === 8){
+                          // if(i === 8){
+                          if(i === 9 || i === length - 1){
+                            setTimeout(function(){
+                              for(var j = 0; j <= i; j++) {
+                                $('.ranking-list').eq(j).css('display', 'flex');
+                                $('.ranking-list').eq(j).show();
+                                $('.ranking-list').eq(j).addClass('anim' + (j + 1));
+                                self.lastElement = j;
+                              }
+                            },500);
                             return false;
                           }
                       });
@@ -169,7 +189,9 @@
                 // Dキー
                 // 最後のlist要素
                 else if(key === 68){
-                  console.log($('.ranking-list:last'));
+                  $('.ranking-list:last').css('opacity', '1');
+                  $('.ranking-list:last').removeClass('anim' + (self.lastElement + 1));
+                  $('.ranking-list:last').removeClass('anim-rev' + (self.lastElement + 1));
                   $('.ranking-list:last').addClass('animation');
                 }
 
@@ -177,6 +199,9 @@
                 // 最初のlist要素
                 else if(key === 84){
                   console.log($('.ranking-list:first'));
+                  $('.ranking-list:first').css('opacity', '1');
+                  $('.ranking-list:first').removeClass('anim1');
+                  $('.ranking-list:first').removeClass('anim-rev1');
                   $('.ranking-list:first').addClass('animation');
                 }
 
@@ -226,6 +251,7 @@
             justify-content: center;
             align-items: center;
             position: relative;
+            opacity: 0;
 
             .nameRank {
                 background: #0100fc;
@@ -280,6 +306,91 @@
                 }
             }
         }
+
+        .anim1 {
+            -webkit-animation: example 0.5s ease 0.5s 1 forwards;
+            animation: example 0.5s ease 0.5s 1 forwards;
+        }
+        .anim2 {
+            -webkit-animation: example 0.5s ease 1s 1 forwards;
+            animation: example 0.5s ease 1s 1 forwards;
+        }
+        .anim3 {
+            -webkit-animation: example 0.5s ease 1.5s 1 forwards;
+            animation: example 0.5s ease 1.5s 1 forwards;
+        }
+        .anim4 {
+            -webkit-animation: example 0.5s ease 2.0s 1 forwards;
+            animation: example 0.5s ease 2.0s 1 forwards;
+        }
+        .anim5 {
+            -webkit-animation: example 0.5s ease 2.5s 1 forwards;
+            animation: example 0.5s ease 2.5s 1 forwards;
+        }
+        .anim6 {
+            -webkit-animation: example 0.5s ease 3.0s 1 forwards;
+            animation: example 0.5s ease 3.0s 1 forwards;
+        }
+        .anim7 {
+            -webkit-animation: example 0.5s ease 3.5s 1 forwards;
+            animation: example 0.5s ease 3.5s 1 forwards;
+        }
+        .anim8 {
+            -webkit-animation: example 0.5s ease 4.0s 1 forwards;
+            animation: example 0.5s ease 4.0s 1 forwards;
+        }
+        .anim9 {
+            -webkit-animation: example 0.5s ease 4.5s 1 forwards;
+            animation: example 0.5s ease 4.5s 1 forwards;
+        }
+        .anim10 {
+            -webkit-animation: example 0.5s ease 5.0s 1 forwards;
+            animation: example 0.5s ease 5.0s 1 forwards;
+        }
+
+
+        .anim-rev1 {
+            -webkit-animation: example 0.5s ease 5.0s 1 forwards;
+            animation: example 0.5s ease 5.0s 1 forwards;
+        }
+        .anim-rev2 {
+            -webkit-animation: example 0.5s ease 4.5s 1 forwards;
+            animation: example 0.5s ease 4.5s 1 forwards;
+        }
+        .anim-rev3 {
+            -webkit-animation: example 0.5s ease 4.0s 1 forwards;
+            animation: example 0.5s ease 4.0s 1 forwards;
+        }
+        .anim-rev4 {
+            -webkit-animation: example 0.5s ease 3.5s 1 forwards;
+            animation: example 0.5s ease 3.5s 1 forwards;
+        }
+        .anim-rev5 {
+            -webkit-animation: example 0.5s ease 3.0s 1 forwards;
+            animation: example 0.5s ease 3.0s 1 forwards;
+        }
+        .anim-rev6 {
+            -webkit-animation: example 0.5s ease 2.5s 1 forwards;
+            animation: example 0.5s ease 2.5s 1 forwards;
+        }
+        .anim-rev7 {
+            -webkit-animation: example 0.5s ease 2.0s 1 forwards;
+            animation: example 0.5s ease 2.0s 1 forwards;
+        }
+        .anim-rev8 {
+            -webkit-animation: example 0.5s ease 1.5s 1 forwards;
+            animation: example 0.5s ease 1.5s 1 forwards;
+        }
+        .anim-rev9 {
+            -webkit-animation: example 0.5s ease 1s 1 forwards;
+            animation: example 0.5s ease 1s 1 forwards;
+        }
+        .anim-rev10 {
+            -webkit-animation: example 0.5s ease 0.5s 1 forwards;
+            animation: example 0.5s ease 0.5s 1 forwards;
+        }
+
+
     }
 
     .animation {
@@ -298,6 +409,25 @@
     @keyframes Flash1{
       50%{
         opacity: 0;
+      }
+    }
+
+    @-webkit-keyframes example {
+      0%{
+        transform: rotateX( 180deg );
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+    @keyframes example {
+      0%{
+        transform: rotateX( 180deg );
+      }
+
+      100% {
+        opacity: 1;
       }
     }
 </style>
