@@ -63,7 +63,7 @@
                 if(value != self.questionAnswer){
                     window.localStorage.setItem('answerFlg', true);
                 }
-
+                self.responseTime *= 100;
                 $.ajax(self.url + '/steps/answer?user_id=' + self.userId + '&select_answer_id=' + value + '&push_time=' + self.responseTime, {
                     method: 'POST',
                     type: 'POST',

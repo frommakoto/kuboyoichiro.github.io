@@ -48,6 +48,9 @@
                 // 90
                 // 金額ランキング
                 else if(key === 90){
+                  if(self.rankings.length > 0){
+                    self.rankings.length = 0;
+                  }
                   self.gainFlg = true;
                   $('.rankingWrapper').show();
                   $.ajax(self.url + '/users/ranking',{
@@ -78,6 +81,9 @@
                 // 88
                 // 速さ早い順
                 else if(key === 88){
+                  if(self.rankings.length > 0){
+                    self.rankings.length = 0;
+                  }
                   $('.rankingWrapper').show();
                   $.ajax(self.url + '/steps/ranking',{
                       method:'POST',
@@ -107,6 +113,9 @@
                 // 67
                 // 速さ遅い順
                 else if(key === 67){
+                  if(self.rankings.length > 0){
+                    self.rankings.length = 0;
+                  }
                   $('.rankingWrapper').show();
                   $.ajax(self.url + '/steps/ranking',{
                       method:'POST',
@@ -115,20 +124,23 @@
                   })
                   .done(function(json){
                       var data = json;
-                      var length = data.length;
+                      var length = data.steps.length;
                       $('.time').show();
-                      data = data.reverse();
-                      $.each(data, function(i){
+                      // data.steps = data.steps.reverse();
+                      // data.users = data.users.reverse();
+                      console.log(data);
+                      $.each(data.steps, function(i){
                           var pushData = {
                             ranking: length - i,
-                            name: data.users[i].name,
-                            time: data.steps[i].response_time
+                            name: data.users[length - i - 1].name,
+                            time: data.steps[length - i - 1].response_time
                           };
                           self.rankings.push(pushData);
                           if(i === 8){
                             return false;
                           }
                       });
+                      self.rankings = self.rankings.reverse();
                   })
                   .fail(function(err){});
                 }

@@ -9,6 +9,9 @@
           </router-link> -->
           <span class="message">{{message}}</span>
       </div>
+      <div class="reset">
+        りせっと
+      </div>
   </div>
 </template>
 
@@ -117,6 +120,10 @@
                   }
               });
           });
+          $('.reset').on('click', function(){
+            alert('ローカルの成否フラグをリセットしました');
+            window.localStorage.setItem('answerFlg', false);
+          })
       }
     }
 </script>
@@ -153,5 +160,10 @@
         top: 100px;
         width: 90%;
         font-weight: bold;
+    }
+
+    .reset {
+      position: absolute;
+      bottom: 100px;
     }
 </style>
