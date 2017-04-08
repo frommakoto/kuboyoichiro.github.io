@@ -18,7 +18,7 @@
         <section>
             <div class="titleWrapper">
                 <p class="title">Dashboard</p>
-                <span class="subtitle">2017/04 総会用管理ページ</span>
+                <span class="subtitle">2017/04 総会（オールスター感謝祭）管理・操作ページ</span>
             </div>
 
             <div class="card single">
@@ -88,8 +88,8 @@
                             <li class="item label"><span>インデックス</span></li>
                             <li class="item label"><span>問題文</span></li>
                         </ul>
-                        <ul class="cell cell-data"  v-for="(q,index) in questions" v-on:click="publishQuestion">
-                            <li class="item">
+                        <ul class="cell cell-data"  v-for="(q,index) in questions">
+                            <li class="item index"  v-on:click="publishQuestion(index)">
                                 {{index}}
                             </li>
                             <li class="item">
@@ -140,10 +140,12 @@
         },
         methods: {
             // 次に出題する問題を決定するボタン
-            publishQuestion: function(event){
-                var questionId = event.target.innerText;
+            publishQuestion: function(value){
+                // var questionId = event.target.innerText;
+                var questionId = value;
                 var self = this;
-                if(window.confirm('この問題を出題しますか？')){
+                var text = self.questions[questionId].problemText;
+                if(window.confirm('問題文：' + text + '  この問題を出題しますか？')){
                   $.ajax(self.url + '/problems/doQuestions?id=' + questionId,{
                       method:'POST',
                       type:'POST',
@@ -240,22 +242,26 @@
 
             // 制限時間フラグ更新ボタン
             $('#isAnswer').on('click', function(){
-                 $.ajax(self.statusUrl + '/isAnswerChange', {
-                     method:'POST',
-                     type:'POST',
-                     cache:false
-                 })
-                 .done(function(json){
-                     if(json === true){
-                         self.answerFlg = true;
-                         self.isAnswerMessage = '時間内';
-                     }
-                     else {
-                         self.answerFlg = false;
-                         self.isAnswerMessage = '時間外';
-                     }
-                     return false;
-                 });
+                if(window.confirm('時間内/外フラグを変更しますか？')){
+                  $.ajax(self.statusUrl + '/isAnswerChange', {
+                      method:'POST',
+                      type:'POST',
+                      cache:false
+                  })
+                  .done(function(json){
+                      if(json === true){
+                          self.answerFlg = true;
+                          self.isAnswerMessage = '時間内';
+                      }
+                      else {
+                          self.answerFlg = false;
+                          self.isAnswerMessage = '時間外';
+                      }
+                      alert('時間内/外フラグを変更しました');
+                      return false;
+                  });
+                }
+                return false;
             });
 
             // 特例フラグ更新ボタン
@@ -459,10 +465,13 @@
                         }
 
                         .item {
-                            font-size: 14px;
+                            font-size: 18px;
                             word-wrap: break-word;
                         }
-                        .item:hover{
+                        .index {
+                          font-size: 24px;
+                        }
+                        .index:hover{
                             color: #dddddd;
                         }
 
@@ -472,7 +481,7 @@
                         color: #fff;
                     }
 
-                    ul.cell.cell-data.even {
+                    ul.cell.cell-data:ntd-child(2n) {
                         background-color: #cccccc;
                     }
                 }
@@ -523,12 +532,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
-        // span {
-        //     position: relative;
-        //     top: 15px;
-        //     left: 55%;
-        // }
     }
 
 </style>

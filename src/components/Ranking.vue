@@ -1,19 +1,7 @@
 <template>
   <div class="ranking">
-    <!-- <div id="card">
-  <div class="front">
-    Front content
-  </div>
-  <div class="back">
-    Back content
-  </div>
-</div> -->
       <ul class="rankingWrapper">
           <li v-for="r in rankings" class="ranking-list">
-            <!-- <div class="front">
-            </div>
-            <div class="back">
-            </div> -->
             <span class="nameRank">
                 <span class="number">{{r.ranking}}</span>
                 <span class="name">{{r.name}}</span>
@@ -26,6 +14,9 @@
             </span>
           </li>
       </ul>
+      <div class="yamawake">
+          <img src="../assets/yamawake.png"  />
+      </div>
   </div>
 </template>
 
@@ -40,23 +31,35 @@
                 gainFlg: false,
                 rankings: [],
                 lastElement: 0,
-                url: 'http://' + window.url
+                url: 'http://' + window.url,
+                keySafety: 0
             }
         },
         mounted () {
             var self = this;
+            self.keySafety = 0;
             var flip = $('#card').flip({'axis': 'x', 'trigger': 'manual'});
+
+            // キー操作
             $(document).on('keyup', function(e){
-                console.log(e.keyCode);
+                // console.log(e.keyCode);
+                if(self.keySafety === 1){
+                  console.log('不可');
+                  return false;
+                }
+
                 var key = e.keyCode;
 
                 // Sキー
                 // 問題一覧ページ（スクリーン）
                 if(key === 83){
+                    self.keySafety = 1;
                     location.href="#screen";
+                    return false;
                 }
                 // Lキー
                 else if(key === 76){
+                    self.keySafety = 1;
                     location.href="/";
                     return false;
                 }
@@ -64,6 +67,7 @@
                 // 90
                 // 金額ランキング
                 else if(key === 90){
+                  self.keySafety = 1;
                   if(self.rankings.length > 0){
                     self.rankings.length = 0;
                   }
@@ -95,6 +99,7 @@
                                 self.lastElement = j;
                               }
                             },500);
+                            self.keySafety = 0;
                             return false;
                           }
                       });
@@ -106,6 +111,7 @@
                 // 88
                 // 速さ早い順
                 else if(key === 88){
+                  self.keySafety = 1;
                   if(self.rankings.length > 0){
                     self.rankings.length = 0;
                   }
@@ -136,6 +142,7 @@
                                 self.lastElement = j;
                               }
                             },500);
+                            self.keySafety = 0;
                             return false;
                           }
                       });
@@ -147,6 +154,7 @@
                 // 67
                 // 速さ遅い順
                 else if(key === 67){
+                  self.keySafety = 1;
                   if(self.rankings.length > 0){
                     self.rankings.length = 0;
                   }
@@ -178,6 +186,7 @@
                                 self.lastElement = j;
                               }
                             },500);
+                            self.keySafety = 0;
                             return false;
                           }
                       });
@@ -189,20 +198,32 @@
                 // Dキー
                 // 最後のlist要素
                 else if(key === 68){
+                  self.keySafety = 1;
                   $('.ranking-list:last').css('opacity', '1');
                   $('.ranking-list:last').removeClass('anim' + (self.lastElement + 1));
                   $('.ranking-list:last').removeClass('anim-rev' + (self.lastElement + 1));
                   $('.ranking-list:last').addClass('animation');
+                  self.keySafety = 0;
                 }
 
                 // Tキー
                 // 最初のlist要素
                 else if(key === 84){
-                  console.log($('.ranking-list:first'));
+                  self.keySafety = 1;
+                  // console.log($('.ranking-list:first'));
                   $('.ranking-list:first').css('opacity', '1');
                   $('.ranking-list:first').removeClass('anim1');
                   $('.ranking-list:first').removeClass('anim-rev1');
                   $('.ranking-list:first').addClass('animation');
+                  self.keySafety = 0;
+                }
+
+                // Yキー
+                // 山分けクイズ開始
+                else if(key === 89){
+                    self.keySafety = 1;
+                    $('.yamawake').css('display', 'block');
+                    self.keySafety = 0;
                 }
 
                 else {
@@ -230,6 +251,23 @@
         -moz-osx-font-smoothing: grayscale;
         font-size: 18px;
     }
+
+    .yamawake {
+        display: none;
+        // display: block;
+        position: absolute;
+        // top: 50%;
+        // left: 30%;
+        top: 40%;
+        left: 20%;
+        opacity: 1.0;
+        z-index: 4;
+
+        img {
+            width: 80%;
+        }
+    }
+
 
     .rankingWrapper {
         position: relative;
@@ -307,6 +345,7 @@
             }
         }
 
+        // 以下アニメーション
         .anim1 {
             -webkit-animation: example 0.5s ease 0.5s 1 forwards;
             animation: example 0.5s ease 0.5s 1 forwards;

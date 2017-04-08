@@ -40,9 +40,6 @@
           var self = this;
           var answerFlg = window.localStorage.getItem('answerFlg');
           var userId = window.localStorage.getItem('userId');
-        //   console.log(userId);
-        //   console.log(answerFlg);
-        //   console.log(self.statusUrl);
 
 
         $.get('http://' + self.url + '/users/' + userId)

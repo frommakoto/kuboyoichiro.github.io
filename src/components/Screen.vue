@@ -40,7 +40,7 @@
           </div>
       </div>
       <div class="timeupText">
-          TIME UP
+          <img src="../assets/4_title_timeUp.png" />
       </div>
   </div>
 </template>
@@ -52,7 +52,7 @@
     export default {
         data () {
             return {
-                timer: 10,
+                timer: 3,
                 text: '選択肢',
                 startCountDown: '',
                 answer: 1,
@@ -67,7 +67,8 @@
                 image2: '',
                 image3: '',
                 image4: '',
-                imageDefault: '../assets/question_sample.jpg'
+                imageDefault: '../assets/question_sample.jpg',
+                keySafety: 0
             }
         },
         methods: {
@@ -82,8 +83,10 @@
                     })
                     .done(function(json){
                         console.log(json);
-                        $('.screen').addClass('done');
-                        $('.timeupText').css('display', 'block');
+                        $('.imageWrapper').addClass('done');
+                        // $('.timeupText').css('display', 'block');
+                        // $('.timeupText').fadeIn('fast');
+                        $('.timeupText').addClass('anim-timeup');
                     });
                 }
                 return false;
@@ -92,6 +95,22 @@
         mounted () {
             $('.imageWrapper').css('display', 'none');
             var self = this;
+            self.keySafety = 0;
+            $.get('http://' + window.statusUrl + '/isAnswer')
+            .done(function(json){
+              console.log(json);
+              if(json === true){
+                $.ajax('http://' + self.statusUrl + '/isAnswerChange',{
+                    method:'POST',
+                    type:'POST',
+                    cache:false
+                })
+                .done(function(json){
+                    console.log(json);
+                    console.log('回答開始フラグがtrueだったのでリセットしました');
+                });
+              }
+            });
 
             $.ajax(self.url + '/rounds/getRoundProblem', {
                 method: 'POST',
@@ -109,20 +128,35 @@
                   if(i === 0){
                     self.answer1 = answer;
                     self.image1 = image;
-                    self.image1 = 'http://www.heimusu.com/img/img1.jpg';
-                    $('.question1').css('background-image', 'url('+ self.image1 +  ')')
+                    // self.image1 = 'http://www.heimusu.com/img/img1.jpg';
+                    $('.question1').css('background-image', 'url('+ self.image1 +  ')');
+                    if(self.image1 == undefined){
+                        $('.question1').css('background-image', 'url(/static/img/question_sample.3b67a50.jpg)');
+                    }
                   }
                   else if(i === 1){
                     self.answer2 = answer;
                     self.image2 = image;
+                    $('.question2').css('background-image', 'url('+ self.image1 +  ')');
+                    if(self.image1 == undefined){
+                        $('.question2').css('background-image', 'url(/static/img/question_sample.3b67a50.jpg)');
+                    }
                   }
                   else if(i === 2){
                     self.answer3 = answer;
                     self.image3 = image;
+                    $('.question3').css('background-image', 'url('+ self.image1 +  ')');
+                    if(self.image1 == undefined){
+                        $('.question3').css('background-image', 'url(/static/img/question_sample.3b67a50.jpg)');
+                    }
                   }
                   else if(i === 4){
                     self.answer4 = answer;
                     self.image4 = image;
+                    $('.question4').css('background-image', 'url('+ self.image1 +  ')');
+                    if(self.image1 == undefined){
+                        $('.question4').css('background-image', 'url(/static/img/question_sample.3b67a50.jpg)');
+                    }
                   }
 
                   if(data.answers[i].answer_flg === true){
@@ -143,92 +177,109 @@
             }
 
             $(document).on('keyup', function(e){
-                console.log(e.keyCode);
-                var key = e.keyCode;
-
-                // Sキー
-                // 問題一覧ページ（スクリーン）
-                if(key === 83){
-                    // location.href="#screen";
-                    // 回答状況を取得するAPIを叩く…？
-                    // $.ajax(self.url + '/steps/ranking',{
-                    //     method:'POST',
-                    //     type:'POST',
-                    //     cache:false
-                    // })
-                    // .done(function(json){
-                    //     console.log(json);
-                    //     $('.selected').css('display', 'block');
-                    // })
-                    // .fail(function(err){});
-                }
-                // Rキー
-                else if(key === 82){
-                  location.href="#ranking";
-                }
-                // Lキー
-                else if(key === 76){
-                    location.href="/";
-                    return false;
-                }
-                // Tキー
-                // カウントダウンスタート
-                else if(key === 84){
-                    $.ajax('http://' + self.statusUrl + '/isAnswerChange',{
-                        method:'POST',
-                        type:'POST',
-                        cache:false
-                    })
-                    .done(function(json){
-                        console.log(json);
-                        self.startCountDown = setInterval(self.countDown, 1000);
-                    });
-                }
-                // Yキー
-                // DONEクラスremove
-                else if(key === 89){
-                    $('.screen').removeClass('done');
-                    $('.timeupText').css('display', 'none');
-                }
-
-                // Aキー
-                // 答えオープン
-                else if(key === 65){
-                  console.log(self.answer);
-                    if(self.answer === 1){
-                        $('.question2').addClass('done');
-                        $('.question3').addClass('done');
-                        $('.question4').addClass('done');
-                    }
-                    else if(self.answer === 2){
-                        $('.question1').addClass('done');
-                        $('.question3').addClass('done');
-                        $('.question4').addClass('done');
-                    }
-                    else if(self.answer === 3){
-                        $('.question1').addClass('done');
-                        $('.question2').addClass('done');
-                        $('.question4').addClass('done');
-                    }
-                    else if(self.answer === 4){
-                        $('.question2').addClass('done');
-                        $('.question3').addClass('done');
-                        $('.question1').addClass('done');
-                    }
-                }
-
-                // Oキー
-                // 問題表示
-                else if(key === 79){
-                    $('.imageWrapper').css('display', 'block');
+                console.log(self.keySafety);
+                if(self.keySafety === 1){
+                  console.log('不可');
+                  return false;
                 }
 
                 else {
+                  // console.log(e.keyCode);
+                  var key = e.keyCode;
+
+                  // Sキー
+                  // 問題一覧ページ（スクリーン）
+                  if(key === 83){
+                      // location.href="#screen";
+                      // 回答状況を取得するAPIを叩く…？
+                      // $.ajax(self.url + '/steps/ranking',{
+                      //     method:'POST',
+                      //     type:'POST',
+                      //     cache:false
+                      // })
+                      // .done(function(json){
+                      //     console.log(json);
+                      //     $('.selected').css('display', 'block');
+                      // })
+                      // .fail(function(err){});
+                  }
+                  // Rキー
+                  else if(key === 82){
+                    self.keySafety = 0;
+                    location.href="#ranking";
                     return false;
+                  }
+                  // Lキー
+                  else if(key === 76){
+                      self.keySafety = 0;
+                      location.href="/";
+                      return false;
+                  }
+                  // Tキー
+                  // カウントダウンスタート
+                  else if(key === 84){
+                      self.keySafety = 1;
+                      $.ajax('http://' + self.statusUrl + '/isAnswerChange',{
+                          method:'POST',
+                          type:'POST',
+                          cache:false
+                      })
+                      .done(function(json){
+                          console.log(json);
+                          self.startCountDown = setInterval(self.countDown, 1000);
+                          self.keySafety = 0;
+                      });
+                  }
+                  // Yキー
+                  // DONEクラスremove
+                  else if(key === 89){
+                      self.keySafety = 1;
+                      $('.imageWrapper').removeClass('done');
+                      $('.timeupText').css('display', 'none');
+                      self.keySafety = 0;
+                  }
+
+                  // Aキー
+                  // 答えオープン
+                  else if(key === 65){
+                    self.keySafety = 1;
+                    console.log(self.answer);
+                      if(self.answer === 1){
+                          $('.question2').addClass('done');
+                          $('.question3').addClass('done');
+                          $('.question4').addClass('done');
+                      }
+                      else if(self.answer === 2){
+                          $('.question1').addClass('done');
+                          $('.question3').addClass('done');
+                          $('.question4').addClass('done');
+                      }
+                      else if(self.answer === 3){
+                          $('.question1').addClass('done');
+                          $('.question2').addClass('done');
+                          $('.question4').addClass('done');
+                      }
+                      else if(self.answer === 4){
+                          $('.question2').addClass('done');
+                          $('.question3').addClass('done');
+                          $('.question1').addClass('done');
+                      }
+                      self.keySafety = 0;
+                  }
+
+                  // Oキー
+                  // 問題表示
+                  else if(key === 79){
+                      self.keySafety = 1;
+                      $('.imageWrapper').css('display', 'block');
+                      self.keySafety = 0;
+                  }
+
+                  else {
+                      return false;
+                  }
+
                 }
-
-                // 答えた人数公開ボタンが必要！
-
                 return false;
             });
         }
@@ -251,7 +302,7 @@
 
     .done {
         background-color: #eeeeee;
-        opacity: 0.6;
+        opacity: 0.2;
         z-index: -3;
     }
 
@@ -276,7 +327,7 @@
             margin-right: 5%;
             margin-bottom: 10%;
             border-radius: 0.8em;
-            border: solid 10px #d9e2f4;
+            border: solid 10px #b6aad5;
             position: relative;
 
             .questionImageText {
@@ -287,7 +338,7 @@
                 width: 100%;
                 text-align: center;
                 // background: #062456;
-                background: linear-gradient(to bottom, #081e29 0%, #062456 100%);
+                background: linear-gradient(to bottom, #081e29 0%, #032983 100%);
                 color: #fff;
                 display: flex;
                 justify-content: center;
@@ -308,6 +359,9 @@
                     box-shadow:4px 0px 6px 1px #000000;
                     -moz-box-shadow:4px 0px 6px 1px #000000;
                     -webkit-box-shadow:4px 0px 6px 1px #000000;
+                    font-family: Lucida Sans Typewriter,Lucida Console,monaco,Bitstream Vera Sans Mono,monospace;
+                    color: #fefefe;
+                    font-weight: bold;
 
                 }
                 .choice {
@@ -338,19 +392,23 @@
                 }
 
                 .one {
-                    background-color: #8540bf;
+                    // background-color: #8540bf;
+                    background: linear-gradient(to bottom, #75f2ff 0%, #017ad4 50%, #0261ab 100%);
                 }
 
                 .two {
-                    background-color: #fd0000;
+                    // background-color: #fd0000;
+                    background: linear-gradient(to bottom, #ffa3a3 0%, #d10200 50%, #5d0100 100%);
                 }
 
                 .three {
-                    background-color: #07c003;
+                    // background-color: #07c003;
+                    background: linear-gradient(to bottom, #38ff33 0%, #07bf03 50%, #045704 100%);
                 }
 
                 .four {
-                    background-color: #f19149;
+                    // background-color: #f19149;
+                    background: linear-gradient(to bottom, #ffffa6 0%, #e2b300 50%, #b78800 100%);
                 }
             }
         }
@@ -364,7 +422,6 @@
         // min-height: 500px;
         height: 70%;
         background: -webkit-linear-gradient(top, #1e5799 0%,#302689 1%,#302689 50%,#2989d8 80%,#2353e6 100%);
-        opacity: 0.9;
         font-family: "ヒラギノ丸ゴ Pro W4","Hiragino Maru Gothic Pro", 'Avenir', Helvetica, Arial, sans-serif;
         border-radius: 0.8em;
 
@@ -451,14 +508,70 @@
 
     .timeupText {
         display: none;
+        // display: block;
         position: absolute;
         top: 50%;
         left: 30%;
-        font-size: 5.0rem;
-        color: red;
-        text-shadow:4px 2px 5px #000000;
         opacity: 1.0;
         z-index: 4;
+
+        img {
+            // width: 50%;
+            width: 50%;
+        }
+    }
+
+    .anim-timeup {
+        display: block;
+        -webkit-animation: timeup 0.5s ease 0.5s 1 forwards;
+        animation: timeup 3.0s ease 0.5s 1 forwards;
+    }
+
+    @-webkit-keyframes timeup {
+        0%{
+          // transform: rotateX( 180deg );
+          width: 10%;
+        }
+
+        25% {
+          width: 80%;
+        }
+
+        50% {
+          width: 10%;
+        }
+
+        75% {
+          width: 25%;
+        }
+
+        100% {
+          // opacity: 1;
+          width: 50%;
+        }
+    }
+    @keyframes timeup {
+      0%{
+        // transform: rotateX( 180deg );
+        transform: scale(0.5);
+      }
+
+      25% {
+        transform: scale(1.5);
+      }
+
+      50% {
+        transform: scale(1.0);
+      }
+
+      75% {
+        transform: scale(1.5);
+      }
+
+      100% {
+        // opacity: 1;
+        transform: scale(1.0);
+      }
     }
 
     @media(max-height: 800px) {

@@ -1,6 +1,7 @@
 <template>
   <div class="login">
-      <img class="logo" src="../assets/logo_kemono.png" />
+      <!-- <img class="logo" src="../assets/logo_kemono.png" /> -->
+      <img class="logo" src="../assets/allstar_logo.png"  />
       <div class="login-wrapper">
           <input type="text" id="userid" name="userid" placeholder="名前（フルネーム）を入力" value="">
           <button class="loginButton">はじめる！</button>

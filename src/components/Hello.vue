@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
-      <img class="logo" src="../assets/logo_kemono.png" />
+      <!-- <img class="logo" src="../assets/logo_kemono.png" /> -->
+      <img class="logo" src="../assets/allstar_logo_top.png" />
   </div>
 </template>
 
@@ -95,6 +96,7 @@
     .logo {
         display: block;
         margin: auto;
-        width: 60%;
+        // width: 60%;
+        width: 90%;
     }
 </style>

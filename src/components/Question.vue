@@ -191,7 +191,7 @@
         .questionDescription {
             display: block;
             position: relative;
-            width: 80%;
+            // width: 80%;
             background-color: #87bcfc;
             color: #000;
             padding: 20px;
@@ -217,28 +217,39 @@
             background-color: #000;
             color: #fff;
             position: absolute;
-            height: 50%;
+            // height: 50%;
+            width: 45px;
+            height: 70px;
+            text-align: center;
+            line-height: 70px;
+            font-size: 24px;
+            font-weight: bold;
         }
         .one {
-            background-color: #8540bf;
+            // background-color: #8540bf;
+            background: linear-gradient(to bottom, #75f2ff 0%, #017ad4 50%, #0261ab 100%);
         }
 
         .two {
-            background-color: #fd0000;
+            // background-color: #fd0000;
+            background: linear-gradient(to bottom, #ffa3a3 0%, #d10200 50%, #5d0100 100%);
         }
 
         .three {
-            background-color: #00ff00;
+            // background-color: #00ff00;
+            background: linear-gradient(to bottom, #38ff33 0%, #07bf03 50%, #045704 100%);
         }
 
         .four {
-            background-color: #f19149;
+            // background-color: #f19149;
+            background: linear-gradient(to bottom, #ffffa6 0%, #e2b300 50%, #b78800 100%);
         }
 
         .answer {
             background-color: #fbf8d0;
             margin-bottom: 20px;
-            height: 40px;
+            // height: 40px;
+            height: 90px;
 
             /* border-radius */
             border-radius:33px;
@@ -250,8 +261,10 @@
             .answerDescription {
                 display: inline-block;
                 position: absolute;
-                top: 10%;
+                // top: 10%;
                 left: 20%;
+                line-height: 90px;
+                font-size: 20px;
             }
         }
         .answer:active {
