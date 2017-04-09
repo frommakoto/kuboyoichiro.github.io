@@ -146,7 +146,7 @@
                 else if(i === 2){
                   self.answer3 = answer;
                 }
-                else if(i === 4){
+                else if(i === 3){
                   self.answer4 = answer;
                 }
             });
