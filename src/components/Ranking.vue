@@ -46,8 +46,10 @@
                 url: 'http://' + window.url,
                 keySafety: 0,
                 startRanking: '../../static/startRoulette.wav',
-                openTop: '../../static/openTop.mp3',
-                openBottom: '../../static/openBottom.mp3'
+                openTop: '../../static/winner.mp3',
+                openBottom: '../../static/failer.mp3'
+                // openTop: '../../static/openTop.mp3',
+                // openBottom: '../../static/openBottom.mp3'
             }
         },
         mounted () {

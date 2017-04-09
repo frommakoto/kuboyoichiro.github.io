@@ -123,8 +123,8 @@
                         console.log(json);
                         $('.imageWrapper').addClass('done');
                         // $('.timeupText').css('display', 'block');
-                        // $('.timeupText').fadeIn('fast');
-                        $('.timeupText').addClass('anim-timeup');
+                        $('.timeupText').fadeIn('fast');
+                        // $('.timeupText').addClass('anim-timeup');
                         document.getElementById('answering').pause();
                         // document.getElementById('timeUpSound').play();
                     });
@@ -296,8 +296,8 @@
                   // 答えオープン
                   else if(key === 65){
                     self.keySafety = 1;
-                    console.log(self.answer);
-                    // document.getElementById('openAnswer').play();
+                    // console.log(self.answer);
+                    document.getElementById('openAnswer').play();
                       if(self.answer === 1){
                           $('.question2').addClass('done');
                           $('.question3').addClass('done');
@@ -324,9 +324,7 @@
                   // Oキー
                   // 問題表示
                   else if(key === 79){
-                    //   self.keySafety = 1;
                       $('.imageWrapper').css('display', 'block');
-                      document.getElementById('openQuestion').play();
                       self.keySafety = 1;
                       var now = new Date();
                       console.log(now);
@@ -346,13 +344,11 @@
                           })
                           .done(function(json){
                               console.log(json);
-                              document.getElementById('answering').play();
+                              document.getElementById('openQuestion').play();
                               self.startCountDown = setInterval(self.countDown, 1000);
                               self.keySafety = 0;
                           });
                       });
-
-                    //   self.keySafety = 0;
                   }
 
                   else {
@@ -590,22 +586,22 @@
         display: none;
         // display: block;
         position: absolute;
-        top: 50%;
-        left: 30%;
+        top: 40%;
+        left: 20%;
         opacity: 1.0;
         z-index: 4;
 
         img {
             // width: 50%;
-            width: 50%;
+            width: 70%;
         }
     }
 
-    .anim-timeup {
-        display: block;
-        -webkit-animation: timeup 0.5s ease 0.5s 1 forwards;
-        animation: timeup 3.0s ease 0.5s 1 forwards;
-    }
+    // .anim-timeup {
+    //     display: block;
+    //     -webkit-animation: timeup 0.5s ease 0.5s 1 forwards;
+    //     animation: timeup 3.0s ease 0.5s 1 forwards;
+    // }
 
     @-webkit-keyframes timeup {
         0%{
