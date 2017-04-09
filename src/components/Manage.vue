@@ -177,7 +177,23 @@
                   })
                   .done(function(json){
                     console.log(json);
-                    self.roundId += 1;
+                    self.roundId++;
+                    $.ajax(self.statusUrl + '/isSpecialChange', {
+                        method:'POST',
+                        type:'POST',
+                        cache:false
+                    })
+                    .done(function(json){
+                        if(json === true){
+                            self.isSpecialFlg = true;
+                            self.isSpecialMessage = '回答可能';
+                        }
+                        else {
+                            self.isSpecialFlg = false;
+                            self.isSpecialMessage = '回答不可';
+                        }
+                        return false;
+                    });
                     alert('セッション変更成功！');
                   });
                 }
