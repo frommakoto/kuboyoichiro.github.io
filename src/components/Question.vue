@@ -8,20 +8,20 @@
       </div>
 
       <ul id="answerWrapper">
-          <li class="answer" v-on:click="greet('1')" value="1">
-              <span class="number one" value="1">1</span>
+          <li class="answer" v-on:click="greet('0')" value="0">
+              <span class="number one" value="0">1</span>
               <span class="answerDescription" value="1">{{answer1}}</span>
           </li>
-          <li class="answer" v-on:click="greet('2')" value="2">
-              <span class="number two"  value="2">2</span>
+          <li class="answer" v-on:click="greet('1')" value="1">
+              <span class="number two"  value="1">2</span>
               <span class="answerDescription"  value="2">{{answer2}}</span>
           </li>
-          <li class="answer" v-on:click="greet('3')" value="3">
-              <span class="number three" value="3">3</span>
+          <li class="answer" v-on:click="greet('2')" value="2">
+              <span class="number three" value="2">3</span>
               <span class="answerDescription" value="3">{{answer3}}</span>
           </li>
-          <li class="answer" v-on:click="greet('4')" value="4">
-              <span class="number four" value="4">4</span>
+          <li class="answer" v-on:click="greet('3')" value="3">
+              <span class="number four" value="3">4</span>
               <span class="answerDescription" value="4">{{answer4}}</span>
           </li>
       </ul>
@@ -51,7 +51,8 @@
           answer2: '',
           answer3: '',
           answer4: '',
-          questionAnswer: 0
+          questionAnswer: 0,
+          answerId: []
         }
       },
       methods: {
@@ -63,12 +64,14 @@
                 if(value != self.questionAnswer){
                     window.localStorage.setItem('answerFlg', true);
                 }
+                var answerValue = self.answerId[value];
+
                 // self.responseTime *= 100;
                 // var now = new Date();
                 // var utc_timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate() ,
                 // now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
                 // $.ajax(self.url + '/steps/answer?user_id=' + self.userId + '&select_answer_id=' + value + '&push_time=' + self.responseTime, {
-                $.ajax(self.url + '/steps/answer?user_id=' + self.userId + '&select_answer_id=' + value, {
+                $.ajax(self.url + '/steps/answer?user_id=' + self.userId + '&select_answer_id=' + answerValue, {
                     method: 'POST',
                     type: 'POST',
                     cache: false
@@ -126,6 +129,8 @@
                   if(data.answers[i].answer_flg == true){
                       self.questionAnswer = i + 1;
                   }
+
+                self.answerId[i] = data.answers[i].id;
 
                 var answer = data.answers[i].answer_text
                 if(i === 0){
