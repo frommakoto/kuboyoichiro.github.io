@@ -55,6 +55,22 @@
             self.keySafety = 0;
             // var flip = $('#card').flip({'axis': 'x', 'trigger': 'manual'});
 
+            $.get('http://' + window.statusUrl + '/isAnswer')
+            .done(function(json){
+              console.log(json);
+              if(json === true){
+                $.ajax('http://' + self.statusUrl + '/isAnswerChange',{
+                    method:'POST',
+                    type:'POST',
+                    cache:false
+                })
+                .done(function(json){
+                    console.log(json);
+                    console.log('回答開始フラグがtrueだったのでリセットしました');
+                });
+              }
+            });
+
             // キー操作
             $(document).on('keyup', function(e){
                 // console.log(e.keyCode);
@@ -221,7 +237,7 @@
                 }
 
                 // Dキー
-                // 最後のlist要素
+                // 最後のlist要素l
                 else if(key === 68){
                   self.keySafety = 1;
                   $('.ranking-list:last').css('opacity', '1');

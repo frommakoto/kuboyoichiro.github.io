@@ -42,6 +42,23 @@
               }
           });
 
+
+          $.get('http://' + window.statusUrl + '/isAnswer')
+          .done(function(json){
+            console.log(json);
+            if(json === true){
+              $.ajax('http://' + self.statusUrl + '/isAnswerChange',{
+                  method:'POST',
+                  type:'POST',
+                  cache:false
+              })
+              .done(function(json){
+                  console.log(json);
+                  console.log('回答開始フラグがtrueだったのでリセットしました');
+              });
+            }
+          });
+
           $(document).on('keyup', function(e){
               var key = e.keyCode;
               console.log(key);
