@@ -63,7 +63,7 @@
                 if(value != self.questionAnswer){
                     window.localStorage.setItem('answerFlg', true);
                 }
-                self.responseTime *= 100;
+                // self.responseTime *= 100;
                 $.ajax(self.url + '/steps/answer?user_id=' + self.userId + '&select_answer_id=' + value + '&push_time=' + self.responseTime, {
                     method: 'POST',
                     type: 'POST',
@@ -88,6 +88,7 @@
                   $('#questionWrapper').css('display', 'none');
                   $('#answerWrapper').css('display', 'none');
                   clearInterval(this.startCountDown);
+                  clearInterval(this.startCountUp);
                   alert('回答時間終了です！');
                   location.href="#ready";
               }
@@ -95,11 +96,8 @@
         },
         countUp: function(){
             var self = this;
-            self.responseTime += Math.exp(-4);
-            // console.log(self.responseTime);
-            if(self.responseTime >= 0.25){
-                clearInterval(this.startCountUp);
-            }
+            self.responseTime += 0.01;
+            console.log(self.responseTime);
         }
       },
       mounted(){
@@ -111,7 +109,7 @@
               location.href="/";
           }
           self.startCountDown = setInterval(self.countDown, 1000);
-          self.startCountUp = setInterval(self.countUp, 0.1);
+          self.startCountUp = setInterval(self.countUp, 1);
           $.ajax(self.url + '/steps/getProblem?user_id=' + self.userId, {
               method: 'POST',
               type: 'POST',
