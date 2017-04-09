@@ -95,7 +95,7 @@
         },
         countUp: function(){
             var self = this;
-            self.responseTime += 0.0001;
+            self.responseTime += Math.exp(-4);
             // console.log(self.responseTime);
             if(self.responseTime >= 0.25){
                 clearInterval(this.startCountUp);
