@@ -64,9 +64,9 @@
                     window.localStorage.setItem('answerFlg', true);
                 }
                 // self.responseTime *= 100;
-                var now = new Date();
-                var utc_timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate() ,
-                now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
+                // var now = new Date();
+                // var utc_timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate() ,
+                // now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
                 // $.ajax(self.url + '/steps/answer?user_id=' + self.userId + '&select_answer_id=' + value + '&push_time=' + self.responseTime, {
                 $.ajax(self.url + '/steps/answer?user_id=' + self.userId + '&select_answer_id=' + value, {
                     method: 'POST',

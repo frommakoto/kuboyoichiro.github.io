@@ -94,7 +94,8 @@
                 image4: '',
                 imageDefault: '../assets/question_sample.jpg',
                 keySafety: 0,
-                openQuestion: '../../static/openQuestion.wav',
+                // openQuestion: '../../static/openQuestion.wav',
+                openQuestion: '../../static/count.mp3',
                 timeUpSound: '../../static/ban1.mp3',
                 answering: '../../static/answering.mp3',
                 openAnswer: '../../static/openAnswer.mp3'
@@ -120,7 +121,7 @@
                         // $('.timeupText').fadeIn('fast');
                         $('.timeupText').addClass('anim-timeup');
                         document.getElementById('answering').pause();
-                        document.getElementById('timeUpSound').play();
+                        // document.getElementById('timeUpSound').play();
                     });
                 }
                 return false;
@@ -253,9 +254,9 @@
                   // カウントダウンスタート
                   else if(key === 84){
                       self.keySafety = 1;
-                      var date = new Date();
-                      var utc_timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate() ,
-                      now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
+                    //   var date = new Date();
+                    //   var utc_timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate() ,
+                    //   now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
                       $.ajax(self.url + '/rounds/setProblemDateTime?push_time=' + utc_timestamp, {
                           method:'POST',
                           type:'POST',
@@ -290,7 +291,7 @@
                   else if(key === 65){
                     self.keySafety = 1;
                     console.log(self.answer);
-                    document.getElementById('openAnswer').play();
+                    // document.getElementById('openAnswer').play();
                       if(self.answer === 1){
                           $('.question2').addClass('done');
                           $('.question3').addClass('done');
@@ -322,8 +323,10 @@
                       document.getElementById('openQuestion').play();
                       self.keySafety = 1;
                       var now = new Date();
+                      console.log(now);
                       var utc_timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate() ,
                       now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
+                      console.log(utc_timestamp);
                       $.ajax(self.url + '/rounds/setProblemDateTime?push_time=' + utc_timestamp, {
                           method:'POST',
                           type:'POST',
