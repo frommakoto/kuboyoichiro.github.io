@@ -52,7 +52,7 @@
     export default {
         data () {
             return {
-                timer: 3,
+                timer: 10,
                 text: '選択肢',
                 startCountDown: '',
                 answer: 1,

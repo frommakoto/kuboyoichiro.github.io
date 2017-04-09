@@ -166,7 +166,8 @@
     .reset {
       position: absolute;
       bottom: 100px;
-      width: 80%;
+      padding: 10px 20px 10px 20px; 
+      // width: 80%;
       background: #dddddd;
       color: #333333;
     }
