@@ -147,7 +147,8 @@
                           var pushData = {
                             ranking: i + 1,
                             name: data.users[i].name,
-                            time: data.steps[i].response_time
+                            // time: data.steps[i].response_time
+                            time: data.steps[i].last_answer_time
                           };
                           self.rankings.push(pushData);
                           if(i === 9 || i === length - 1){
@@ -191,7 +192,8 @@
                           var pushData = {
                             ranking: length - i,
                             name: data.users[length - i - 1].name,
-                            time: data.steps[length - i - 1].response_time
+                            // time: data.steps[length - i - 1].response_time
+                            time: data.steps[length - i - 1].last_answer_time
                           };
                           self.rankings.push(pushData);
                           // if(i === 8){
