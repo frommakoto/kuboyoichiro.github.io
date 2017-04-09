@@ -2,29 +2,33 @@
   <div class="screen">
       <ul class="imageWrapper">
           <li class="questionImage question1">
+              <span class="index one">1</span>
               <div class="questionImageText">
-                  <span class="index one">1</span>
+                  <!-- <span class="index one">1</span> -->
                   <span class="choice">{{answer1}}</span>
                   <span class="selected">18</span>
               </div>
           </li>
           <li class="questionImage question2">
+              <span class="index two">2</span>
               <div class="questionImageText">
-                  <span class="index two">2</span>
+                  <!-- <span class="index two">2</span> -->
                   <span class="choice">{{answer2}}</span>
                   <span class="selected">18</span>
               </div>
           </li>
           <li class="questionImage question3">
+              <span class="index three">3</span>
               <div class="questionImageText">
-                  <span class="index three">3</span>
+                  <!-- <span class="index three">3</span> -->
                   <span class="choice">{{answer3}}</span>
                   <span class="selected">18</span>
               </div>
           </li>
           <li class="questionImage question4">
+              <span class="index four">4</span>
               <div class="questionImageText">
-                  <span class="index four">4</span>
+                  <!-- <span class="index four">4</span> -->
                   <span class="choice">{{answer4}}</span>
                   <span class="selected">18</span>
               </div>
@@ -165,38 +169,45 @@
                 $.each(data.answers, function(i){
                   // 選択肢のパッケージング
                   var answer = data.answers[i].answer_text;
-                  var image = data.answers[i].imgpath;
+                  var image = data.answers[i].img_path;
+                  console.log(image);
                   if(i === 0){
                     self.answer1 = answer;
                     self.image1 = image;
-                    // self.image1 = 'http://www.heimusu.com/img/img1.jpg';
+                    // self.image1 = undefined;
+                    // console.log(self.image1);
+                    // self.image1 = '../../static/questions/ans1_1.png';
                     $('.question1').css('background-image', 'url('+ self.image1 +  ')');
                     if(self.image1 == undefined){
-                        $('.question1').css('background-image', 'url(/static/img/question_sample.3b67a50.jpg)');
+                        $('.question1').css('background-image', 'url(/static/img/allstar_logo_top.3efcf97.png)');
+                        // $('.question1').css('background', '#fff');
                     }
                   }
                   else if(i === 1){
                     self.answer2 = answer;
                     self.image2 = image;
-                    $('.question2').css('background-image', 'url('+ self.image1 +  ')');
-                    if(self.image1 == undefined){
-                        $('.question2').css('background-image', 'url(/static/img/question_sample.3b67a50.jpg)');
+                    // self.image2 = '../../static/questions/ans1_2.png';
+                    $('.question2').css('background-image', 'url('+ self.image2 +  ')');
+                    if(self.image2 == undefined){
+                        $('.question2').css('background-image', 'url(/static/img/allstar_logo_top.3efcf97.png)');
                     }
                   }
                   else if(i === 2){
                     self.answer3 = answer;
                     self.image3 = image;
-                    $('.question3').css('background-image', 'url('+ self.image1 +  ')');
-                    if(self.image1 == undefined){
-                        $('.question3').css('background-image', 'url(/static/img/question_sample.3b67a50.jpg)');
+                    // self.image3 = '../../static/questions/ans1_3.png';
+                    $('.question3').css('background-image', 'url('+ self.image3 +  ')');
+                    if(self.image3 == undefined){
+                        $('.question3').css('background-image', 'url(/static/img/allstar_logo_top.3efcf97.png)');
                     }
                   }
                   else if(i === 3){
                     self.answer4 = answer;
                     self.image4 = image;
-                    $('.question4').css('background-image', 'url('+ self.image1 +  ')');
-                    if(self.image1 == undefined){
-                        $('.question4').css('background-image', 'url(/static/img/question_sample.3b67a50.jpg)');
+                    // self.image4 = '../../static/questions/ans1_4.png';
+                    $('.question4').css('background-image', 'url('+ self.image4 +  ')');
+                    if(self.image4 == undefined){
+                        $('.question4').css('background-image', 'url(/static/img/allstar_logo_top.3efcf97.png)');
                     }
                   }
 
@@ -398,13 +409,56 @@
         .questionImage {
             // height: 40%;
             height: 43%;
-            background-size: cover;
+            // background-size: cover;
+            background-size: contain;
             background-image: url('../assets/question_sample.jpg');
             margin-right: 5%;
             margin-bottom: 10%;
             border-radius: 0.8em;
             border: solid 10px #b6aad5;
             position: relative;
+
+            .index {
+                font-size: 2.0rem;
+                position: absolute;
+                // left: 0;
+                left: -20px ;
+                // line-height: 60px;
+                padding: 10px 20px 10px 20px;
+                margin-left: 20px;
+                border-radius: 50%;
+                background-color: red;
+                height: 40px;
+                font-weight: bold;
+                box-shadow:4px 0px 6px 1px #000000;
+                -moz-box-shadow:4px 0px 6px 1px #000000;
+                -webkit-box-shadow:4px 0px 6px 1px #000000;
+                font-family: Lucida Sans Typewriter,Lucida Console,monaco,Bitstream Vera Sans Mono,monospace;
+                color: #fefefe;
+                font-weight: bold;
+
+            }
+
+            .one {
+                // background-color: #8540bf;
+                background: linear-gradient(to bottom, #75f2ff 0%, #017ad4 50%, #0261ab 100%);
+            }
+
+            .two {
+                // background-color: #fd0000;
+                background: linear-gradient(to bottom, #ffa3a3 0%, #d10200 50%, #5d0100 100%);
+            }
+
+            .three {
+                // background-color: #07c003;
+                background: linear-gradient(to bottom, #38ff33 0%, #07bf03 50%, #045704 100%);
+            }
+
+            .four {
+                // background-color: #f19149;
+                background: linear-gradient(to bottom, #ffffa6 0%, #e2b300 50%, #b78800 100%);
+            }
+
 
             .questionImageText {
                 position: absolute;
@@ -421,27 +475,27 @@
                 align-items: center;
                 border-radius: 0.5em;
 
-                .index {
-                    font-size: 2.0rem;
-                    position: absolute;
-                    left: 0;
-                    // line-height: 60px;
-                    padding: 10px 20px 10px 20px;
-                    margin-left: 20px;
-                    border-radius: 50%;
-                    background-color: red;
-                    height: 40px;
-                    font-weight: bold;
-                    box-shadow:4px 0px 6px 1px #000000;
-                    -moz-box-shadow:4px 0px 6px 1px #000000;
-                    -webkit-box-shadow:4px 0px 6px 1px #000000;
-                    font-family: Lucida Sans Typewriter,Lucida Console,monaco,Bitstream Vera Sans Mono,monospace;
-                    color: #fefefe;
-                    font-weight: bold;
-
-                }
+                // .index {
+                //     font-size: 2.0rem;
+                //     position: absolute;
+                //     left: 0;
+                //     // line-height: 60px;
+                //     padding: 10px 20px 10px 20px;
+                //     margin-left: 20px;
+                //     border-radius: 50%;
+                //     background-color: red;
+                //     height: 40px;
+                //     font-weight: bold;
+                //     box-shadow:4px 0px 6px 1px #000000;
+                //     -moz-box-shadow:4px 0px 6px 1px #000000;
+                //     -webkit-box-shadow:4px 0px 6px 1px #000000;
+                //     font-family: Lucida Sans Typewriter,Lucida Console,monaco,Bitstream Vera Sans Mono,monospace;
+                //     color: #fefefe;
+                //     font-weight: bold;
+                //
+                // }
                 .choice {
-                    font-size: 3.0rem;
+                    font-size: 2.0rem;
                     font-weight: bold;
                     line-height: 60px;
                     text-shadow: 2px 2px 1px #00f,
@@ -467,25 +521,25 @@
                     display: none;
                 }
 
-                .one {
-                    // background-color: #8540bf;
-                    background: linear-gradient(to bottom, #75f2ff 0%, #017ad4 50%, #0261ab 100%);
-                }
-
-                .two {
-                    // background-color: #fd0000;
-                    background: linear-gradient(to bottom, #ffa3a3 0%, #d10200 50%, #5d0100 100%);
-                }
-
-                .three {
-                    // background-color: #07c003;
-                    background: linear-gradient(to bottom, #38ff33 0%, #07bf03 50%, #045704 100%);
-                }
-
-                .four {
-                    // background-color: #f19149;
-                    background: linear-gradient(to bottom, #ffffa6 0%, #e2b300 50%, #b78800 100%);
-                }
+                // .one {
+                //     // background-color: #8540bf;
+                //     background: linear-gradient(to bottom, #75f2ff 0%, #017ad4 50%, #0261ab 100%);
+                // }
+                //
+                // .two {
+                //     // background-color: #fd0000;
+                //     background: linear-gradient(to bottom, #ffa3a3 0%, #d10200 50%, #5d0100 100%);
+                // }
+                //
+                // .three {
+                //     // background-color: #07c003;
+                //     background: linear-gradient(to bottom, #38ff33 0%, #07bf03 50%, #045704 100%);
+                // }
+                //
+                // .four {
+                //     // background-color: #f19149;
+                //     background: linear-gradient(to bottom, #ffffa6 0%, #e2b300 50%, #b78800 100%);
+                // }
             }
         }
     }
@@ -532,7 +586,7 @@
             -webkit-writing-mode: vertical-rl;
             -ms-writing-mode: tb-rl;
             writing-mode: vertical-rl;
-            font-size: 3.5rem;
+            font-size: 2.0rem;
             text-align: center;
             opacity: 1.0;
             display: flex;
