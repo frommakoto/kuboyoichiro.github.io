@@ -65,6 +65,10 @@
               <source v-bind:src="openAnswer">
                Your browser does not support the audio element.
            </audio>
+           <audio id="quizStart">
+               <source v-bind:src="quizStart">
+                Your browser does not support the audio element.
+            </audio>
   </div>
 </template>
 
@@ -98,7 +102,8 @@
                 openQuestion: '../../static/count.mp3',
                 timeUpSound: '../../static/ban1.mp3',
                 answering: '../../static/answering.mp3',
-                openAnswer: '../../static/openAnswer.mp3'
+                openAnswer: '../../static/openAnswer.mp3',
+                quizStart: '../../static/quiz_start.mp3'
             }
         },
         // components: {
@@ -131,6 +136,7 @@
             $('.imageWrapper').css('display', 'none');
             var self = this;
             self.keySafety = 0;
+            document.getElementById('quizStart').play();
             $.get('http://' + window.statusUrl + '/isAnswer')
             .done(function(json){
               console.log(json);

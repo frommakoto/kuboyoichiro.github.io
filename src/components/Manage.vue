@@ -159,8 +159,16 @@
                       cache:false
                   })
                   .done(function(json){
-                      console.log(json);
-                      alert('出題準備成功！');
+                      console.log(json)
+                    //   $.ajax(self.url + '/steps/clearLastData', {
+                    //       method:'POST',
+                    //       type:'POST',
+                    //       cache:false
+                    //   })
+                    //   .done(function(json){
+                    //       alert('出題準備成功！');
+                    //   });
+                    alert('出題準備成功！');
                   })
                   .fail(function(err){});
                 }

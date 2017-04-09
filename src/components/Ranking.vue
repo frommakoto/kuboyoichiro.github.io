@@ -187,28 +187,33 @@
                       var data = json;
                       var length = data.steps.length;
                       $('.time').show();
-                      console.log(data);
+                    //   console.log(data);
+
                       $.each(data.steps, function(i){
-                          var pushData = {
-                            ranking: length - i,
-                            name: data.users[length - i - 1].name,
-                            // time: data.steps[length - i - 1].response_time
-                            time: data.steps[length - i - 1].last_answer_time
-                          };
-                          self.rankings.push(pushData);
-                          // if(i === 8){
-                          if(i === 9 || i === length - 1){
-                            setTimeout(function(){
-                              for(var j = 0; j <= i; j++) {
-                                $('.ranking-list').eq(j).css('display', 'flex');
-                                $('.ranking-list').eq(j).show();
-                                $('.ranking-list').eq(j).addClass('anim' + (j + 1));
-                                self.lastElement = j;
-                              }
-                            },500);
-                            self.keySafety = 0;
-                            return false;
-                          }
+                          //   console.log(data.steps[i]);
+                            var pushData = {
+                              ranking: length - i,
+                              name: data.users[length - i - 1].name,
+                              // time: data.steps[length - i - 1].response_time
+                              time: data.steps[length - i - 1].last_answer_time
+                            };
+                            self.rankings.push(pushData);
+                          //   console.log(self.rankings);
+                          //   console.log(length);
+                            // if(i === 8){
+                            if(i === 9 || i === length - 1){
+                              setTimeout(function(){
+                                for(var j = 0; j <= i; j++) {
+                                  $('.ranking-list').eq(j).css('display', 'flex');
+                                  $('.ranking-list').eq(j).show();
+                                  $('.ranking-list').eq(j).addClass('anim' + (j + 1));
+                                  self.lastElement = j;
+                                  console.log(self.lastElement);
+                                }
+                              },500);
+                              self.keySafety = 0;
+                              return false;
+                            }
                       });
                       self.rankings = self.rankings.reverse();
                   })
