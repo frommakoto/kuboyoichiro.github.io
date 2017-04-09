@@ -17,6 +17,18 @@
       <div class="yamawake">
           <img src="../assets/yamawake.png"  />
       </div>
+      <audio id="startRanking">
+          <source v-bind:src="startRanking">
+           Your browser does not support the audio element.
+       </audio>
+       <audio id="openTop">
+           <source v-bind:src="openTop">
+            Your browser does not support the audio element.
+        </audio>
+        <audio id="openBottom">
+            <source v-bind:src="openBottom">
+             Your browser does not support the audio element.
+         </audio>
   </div>
 </template>
 
@@ -32,13 +44,16 @@
                 rankings: [],
                 lastElement: 0,
                 url: 'http://' + window.url,
-                keySafety: 0
+                keySafety: 0,
+                startRanking: '../../static/startRoulette.wav',
+                openTop: '../../static/openTop.mp3',
+                openBottom: '../../static/openBottom.mp3'
             }
         },
         mounted () {
             var self = this;
             self.keySafety = 0;
-            var flip = $('#card').flip({'axis': 'x', 'trigger': 'manual'});
+            // var flip = $('#card').flip({'axis': 'x', 'trigger': 'manual'});
 
             // キー操作
             $(document).on('keyup', function(e){
@@ -79,6 +94,7 @@
                       cache:false
                   })
                   .done(function(json){
+                      document.getElementById('startRanking').play();
                       var data = json;
                       var length = data.length;
                       // console.log(length);
@@ -203,6 +219,8 @@
                   $('.ranking-list:last').removeClass('anim' + (self.lastElement + 1));
                   $('.ranking-list:last').removeClass('anim-rev' + (self.lastElement + 1));
                   $('.ranking-list:last').addClass('animation');
+                  document.getElementById('startRanking').pause();
+                  document.getElementById('openBottom').play();
                   self.keySafety = 0;
                 }
 
@@ -215,6 +233,8 @@
                   $('.ranking-list:first').removeClass('anim1');
                   $('.ranking-list:first').removeClass('anim-rev1');
                   $('.ranking-list:first').addClass('animation');
+                  document.getElementById('startRanking').pause();
+                  document.getElementById('openTop').play();
                   self.keySafety = 0;
                 }
 

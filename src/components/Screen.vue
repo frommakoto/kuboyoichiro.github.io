@@ -50,9 +50,21 @@
        <!-- <audio v-el:audio :src="audio" preload="auto"></audio> -->
 
        <audio id="openQuestion">
-           <source v-bind:src="audio">
+           <source v-bind:src="openQuestion">
             Your browser does not support the audio element.
         </audio>
+        <audio id="timeUpSound">
+            <source v-bind:src="timeUpSound">
+             Your browser does not support the audio element.
+         </audio>
+         <audio id="answering">
+             <source v-bind:src="answering">
+              Your browser does not support the audio element.
+          </audio>
+          <audio id="openAnswer">
+              <source v-bind:src="openAnswer">
+               Your browser does not support the audio element.
+           </audio>
   </div>
 </template>
 
@@ -82,7 +94,10 @@
                 image4: '',
                 imageDefault: '../assets/question_sample.jpg',
                 keySafety: 0,
-                audio: '../../static/openQuestion.wav'
+                openQuestion: '../../static/openQuestion.wav',
+                timeUpSound: '../../static/ban1.mp3',
+                answering: '../../static/answering.mp3',
+                openAnswer: '../../static/openAnswer.mp3'
             }
         },
         // components: {
@@ -104,6 +119,8 @@
                         // $('.timeupText').css('display', 'block');
                         // $('.timeupText').fadeIn('fast');
                         $('.timeupText').addClass('anim-timeup');
+                        document.getElementById('answering').pause();
+                        document.getElementById('timeUpSound').play();
                     });
                 }
                 return false;
@@ -243,6 +260,7 @@
                       })
                       .done(function(json){
                           console.log(json);
+                          document.getElementById('answering').play();
                           self.startCountDown = setInterval(self.countDown, 1000);
                           self.keySafety = 0;
                       });
@@ -261,6 +279,7 @@
                   else if(key === 65){
                     self.keySafety = 1;
                     console.log(self.answer);
+                    document.getElementById('openAnswer').play();
                       if(self.answer === 1){
                           $('.question2').addClass('done');
                           $('.question3').addClass('done');
