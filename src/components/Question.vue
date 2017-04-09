@@ -61,10 +61,14 @@
             if(this.questionState === 0){
                 this.questionState = 1;
                 // 成否内部判定
-                if(value != self.questionAnswer){
+                var answerValue = self.answerId[value];
+                console.log(answerValue);
+                console.log(self.questionAnswer);
+                if(answerValue != self.questionAnswer){
+                    console.log('hit');
                     window.localStorage.setItem('answerFlg', true);
                 }
-                var answerValue = self.answerId[value];
+
 
                 // self.responseTime *= 100;
                 // var now = new Date();
@@ -127,7 +131,7 @@
               self.question = data.problem.problem_text;
               $.each(data.answers, function(i){
                   if(data.answers[i].answer_flg == true){
-                      self.questionAnswer = i + 1;
+                      self.questionAnswer = data.answers[i].id;
                   }
 
                 self.answerId[i] = data.answers[i].id;
