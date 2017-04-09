@@ -142,13 +142,19 @@
         height: 80px;
         border: solid 1px #fff;
         border-radius: 0.5em;
-        background-color: yellow;
-        color: #333333;
+        // background-color: yellow;
+        background: linear-gradient(to bottom, #606e75 0%, #072141 50%, #4563ac 100%);
+        color: #160087;
         font-size: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
         margin-top: 50%;
+        font-weight: bold;
+        text-shadow: 2px 2px 1px #fff,
+        -2px 2px 1px #fff,
+        2px -2px 1px #fff,
+        -2px -2px 1px #fff;
     }
 
     .point{

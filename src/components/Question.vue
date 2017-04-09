@@ -25,6 +25,9 @@
               <span class="answerDescription" value="4">{{answer4}}</span>
           </li>
       </ul>
+      <div class="answered">
+          <img src="../assets/receive.png" />
+      </div>
   </div>
 </template>
 
@@ -85,6 +88,7 @@
                     $('#questionWrapper').css('display', 'none');
                     $('#answerWrapper').css('display', 'none');
                     $('.question').addClass('done');
+                    $('.answered').css('display', 'block');
                     clearInterval(this.startCountUp);
                 })
                 .fail(function(err){});
@@ -294,5 +298,12 @@
         color: #333333;
         font-size: 90px;
         display: none;
+    }
+
+    .answered {
+        display: none;
+        img {
+            width: 100%;
+        }
     }
 </style>
