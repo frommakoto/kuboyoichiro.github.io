@@ -100,9 +100,9 @@
                 </div>
             </div>
         </section>
-        <footer>
+        <!-- <footer>
             <span>manager page</span>
-        </footer>
+        </footer> -->
     </div>
 </template>
 
@@ -401,7 +401,7 @@
         // clear: both;
         // background-color: #f9f9f9;
         background-color: #dddddd;
-        height: 100%;
+        // height: 100%;
         position: relative;
         top: 70px;
         // left: 280px;
