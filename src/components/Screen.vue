@@ -46,7 +46,13 @@
       <!-- <audio id="openQuestion" preload="auto">
         <source src="../assets/audio/openQuestion.wav" type="audio/wav">
       </audio> -->
-       <vue-audio :file="audio"></vue-audio>
+       <!-- <vue-audio :file="audio"></vue-audio> -->
+       <!-- <audio v-el:audio :src="audio" preload="auto"></audio> -->
+
+       <audio id="openQuestion">
+           <source v-bind:src="audio">
+            Your browser does not support the audio element.
+        </audio>
   </div>
 </template>
 
@@ -54,7 +60,7 @@
     import * as $ from 'jquery';
     import url from '../assets/url.js';
     import statusUrl from '../assets/url.js';
-    import VueAudio from 'vue-audio';
+    // import VueAudio from 'vue-audio';
 
     export default {
         data () {
@@ -76,12 +82,12 @@
                 image4: '',
                 imageDefault: '../assets/question_sample.jpg',
                 keySafety: 0,
-                audio: '../assets/audio/sample.mp3'
+                audio: '../../static/openQuestion.wav'
             }
         },
-        components: {
-          'vue-audio': VueAudio
-        },
+        // components: {
+        //   'vue-audio': VueAudio
+        // },
         methods: {
             countDown: function(){
                 this.timer -= 1;
@@ -283,6 +289,7 @@
                   else if(key === 79){
                       self.keySafety = 1;
                       $('.imageWrapper').css('display', 'block');
+                      document.getElementById('openQuestion').play();
                       self.keySafety = 0;
                   }
 
