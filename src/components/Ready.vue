@@ -3,14 +3,11 @@
       <div class="point">
          あなたの獲得したポイント: {{userPoint}}
       </div>
-      <div class="goAnswerButton">
-          <!-- <router-link to="/question">
-              回答開始！
-          </router-link> -->
-          <span class="message">{{message}}</span>
-      </div>
       <div class="reset">
         りせっと
+      </div>
+      <div class="goAnswerButton">
+          <span class="message">{{message}}</span>
       </div>
   </div>
 </template>
@@ -138,13 +135,10 @@
         background-size: cover;
         overflow: hidden;
         text-align: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        position: relative;
     }
 
     .goAnswerButton {
-        width: 90%;
         height: 80px;
         border: solid 1px #fff;
         border-radius: 0.5em;
@@ -154,21 +148,24 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-top: 50%;
     }
 
     .point{
-        position: absolute;
-        top: 100px;
-        width: 90%;
+        margin-top: 10%;
         font-weight: bold;
     }
 
     .reset {
-      position: absolute;
-      bottom: 100px;
-      padding: 10px 20px 10px 20px; 
+      // position: absolute;
+      // bottom: 100px;
+      padding: 10px 20px 10px 20px;
       // width: 80%;
       background: #dddddd;
       color: #333333;
+      box-sizing: border-box;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
     }
 </style>
