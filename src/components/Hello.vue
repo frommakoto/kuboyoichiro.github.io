@@ -61,9 +61,9 @@
                   }
                   location.href="#ranking";
               }
-              //   Dキー
+              //   Mキー
               // ローカルストレージ削除
-              else if(key == 68){
+              else if(key == 77){
                 if(isiPhone || isiPad || isAndroid || isAndroidTablet){
                   return false;
                 }

@@ -127,6 +127,7 @@
                 // 88
                 // 速さ早い順
                 else if(key === 88){
+                    document.getElementById('startRanking').play();
                   self.keySafety = 1;
                   if(self.rankings.length > 0){
                     self.rankings.length = 0;
@@ -171,6 +172,7 @@
                 // 速さ遅い順
                 else if(key === 67){
                   self.keySafety = 1;
+                  document.getElementById('startRanking').play();
                   if(self.rankings.length > 0){
                     self.rankings.length = 0;
                   }

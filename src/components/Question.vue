@@ -82,6 +82,7 @@
         },
         countDown: function(){
               this.timer -= 1;
+              console.log(this.timer);
               if(this.timer === 0){
                   $('.question').addClass('done');
                   $('#questionWrapper').css('display', 'none');
@@ -109,6 +110,8 @@
           if(userId == null){
               location.href="/";
           }
+          self.startCountDown = setInterval(self.countDown, 1000);
+          self.startCountUp = setInterval(self.countUp, 0.1);
           $.ajax(self.url + '/steps/getProblem?user_id=' + self.userId, {
               method: 'POST',
               type: 'POST',
@@ -136,8 +139,8 @@
                   self.answer4 = answer;
                 }
             });
-              self.startCountDown = setInterval(self.countDown, 1000);
-              self.startCountUp = setInterval(self.countUp, 0.1);
+            //   self.startCountDown = setInterval(self.countDown, 1000);
+            //   self.startCountUp = setInterval(self.countUp, 0.1);
           });
       }
     }

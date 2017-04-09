@@ -306,10 +306,22 @@
                   // Oキー
                   // 問題表示
                   else if(key === 79){
-                      self.keySafety = 1;
+                    //   self.keySafety = 1;
                       $('.imageWrapper').css('display', 'block');
                       document.getElementById('openQuestion').play();
-                      self.keySafety = 0;
+                      self.keySafety = 1;
+                      $.ajax('http://' + self.statusUrl + '/isAnswerChange',{
+                          method:'POST',
+                          type:'POST',
+                          cache:false
+                      })
+                      .done(function(json){
+                          console.log(json);
+                          document.getElementById('answering').play();
+                          self.startCountDown = setInterval(self.countDown, 1000);
+                          self.keySafety = 0;
+                      });
+                    //   self.keySafety = 0;
                   }
 
                   else {

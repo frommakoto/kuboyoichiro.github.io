@@ -21,10 +21,11 @@ npm run build --report
 npm run deploy
 
 # instance of ec2
-52.192.55.36:5000
+# 52.192.55.36:5000
+52.68.45.211:5000
 
 # active nodejs
-~/.nvm/nvm.sh
+source ~/.nvm/nvm.sh
 
 ```
 

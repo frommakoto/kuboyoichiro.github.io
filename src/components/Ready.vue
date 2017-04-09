@@ -72,7 +72,7 @@
                       self.message = "回答開始！"
                   }
                   else {
-                    self.message = "不正解でした。次のチャンスまでお待ち下さい。";
+                    self.message = "しばらくお待ち下さい。";
                   }
                 //   alert('回答できるまでしばらくお待ち下さい');
               }
@@ -109,7 +109,7 @@
                           self.message = "回答開始！"
                       }
                       else {
-                          self.message = "不正解でした。次のチャンスまでお待ち下さい。";
+                          self.message = "しばらくお待ち下さい。";
                           alert('回答できるまでしばらくお待ち下さい');
                       }
                   }
