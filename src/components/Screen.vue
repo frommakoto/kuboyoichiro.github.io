@@ -191,7 +191,7 @@
                         $('.question3').css('background-image', 'url(/static/img/question_sample.3b67a50.jpg)');
                     }
                   }
-                  else if(i === 4){
+                  else if(i === 3){
                     self.answer4 = answer;
                     self.image4 = image;
                     $('.question4').css('background-image', 'url('+ self.image1 +  ')');
