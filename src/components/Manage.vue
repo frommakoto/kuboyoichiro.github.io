@@ -85,12 +85,12 @@
                 <div class="cardContent" style="padding: 0;">
                     <div class="tableWrapper">
                         <ul class="cell label">
-                            <li class="item label"><span>インデックス</span></li>
+                            <li class="item label"><span>問題ID</span></li>
                             <li class="item label"><span>問題文</span></li>
                         </ul>
                         <ul class="cell cell-data"  v-for="(q,index) in questions">
-                            <li class="item index"  v-on:click="publishQuestion(index)">
-                                {{index}}
+                            <li class="item index"  v-on:click="publishQuestion(q)">
+                                {{q.id}}
                             </li>
                             <li class="item">
                                 <span>{{q.problemText}}</span>
@@ -141,10 +141,17 @@
         methods: {
             // 次に出題する問題を決定するボタン
             publishQuestion: function(value){
+                console.log(value.id);
                 // var questionId = event.target.innerText;
-                var questionId = value;
+                var questionId = value.id;
                 var self = this;
-                var text = self.questions[questionId].problemText;
+                // var text = self.questions[questionId].problemText;
+                var text;
+                $.each(self.questions, function(i){
+                    if(self.questions[i].id === questionId){
+                      text = self.questions[i].problemText;
+                    }
+                })
                 if(window.confirm('問題文：' + text + '  この問題を出題しますか？')){
                   $.ajax(self.url + '/problems/doQuestions?id=' + questionId,{
                       method:'POST',
@@ -212,6 +219,7 @@
                 var data = json;
                 $.each(data, function(i){
                     var questionData = {};
+                    questionData.id = data[i].id;
                     questionData.problemText = data[i].problem_text;
                     self.questions.push(questionData);
                 });
