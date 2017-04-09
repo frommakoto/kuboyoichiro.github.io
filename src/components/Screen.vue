@@ -253,16 +253,27 @@
                   // カウントダウンスタート
                   else if(key === 84){
                       self.keySafety = 1;
-                      $.ajax('http://' + self.statusUrl + '/isAnswerChange',{
+                      var date = new Date();
+                      var utc_timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate() ,
+                      now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
+                      $.ajax(self.url + '/rounds/setProblemDateTime?push_time=' + utc_timestamp, {
                           method:'POST',
                           type:'POST',
                           cache:false
                       })
                       .done(function(json){
                           console.log(json);
-                          document.getElementById('answering').play();
-                          self.startCountDown = setInterval(self.countDown, 1000);
-                          self.keySafety = 0;
+                          $.ajax('http://' + self.statusUrl + '/isAnswerChange',{
+                              method:'POST',
+                              type:'POST',
+                              cache:false
+                          })
+                          .done(function(json){
+                              console.log(json);
+                              document.getElementById('answering').play();
+                              self.startCountDown = setInterval(self.countDown, 1000);
+                              self.keySafety = 0;
+                          });
                       });
                   }
                   // Yキー
@@ -310,17 +321,28 @@
                       $('.imageWrapper').css('display', 'block');
                       document.getElementById('openQuestion').play();
                       self.keySafety = 1;
-                      $.ajax('http://' + self.statusUrl + '/isAnswerChange',{
+                      var now = new Date();
+                      var utc_timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate() ,
+                      now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
+                      $.ajax(self.url + '/rounds/setProblemDateTime?push_time=' + utc_timestamp, {
                           method:'POST',
                           type:'POST',
                           cache:false
                       })
                       .done(function(json){
-                          console.log(json);
-                          document.getElementById('answering').play();
-                          self.startCountDown = setInterval(self.countDown, 1000);
-                          self.keySafety = 0;
+                          $.ajax('http://' + self.statusUrl + '/isAnswerChange',{
+                              method:'POST',
+                              type:'POST',
+                              cache:false
+                          })
+                          .done(function(json){
+                              console.log(json);
+                              document.getElementById('answering').play();
+                              self.startCountDown = setInterval(self.countDown, 1000);
+                              self.keySafety = 0;
+                          });
                       });
+
                     //   self.keySafety = 0;
                   }
 

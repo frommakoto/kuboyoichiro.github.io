@@ -64,7 +64,11 @@
                     window.localStorage.setItem('answerFlg', true);
                 }
                 // self.responseTime *= 100;
-                $.ajax(self.url + '/steps/answer?user_id=' + self.userId + '&select_answer_id=' + value + '&push_time=' + self.responseTime, {
+                var now = new Date();
+                var utc_timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate() ,
+                now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
+                // $.ajax(self.url + '/steps/answer?user_id=' + self.userId + '&select_answer_id=' + value + '&push_time=' + self.responseTime, {
+                $.ajax(self.url + '/steps/answer?user_id=' + self.userId + '&select_answer_id=' + value, {
                     method: 'POST',
                     type: 'POST',
                     cache: false
@@ -82,7 +86,7 @@
         },
         countDown: function(){
               this.timer -= 1;
-              console.log(this.timer);
+            //   console.log(this.timer);
               if(this.timer === 0){
                   $('.question').addClass('done');
                   $('#questionWrapper').css('display', 'none');
@@ -97,7 +101,7 @@
         countUp: function(){
             var self = this;
             self.responseTime += 0.01;
-            console.log(self.responseTime);
+            // console.log(self.responseTime);
         }
       },
       mounted(){
