@@ -42,6 +42,11 @@
       <div class="timeupText">
           <img src="../assets/4_title_timeUp.png" />
       </div>
+      <!-- openQuestion -->
+      <!-- <audio id="openQuestion" preload="auto">
+        <source src="../assets/audio/openQuestion.wav" type="audio/wav">
+      </audio> -->
+       <vue-audio :file="audio"></vue-audio>
   </div>
 </template>
 
@@ -49,6 +54,8 @@
     import * as $ from 'jquery';
     import url from '../assets/url.js';
     import statusUrl from '../assets/url.js';
+    import VueAudio from 'vue-audio';
+
     export default {
         data () {
             return {
@@ -68,8 +75,12 @@
                 image3: '',
                 image4: '',
                 imageDefault: '../assets/question_sample.jpg',
-                keySafety: 0
+                keySafety: 0,
+                audio: '../assets/audio/sample.mp3'
             }
+        },
+        components: {
+          'vue-audio': VueAudio
         },
         methods: {
             countDown: function(){
