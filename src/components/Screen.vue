@@ -411,6 +411,8 @@
             height: 43%;
             // background-size: cover;
             background-size: contain;
+            background-repeat: no-repeat;
+            background-color: #fff;
             background-image: url('../assets/question_sample.jpg');
             margin-right: 5%;
             margin-bottom: 10%;
