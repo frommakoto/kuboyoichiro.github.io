@@ -3,9 +3,9 @@
       <div class="point">
          あなたの獲得したポイント: {{userPoint}}
       </div>
-      <div class="reset">
+      <!-- <div class="reset">
         りせっと
-      </div>
+      </div> -->
       <div class="goAnswerButton">
           <span class="message">{{message}}</span>
       </div>
