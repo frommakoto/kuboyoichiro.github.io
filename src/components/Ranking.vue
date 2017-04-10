@@ -112,7 +112,8 @@
                       cache:false
                   })
                   .done(function(json){
-                      document.getElementById('startRanking').play();
+                    //   document.getElementById('startRanking').play();
+                      document.getElementById('openTop').play();
                       var data = json;
                       var length = data.length;
                       // console.log(length);
@@ -145,7 +146,8 @@
                 // 88
                 // 速さ早い順
                 else if(key === 88){
-                    document.getElementById('startRanking').play();
+                    // document.getElementById('startRanking').play();
+                  document.getElementById('openTop').play();
                   self.keySafety = 1;
                   if(self.rankings.length > 0){
                     self.rankings.length = 0;
@@ -191,7 +193,8 @@
                 // 速さ遅い順
                 else if(key === 67){
                   self.keySafety = 1;
-                  document.getElementById('startRanking').play();
+                //   document.getElementById('startRanking').play();
+                  document.getElementById('openBottom').play();
                   if(self.rankings.length > 0){
                     self.rankings.length = 0;
                   }
@@ -246,8 +249,8 @@
                   $('.ranking-list:last').removeClass('anim' + (self.lastElement + 1));
                   $('.ranking-list:last').removeClass('anim-rev' + (self.lastElement + 1));
                   $('.ranking-list:last').addClass('animation');
-                  document.getElementById('startRanking').pause();
-                  document.getElementById('openBottom').play();
+                //   document.getElementById('startRanking').pause();
+                //   document.getElementById('openBottom').play();
                   self.keySafety = 0;
                 }
 
@@ -260,8 +263,8 @@
                   $('.ranking-list:first').removeClass('anim1');
                   $('.ranking-list:first').removeClass('anim-rev1');
                   $('.ranking-list:first').addClass('animation');
-                  document.getElementById('startRanking').pause();
-                  document.getElementById('openTop').play();
+                //   document.getElementById('startRanking').pause();
+                //   document.getElementById('openTop').play();
                   self.keySafety = 0;
                 }
 
